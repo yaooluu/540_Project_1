@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+<div id="header">
+  <h1>Student Dashboard</h1>
+</div>
+
+<div id="nav">
+<button type="button" onclick="SelectCourse()">Select Course</button><br>
+<p></p>
+<button type="button" onclick="AddCourse()">Add Course</button><br>
+<a href="Index.html">Exit</a>
+</div>
+
+<div id="section">
+<p id="reserved"></p>
+</div>
+
+<script>
+function SelectCourse(){
+   document.getElementById("reserved").innerHTML="select course";
+}
+function AddCourse(){
+   document.getElementById("reserved").innerHTML="add course";
+}
+</script>
+</body>
+</html>
