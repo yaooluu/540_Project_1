@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Add Course</h2>
+
+<p><strong>Please input Course token</strong></p>
+<form method="post">
+<input type="text" placeholder="course token"><br>
+<input type="submit">
+</form>
+
+<p id="reserved"></p>
+
+<script>
+var bl=true;
+var obj = 
+{
+"courseName": "true",
+"url": "false"
+};
+if(bl==true){
+	document.getElementById("reserved").innerHTML = obj.courseName;
+}else{
+	document.getElementById("reserved").innerHTML = obj.url;
+}
+</script>
+</body>
+</html>
+
+
