@@ -2,23 +2,25 @@
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.*;
 
-@Path("/hello")
-public class HelloJersey {
 
+@Path("/test")	//This path must be different from any other classes!
+public class HelloJersey {
+	///*
 	@GET
-	@Produces(MediaType.APPLICATION_JSON)
+	@Path("hello")
+	@Produces(MediaType.TEXT_PLAIN)
+	//@Produces(MediaType.APPLICATION_JSON)
 	public String sayHello() {
 		return "{\"name\": \"luyao\" }";
 		//return "Hello Jersey";
 	}
 	
 	@GET
-	@Path("{contact}")
+	@Path("{name}")
 	@Produces(MediaType.TEXT_PLAIN)
-	public String getres(@PathParam("contact") String contact)
+	public String getres(@PathParam("name") String contact)
 	{
 		return "Hello, " + contact;
 	}
-
-
+	//*/
 }
