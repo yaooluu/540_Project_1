@@ -10,10 +10,11 @@
     <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
     
 	<init-param>
-	    <!--  "Viewable" JSP root is placed in the /WEB-INF/jsp directory.-->
+	    <!--  "Viewable" JSP root is placed in the /jsp directory.-->
         <param-name>com.sun.jersey.config.property.JSPTemplatesBasePath</param-name>
     	<param-value>jsp</param-value>
     </init-param>
+    
   </servlet>
   
   <servlet-mapping>

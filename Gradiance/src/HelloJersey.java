@@ -5,7 +5,7 @@ import javax.ws.rs.*;
 
 @Path("/test")	//This path must be different from any other classes!
 public class HelloJersey {
-	///*
+	/*
 	@GET
 	@Path("hello")
 	@Produces(MediaType.TEXT_PLAIN)

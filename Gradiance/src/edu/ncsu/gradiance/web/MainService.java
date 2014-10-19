@@ -2,31 +2,30 @@ package edu.ncsu.gradiance.web;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.*;
+
 import com.sun.jersey.api.view.Viewable;
+
+import edu.ncsu.gradiance.action.*;
 
 @Path("/")
 public class MainService {
 	
 	/**
 	 * @author yaolu
-	 * @function forward to index page
+	 * @throws URISyntaxException 
+	 * @function forward to index or login page
 	 */
     @GET
     @Path("index")
-    public Viewable index(@Context HttpServletRequest request) {
-    	System.out.println("/index called");
-    	
-    	//if use code below, html page should contain request.getAttribute("title")
-    	request.setAttribute("title", new String("This title comes from jersey!")); 
-
-    	//if use code below, html page should contain session.getAttribute("title") 
-    	//request.getSession().setAttribute("title", new String("This title comes from jersey!"));      
-        
-    	//more knowledge: http://www.coderanch.com/t/462078/Struts/Difference-Request-scope-Session-scope
-    	
-    	//here the 2nd param named will be "it" in html
-    	return new Viewable("/index.jsp", new String("2nd param from server!!!"));	
+    public Response index(@Context HttpServletRequest request) {
+    	System.out.println("/index called at: "+System.currentTimeMillis());	
+    	//check if logged in
+    	if(request.getSession().getAttribute("curUser") != null )
+    		return Response.ok(new Viewable("/index.jsp", null)).build();
+    	else
+    		return Response.ok(new Viewable("/login.jsp", null)).build();
     }
 	
 	/**
@@ -35,13 +34,38 @@ public class MainService {
 	 */
 	@POST
 	@Path("login")
-	public String login(@FormParam("uname") String uname, @FormParam("upass") String upass)
-	{ 
-		System.out.println(uname+", "+upass);
-		//here we will do database query and verify login, and there are two ways after that:
-		//1. use Viewable to navigate to different pages based on verification result
-		//2. simply return a message, let jsp do the navigate job (¡ú_¡ú)
-		return "Login Succeed!";
+	public Response login(@Context HttpServletRequest request,
+			@FormParam("uname") String uname, @FormParam("upass") String upass) throws Exception { 
+		System.out.println("/login called at: "+System.currentTimeMillis());
+		
+		if(new LoginAction().verify(uname, upass)) {
+			request.getSession().setAttribute("curUser", uname);	
+		    return Response.ok(new Viewable("/index.jsp", null)).build();
+		}else {
+			request.setAttribute("loginResult", "Login Failed!");
+		    return Response.ok(new Viewable("/login.jsp", null)).build();
+		}
+	}
+	
+	/**
+	 * @author yaolu
+	 * @function register user
+	 */
+	@POST
+	@Path("register")
+	public Response register(@Context HttpServletRequest request,
+			@FormParam("authority") String authority,@FormParam("uname") String uname, 
+			@FormParam("upass") String upass, @FormParam("uid") String uid) throws Exception { 
+		System.out.println("/register called at: "+System.currentTimeMillis());
+		
+		//if(new RegisterAction().register(uid, uname, upass, authority)) {
+		if(false){ //to be continued...
+			request.setAttribute("registerResult", "Register succeed! Please Log in.");	
+		    return Response.ok(new Viewable("/login.jsp", null)).build();
+		}else {
+			request.setAttribute("registerResult", "Register Failed!");
+		    return Response.ok(new Viewable("/register.jsp", null)).build();
+		}
 	}
 
 
