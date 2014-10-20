@@ -6,31 +6,35 @@ import java.sql.ResultSet;
 
 import edu.ncsu.gradiance.util.DBConnection;
 
-public class LoginAction {
+public class AddCourseAction {
 	private DBConnection dbc = null;
 	private Connection conn = null;
 
 	/**
 	 * @author yaolu
-	 * @function user login verification
+	 * @function add course by token
 	 */
-	public int verify(String uid, String upass) {		
-		String sql = "select authority from user where uid=? and upass=?";
-		int authority = -1;
+	public boolean addCourse(String token, String sid) {		
+		String sql = "select cid from course where token=?";
+		boolean success = false;
+		
 		try {
 			dbc = new DBConnection();
 			conn = dbc.getConnection();
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			
-			stmt.setString(1, uid);
-			stmt.setString(2, upass);
-	
+			stmt.setString(1, token);
 			ResultSet rs = stmt.executeQuery();
-			if(rs.next()) authority = rs.getInt("authority");
+			if(rs.next()) {
+				sql = "insert into stusecour(sid,cid) values (?,?)";
+				stmt = conn.prepareStatement(sql);
+				stmt.setString(1, sid);
+				stmt.setString(2, rs.getString("cid"));
+				if(stmt.executeUpdate()>0) success = true;
+			}
 		} catch(Exception e){
 			e.printStackTrace();
 		}
-		return authority;
+		return success;
 	}
-
 }

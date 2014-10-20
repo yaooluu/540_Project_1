@@ -18,9 +18,9 @@
 	
 	<form action="<%=request.getContextPath()+"/rest/register" %>" method="post">
 		<label for="character">character</label><br>
-		<input type="radio" name="authority" value="student">Student<br>
-		<input type="radio" name="authority" value="instructor">Instructor<br>
-		<input type="radio" name="authority" value="TA">TA<br>
+		<input type="radio" name="authority" value="0">Instructor<br>
+		<input type="radio" name="authority" value="1">TA<br>
+		<input type="radio" name="authority" value="2">Student<br>
 		
 		<label for="user">Username:<br></label>
 		<input type="text" class="form-control" name="uname"
@@ -30,7 +30,7 @@
 		placeholder="Enter password" required><br>
 		<label for="pwd">Unity ID:<br></label>
 		<input type="password" class="form-control" name="uid"
-		placeholder="Enter password" required><br>
+		placeholder="Enter Unity ID" required><br>
 			
 		<button type="submit">Create</button><br>
 	</form>

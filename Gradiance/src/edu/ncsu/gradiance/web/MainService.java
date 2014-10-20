@@ -22,10 +22,19 @@ public class MainService {
     public Response index(@Context HttpServletRequest request) {
     	System.out.println("/index called at: "+System.currentTimeMillis());	
     	//check if logged in
-    	if(request.getSession().getAttribute("curUser") != null )
-    		return Response.ok(new Viewable("/index.jsp", null)).build();
-    	else
-    		return Response.ok(new Viewable("/login.jsp", null)).build();
+    	String uid = (String)request.getSession().getAttribute("curUser");
+    	Integer authority = (Integer)request.getSession().getAttribute("curAuthority");
+    	String forwardPage = "/login.jsp";
+  
+    	if(uid != null) {
+    		if(authority.intValue() == 0)		
+    			forwardPage = "/indexTeacher.jsp";
+    		else if(authority.intValue() == 1) 
+    			forwardPage = "/indexTA.jsp";
+    		else if(authority.intValue() == 2) 
+    			forwardPage = "/indexStudent.jsp";
+    	}
+    	return Response.ok(new Viewable(forwardPage, null)).build();
     }
 	
 	/**
@@ -35,16 +44,26 @@ public class MainService {
 	@POST
 	@Path("login")
 	public Response login(@Context HttpServletRequest request,
-			@FormParam("uname") String uname, @FormParam("upass") String upass) throws Exception { 
+			@FormParam("uname") String uid, @FormParam("upass") String upass) throws Exception { 
 		System.out.println("/login called at: "+System.currentTimeMillis());
 		
-		if(new LoginAction().verify(uname, upass)) {
-			request.getSession().setAttribute("curUser", uname);	
-		    return Response.ok(new Viewable("/index.jsp", null)).build();
-		}else {
+		int authority = new LoginAction().verify(uid, upass);
+		String forwardPage = "/indexStudent.jsp";	//set student page as default
+		
+		if(authority>0) {	 
+			request.getSession().setAttribute("curUser", uid);	//login succeed.
+			request.getSession().setAttribute("curAuthority", authority);
+		} else {								
+			forwardPage = "/login.jsp";								//login failed.
 			request.setAttribute("loginResult", "Login Failed!");
-		    return Response.ok(new Viewable("/login.jsp", null)).build();
 		}
+		
+		if(authority == 0)											//switch forward page to corresponding role
+			forwardPage = "/indexTeacher.jsp";
+		else if(authority == 1) 
+			forwardPage = "/indexTA.jsp";
+		
+		return Response.ok(new Viewable(forwardPage, null)).build();
 	}
 	
 	/**
@@ -54,18 +73,36 @@ public class MainService {
 	@POST
 	@Path("register")
 	public Response register(@Context HttpServletRequest request,
-			@FormParam("authority") String authority,@FormParam("uname") String uname, 
+			@FormParam("authority") int authority,@FormParam("name") String name, 
 			@FormParam("upass") String upass, @FormParam("uid") String uid) throws Exception { 
 		System.out.println("/register called at: "+System.currentTimeMillis());
 		
-		//if(new RegisterAction().register(uid, uname, upass, authority)) {
-		if(false){ //to be continued...
+		if(new RegisterAction().register(uid, name, upass, authority)) {
 			request.setAttribute("registerResult", "Register succeed! Please Log in.");	
 		    return Response.ok(new Viewable("/login.jsp", null)).build();
 		}else {
 			request.setAttribute("registerResult", "Register Failed!");
 		    return Response.ok(new Viewable("/register.jsp", null)).build();
 		}
+	}
+	
+	/**
+	 * @author yaolu
+	 * @function add course by token
+	 */
+	@POST
+	@Path("addCourse")
+	public Response addCourse(@Context HttpServletRequest request,
+			@FormParam("token") String token) throws Exception { 
+		System.out.println("/addCourse called at: "+System.currentTimeMillis());
+		
+		String curUser = (String)request.getSession().getAttribute("curUser");
+		String addCourseResult = "Add Course Failed!";
+		if(curUser != null && new AddCourseAction().addCourse(token,curUser))
+			addCourseResult = "Course Added! Please go back to previous page.";
+			
+		request.setAttribute("addCourseResult", addCourseResult);	
+	    return Response.ok(new Viewable("/addCourse.jsp", null)).build();
 	}
 
 
