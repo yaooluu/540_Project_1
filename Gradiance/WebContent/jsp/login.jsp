@@ -16,26 +16,25 @@
 				else out.print("Welcome! Guest.");
 			 %>
 		</h1>
-	</div>
+	</div><br>
+	<div align="center">
 	
 	<form action="<%=request.getContextPath()+"/rest/login"%>" method="post">
 	        <div>
-	          <label for="user">Username:<br></label>
+	          <label for="user">Username:</label>
 	          <input type="text" name="uid" placeholder="Enter unity id" required>
 	        </div>
 	        <div class="form-group">
-	          <label for="pwd">Password:<br></label>
+	          <label for="pwd">Password:</label>
 	          <input type="password" name="upass" placeholder="Enter password" required>
 	        </div>
 	        <button type="submit">Login</button>
 		<input type="button" value="Exit" onclick="self.close()">
 	</form>
-		
+	
 	<a href="register.jsp">Register</a>
 
-<div id="footer">
-Copyright @YY,YY,YY,DD
-</div>
-
+	</div><br>
+	<div id="footer">Copyright @YY,YY,YY,DD</div>
 </body>
 </html>

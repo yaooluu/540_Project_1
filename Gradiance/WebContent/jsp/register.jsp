@@ -22,15 +22,18 @@
 		<input type="radio" name="authority" value="1">TA<br>
 		<input type="radio" name="authority" value="2">Student<br>
 		
-		<label for="user">Username:<br></label>
-		<input type="text" class="form-control" name="uname"
-		placeholder="Enter username" required><br>
-		<label for="pwd">Password:<br></label>
-		<input type="password" class="form-control" name="upass"
-		placeholder="Enter password" required><br>
 		<label for="pwd">Unity ID:<br></label>
 		<input type="password" class="form-control" name="uid"
 		placeholder="Enter Unity ID" required><br>
+		
+		<label for="pwd">Password:<br></label>
+		<input type="password" class="form-control" name="upass"
+		placeholder="Enter password" required><br>
+		
+		<label for="user">User Name:<br></label>
+		<input type="text" class="form-control" name="name"
+		placeholder="Enter username" required><br>
+		
 			
 		<button type="submit">Create</button><br>
 	</form>

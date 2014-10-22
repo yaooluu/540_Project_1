@@ -96,32 +96,82 @@ public class StudentAction {
 	
 	/**
 	 * @author yaolu
-	 * @function get student's selected courses by sid
+	 * @function get final scores for all assessments by sid,cid
+	 * @return a string list of "assesment name, final score, total score"
 	 */
-	public String viewCourse(String sid) {		
-		String sql = "select cid,name from course where cid in (select cid from stusecour where sid=?)";
-		List<Course> selectedCourses = new ArrayList<Course>();
-	
+	public List<String> viewScore(String sid, String cid) {		
+		String sql = "select aid, title, corrPts, scoreSelect from assessment where cid=?";
+		List<String> scores = new ArrayList<String>();
+		
 		try {
 			dbc = new DBConnection();
 			conn = dbc.getConnection();
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			
-			stmt.setString(1, sid);
+			stmt.setString(1, cid);
 			ResultSet rs = stmt.executeQuery();
-			while(rs.next()) {
-				String cid = rs.getString("cid");
-				String name = rs.getString("name");
+			
+			//for each assessment of course(cid), get its title,finalScore,totalScore
+			while(rs.next()) {				
+				int aid = rs.getInt("aid");
+				String title = rs.getString("title");
+				int corrPts = rs.getInt("corrPts");
+				String scoreSelect = rs.getString("scoreSelect");
+				String finalScore = "N/A";
+				String totalScore = "N/A";
+	
+				//get totalScore
+				sql = "select count(*) from asshasq where aid="+aid;
+				stmt = conn.prepareStatement(sql);
+				ResultSet rs2 = stmt.executeQuery();
+				if(rs2.next()) {
+					int total = corrPts * rs2.getInt(1);
+					if(total>0)
+						totalScore = "" + total;
+				}
 				
-				Course c = new Course();
-				c.setCid(cid);
-				c.setName(name);
+				//get finalScore
+				sql = "select subtime,sum(point) from attempt where aid="+aid+" and sid='"+sid+"' group by atid,sid,aid,subtime";
+				stmt = conn.prepareStatement(sql);
+				ResultSet rs3 = stmt.executeQuery();
+				List<Integer> n = new ArrayList<Integer>();
+				List<String> s = new ArrayList<String>();
+				while(rs3.next()) {
+					s.add(rs3.getString(1));
+					n.add(rs3.getInt(2));
+				}
 				
-				selectedCourses.add(c);
+				if(n.size()>0) {
+					int score = 0;
+					if(scoreSelect.equals("max score")) {
+						score = -100;
+						for(Integer i:n)
+							if(i.intValue()>score) score = i.intValue();
+					}else if(scoreSelect.equals("average score")) {
+						score = 0;
+						for(Integer i:n)
+							score = score + i.intValue();
+						score = score/n.size();
+					}else if(scoreSelect.equals("latest attempt")) {
+						int i=-1;
+						String max = "0000-00-00 00:00:00";
+						for(String str:s)
+							if(str.compareTo(max)>0) {max = str;i++;}
+						score = n.get(i);
+					}
+					finalScore = ""+score;
+				}
+				scores.add(title+","+finalScore+","+totalScore);
 			}
 		} catch(Exception e){
 			e.printStackTrace();
 		}
-		return "";
+		System.out.println(scores);
+		return scores;
+	}
+	
+	public static void main(String[] args) {
+		StudentAction sa = new StudentAction();
+		sa.viewScore("mjones", "CSC540");
 	}
 }

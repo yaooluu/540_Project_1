@@ -1,5 +1,7 @@
 package edu.ncsu.gradiance.web;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
@@ -36,19 +38,30 @@ public class StudentService {
 	 * @function add course by token
 	 */
 	@POST
-	@Path("viewCourse")
-	public Response viewCourse(@Context HttpServletRequest request,
+	@Path("courseOption")
+	public Response courseOption(@Context HttpServletRequest request,
 			@FormParam("cid") String cid) throws Exception { 
-		System.out.println("/student/addCourse called at: "+System.currentTimeMillis());
+		System.out.println("/student/courseOption called at: "+System.currentTimeMillis());
 		
-		String curUser = (String)request.getSession().getAttribute("curUser");
-		String addCourseResult = "Please Login first!";
-		if(curUser != null)
-			addCourseResult = new StudentAction().viewCourse(cid);
-			
-		request.setAttribute("addCourseResult", addCourseResult);	
-	    return Response.ok(new Viewable("/indexStudent.jsp", null)).build();
+		request.getSession().setAttribute("cid", cid);
+	    return Response.ok(new Viewable("/courseOption.jsp", null)).build();
 	}
 
+	/**
+	 * @author yaolu
+	 * @function add course by token
+	 */
+	@POST
+	@Path("viewScore")
+	public Response viewScore(@Context HttpServletRequest request) throws Exception { 
+		System.out.println("/student/courseOption called at: "+System.currentTimeMillis());
+		
+		String cid = (String) request.getSession().getAttribute("cid");
+		String sid = (String) request.getSession().getAttribute("curUser");
+		List<String> scores = new StudentAction().viewScore(sid, cid);
+		
+		request.setAttribute("scores", scores);
+	    return Response.ok(new Viewable("/viewScore.jsp", null)).build();
+	}
 
 }

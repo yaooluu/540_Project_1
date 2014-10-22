@@ -41,7 +41,7 @@ var obj = [
 }
 ]
 var i;
-var str="<form action='<%=request.getContextPath()+\"/rest/addCourse\" %>' method='post'>";
+var str="<form action=''>";
 for(i=0;i<obj.length;i++){
 	str+="<p>"+obj[i].number+". "+obj[i].question+"<br><input type='radio' name='q"+i+
 "'>"+obj[i].choiceA+"</input><br><input type='radio' name='q"+i+

@@ -2,19 +2,27 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<link href="../css/style.css" rel="stylesheet" type="text/css" />
+	<link href="<%=request.getContextPath()+"/css/style.css"%>" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
-	<title>Course Option</title>
-	<div id="header"><h1>Course Option </h1></div>
+	<title>Course Options</title>
+	<div id="header"><h1>Course Options</h1></div><br>
 	
-	<form method="post">
-<input type="radio" name="choice">View Scores</input><br>
-<input type="radio" name="choice">Attempt Homework</input><br>
-<input type="radio" name="choice">View Past Submission"</input><br>
-<input type="submit" value="Confirme"/>
-</form>
+	<div align="center">
+		
+		<form id="myForm_1" action="<%=request.getContextPath()+"/rest/student/viewScore"%>" method="post">
+			<a href="#" onclick="document.getElementById('myForm_1').submit()">View Scores</a>
+		</form><br>
+		
+		<form id="myForm_2" action="<%=request.getContextPath()+"/rest/student/attemptHomework"%>" method="post">
+			<a href="#" onclick="document.getElementById('myForm_2').submit()">Attempt Homework</a>
+		</form><br>
+		
+		<form id="myForm_3" action="<%=request.getContextPath()+"/rest/student/viewSubmission"%>" method="post">
+			<a href="#" onclick="document.getElementById('myForm_3').submit()">View Submissions</a>
+		</form><br>
+	</div>
 
 	<div id="footer">Copyright @YY,YY,YY,DD</div>
 </body>

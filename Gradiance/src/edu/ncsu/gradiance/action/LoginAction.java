@@ -33,4 +33,26 @@ public class LoginAction {
 		return authority;
 	}
 
+	/**
+	 * @author yaolu
+	 * @function get user name by uid
+	 */
+	public String getUserName(String uid) {		
+		String sql = "select name from user where uid=?";
+		String name = "";
+		try {
+			dbc = new DBConnection();
+			conn = dbc.getConnection();
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			
+			stmt.setString(1, uid);
+	
+			ResultSet rs = stmt.executeQuery();
+			if(rs.next()) name = rs.getString("name");
+		} catch(Exception e){
+			e.printStackTrace();
+		}
+		return name;
+	}
+
 }

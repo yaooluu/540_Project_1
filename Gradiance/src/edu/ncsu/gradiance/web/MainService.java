@@ -50,8 +50,9 @@ public class MainService {
 		int authority = new LoginAction().verify(uid, upass);
 		String forwardPage = "/indexStudent.jsp";	//set student page as default
 		
-		if(authority>0) {	 
-			request.getSession().setAttribute("curUser", uid);	//login succeed.
+		if(authority>0) {	 	//login succeed.
+			request.getSession().setAttribute("curUser", uid);
+			request.getSession().setAttribute("curUserName", new LoginAction().getUserName(uid));
 			request.getSession().setAttribute("curAuthority", authority);
 			
 			if(authority == 0)											//switch forward page to corresponding role
@@ -66,7 +67,7 @@ public class MainService {
 			forwardPage = "/login.jsp";								//login failed.
 			request.setAttribute("loginResult", "Login Failed!");
 		}
-		System.out.println("f:"+forwardPage);
+
 		return Response.ok(new Viewable(forwardPage, null)).build();
 	}
 	

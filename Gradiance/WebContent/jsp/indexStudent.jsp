@@ -3,35 +3,37 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<link href="../css/style.css" rel="stylesheet" type="text/css"/>
+	<link href="<%=request.getContextPath()+"/css/style.css"%>" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
 	<title>Student Dashboard</title> 
 
 	<div id="header">
-		<h1><%out.println("Welcome back, " + session.getAttribute("curUser"));%></h1>	
+		<h1><%out.println("Welcome back, " + session.getAttribute("curUserName"));%></h1>	
 	</div>
 
 	<div align="center">
 		<font color="midnightblue" size="5"><br>Select Course<br><br></font>
 		
-		<!-- the first part is an static example for writing jsp below! -->
-		<form id="myForm" action="<%=request.getContextPath()+"/rest/student/viewCourse"%>" method="post">	 
+		<!-- the first part is an static example for writing jsp below! 
+		<form id="myForm" action="request.getContextPath()+"/rest/student/viewCourse"" method="post">	 
 			<a href="#" onclick="document.getElementById('myForm').submit()">CSC540</a> Database Management Systems
 			<input type="hidden" name="cid" value="CSC540"/>
-		</form>
+		</form>-->
 		
 		<!-- here we use jsp to load current student's selected courses. -->
 		<%
 			List<Course> list = (List<Course>) request.getAttribute("selectedCourses"); 
 			if(list != null) {
-				 for(Course c : list) {
-					 out.println("<form id='myForm' action='" + request.getContextPath()+"/rest/student/viewCourse" + "' method='post'>");
-					 out.println("<a href='#' onclick='document.getElementById('myForm').submit()'>"+c.getCid()+"</a> "+c.getName()+"<br>");
-					 out.println("<input type='hidden' name='cid' value='"+c.getCid()+"'/>");
-					 out.println("</form>");
-				 }
+				int i=0;
+				for(Course c : list) {
+					i++;
+					out.println("<form id='myForm_"+i+"' action='" + request.getContextPath()+"/rest/student/courseOption" + "' method='post'>");
+					out.println("<a href='#' onclick=\"document.getElementById('myForm_"+i+"').submit()\">"+c.getCid()+"</a> &nbsp;"+c.getName()+"<br>");
+					out.println("<input type='hidden' name='cid' value='"+c.getCid()+"'/>");
+					out.println("</form>");
+				}
 			}
 		%>
 		
