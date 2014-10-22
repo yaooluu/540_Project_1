@@ -21,7 +21,7 @@
 	<form action="<%=request.getContextPath()+"/rest/login"%>" method="post">
 	        <div>
 	          <label for="user">Username:<br></label>
-	          <input type="text" name="uname" placeholder="Enter username" required>
+	          <input type="text" name="uid" placeholder="Enter unity id" required>
 	        </div>
 	        <div class="form-group">
 	          <label for="pwd">Password:<br></label>

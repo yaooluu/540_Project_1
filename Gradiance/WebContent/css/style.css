@@ -1,3 +1,10 @@
+body {
+	font-family: sans-serif; 
+	font-weight:lighter;
+}
+div {
+	align-content:center;
+}
 #header {
     background-color:black;
     color:white;

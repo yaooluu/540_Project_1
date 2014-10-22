@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<link href="../css/style.css" rel="stylesheet" type="text/css" />
+	<link href="../css/style.css" rel="stylesheet" type="text/css" />z
 </head>
 
 <body>

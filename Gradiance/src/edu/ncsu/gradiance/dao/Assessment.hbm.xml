@@ -1,15 +1,18 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated Oct 15, 2014 11:57:20 AM by Hibernate Tools 4.3.1 -->
+<!-- Generated Oct 20, 2014 5:46:17 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="edu.ncsu.gradiance.dao.Assessment" table="assessment" catalog="gradiance" optimistic-lock="version">
-        <id name="id" type="java.lang.Integer">
-            <column name="id" />
+        <id name="aid" type="java.lang.Integer">
+            <column name="aid" />
             <generator class="identity" />
         </id>
+        <many-to-one name="course" class="edu.ncsu.gradiance.dao.Course" fetch="select">
+            <column name="cid" length="10" not-null="true" />
+        </many-to-one>
         <property name="title" type="string">
-            <column name="title" length="50" />
+            <column name="title" />
         </property>
         <property name="tstart" type="date">
             <column name="tstart" length="10" />
@@ -17,17 +20,34 @@
         <property name="tend" type="date">
             <column name="tend" length="10" />
         </property>
-        <property name="difficulty" type="java.lang.Integer">
-            <column name="difficulty" />
+        <property name="difficulty" type="string">
+            <column name="difficulty" length="10" />
         </property>
         <property name="retry" type="java.lang.Integer">
             <column name="retry" />
         </property>
-        <property name="pcorrect" type="java.lang.Integer">
-            <column name="pcorrect" />
+        <property name="corrPts" type="java.lang.Integer">
+            <column name="corrPts" />
         </property>
-        <property name="pwrong" type="java.lang.Integer">
-            <column name="pwrong" />
+        <property name="penalPts" type="java.lang.Integer">
+            <column name="penalPts" />
         </property>
+        <property name="scoreSelect" type="string">
+            <column name="scoreSelect" length="50" />
+        </property>
+        <set name="attempts" table="attempt" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="aid" not-null="true" />
+            </key>
+            <one-to-many class="edu.ncsu.gradiance.dao.Attempt" />
+        </set>
+        <set name="questions" table="asshasq" inverse="false" lazy="true" fetch="select">
+            <key>
+                <column name="aid" not-null="true" />
+            </key>
+            <many-to-many entity-name="edu.ncsu.gradiance.dao.Question">
+                <column name="qid" not-null="true" />
+            </many-to-many>
+        </set>
     </class>
 </hibernate-mapping>

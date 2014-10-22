@@ -44,7 +44,7 @@ public class MainService {
 	@POST
 	@Path("login")
 	public Response login(@Context HttpServletRequest request,
-			@FormParam("uname") String uid, @FormParam("upass") String upass) throws Exception { 
+			@FormParam("uid") String uid, @FormParam("upass") String upass) throws Exception { 
 		System.out.println("/login called at: "+System.currentTimeMillis());
 		
 		int authority = new LoginAction().verify(uid, upass);
@@ -53,16 +53,20 @@ public class MainService {
 		if(authority>0) {	 
 			request.getSession().setAttribute("curUser", uid);	//login succeed.
 			request.getSession().setAttribute("curAuthority", authority);
+			
+			if(authority == 0)											//switch forward page to corresponding role
+				forwardPage = "/indexTeacher.jsp";
+			else if(authority == 1) 
+				forwardPage = "/indexTA.jsp";
+			else {
+				forwardPage = "/indexStudent.jsp";
+				request.setAttribute("selectedCourses", new StudentAction().getSelectedCourses(uid));
+			}
 		} else {								
 			forwardPage = "/login.jsp";								//login failed.
 			request.setAttribute("loginResult", "Login Failed!");
 		}
-		
-		if(authority == 0)											//switch forward page to corresponding role
-			forwardPage = "/indexTeacher.jsp";
-		else if(authority == 1) 
-			forwardPage = "/indexTA.jsp";
-		
+		System.out.println("f:"+forwardPage);
 		return Response.ok(new Viewable(forwardPage, null)).build();
 	}
 	
@@ -86,24 +90,4 @@ public class MainService {
 		}
 	}
 	
-	/**
-	 * @author yaolu
-	 * @function add course by token
-	 */
-	@POST
-	@Path("addCourse")
-	public Response addCourse(@Context HttpServletRequest request,
-			@FormParam("token") String token) throws Exception { 
-		System.out.println("/addCourse called at: "+System.currentTimeMillis());
-		
-		String curUser = (String)request.getSession().getAttribute("curUser");
-		String addCourseResult = "Add Course Failed!";
-		if(curUser != null && new AddCourseAction().addCourse(token,curUser))
-			addCourseResult = "Course Added! Please go back to previous page.";
-			
-		request.setAttribute("addCourseResult", addCourseResult);	
-	    return Response.ok(new Viewable("/addCourse.jsp", null)).build();
-	}
-
-
 }

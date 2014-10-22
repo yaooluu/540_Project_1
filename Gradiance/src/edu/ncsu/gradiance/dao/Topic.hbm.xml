@@ -1,15 +1,29 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated Oct 15, 2014 11:57:20 AM by Hibernate Tools 4.3.1 -->
+<!-- Generated Oct 20, 2014 5:46:17 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="edu.ncsu.gradiance.dao.Topic" table="topic" catalog="gradiance" optimistic-lock="version">
-        <id name="id" type="java.lang.Integer">
-            <column name="id" />
+        <id name="tid" type="java.lang.Integer">
+            <column name="tid" />
             <generator class="identity" />
         </id>
         <property name="name" type="string">
             <column name="name" length="50" />
         </property>
+        <set name="questions" table="question" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="tid" />
+            </key>
+            <one-to-many class="edu.ncsu.gradiance.dao.Question" />
+        </set>
+        <set name="courses" table="cover" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="tid" not-null="true" />
+            </key>
+            <many-to-many entity-name="edu.ncsu.gradiance.dao.Course">
+                <column name="cid" length="10" not-null="true" />
+            </many-to-many>
+        </set>
     </class>
 </hibernate-mapping>
