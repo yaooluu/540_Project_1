@@ -14,7 +14,7 @@
     color:white;
     clear:both;
     text-align:center;
-   padding:5px;	 	 
+   	padding:5px;	 	 
 }
 </style>
 
@@ -42,8 +42,13 @@
 
 <form action="<%=request.getContextPath()+"/rest/login" %>" method="post">
         <div>
-          <label for="user">UserID:<br></label>
-          <input type="text" name="uid" placeholder="Enter userID" required>
+          <label for="user">Your Classes<br></label>
+          <!input type="text" name="uid" placeholder="Enter userID" required>
+        </div>
+        <div>
+          <label for="user">Sign up for a new class<br></label>
+          <label for="user">ClassToken<br></label>
+          <!input type="text" name="uid" placeholder="Enter userID" required>
         </div>
         <div class="form-group">
           <label for="pwd">Password:<br></label>
