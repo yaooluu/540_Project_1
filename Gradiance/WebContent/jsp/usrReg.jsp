@@ -40,7 +40,7 @@
 	<a href="<%
 		if(session.getAttribute("curUser")!=null)
 			out.print("index.jsp");
-		else out.print("login.jsp");
+		else out.print("usrLog.jsp");
 	%>">Back</a>
 
 	<div id="footer">Copyright @YY,YY,YY,DD</div>

@@ -32,7 +32,7 @@
 		<input type="button" value="Exit" onclick="self.close()">
 	</form>
 	
-	<a href="register.jsp">Register</a>
+	<a href="usrReg.jsp">Register</a>
 
 	</div><br>
 	<div id="footer">Copyright @YY,YY,YY,DD</div>

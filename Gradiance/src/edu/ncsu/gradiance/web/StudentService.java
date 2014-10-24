@@ -30,7 +30,7 @@ public class StudentService {
 			addCourseResult = new StudentAction().addCourse(token,curUser);
 			
 		request.setAttribute("addCourseResult", addCourseResult);	
-	    return Response.ok(new Viewable("/indexStudent.jsp", null)).build();
+	    return Response.ok(new Viewable("/indexStu.jsp", null)).build();
 	}
 	
 	/**
@@ -44,7 +44,7 @@ public class StudentService {
 		System.out.println("/student/courseOption called at: "+System.currentTimeMillis());
 		
 		request.getSession().setAttribute("cid", cid);
-	    return Response.ok(new Viewable("/courseOption.jsp", null)).build();
+	    return Response.ok(new Viewable("/optStu.jsp", null)).build();
 	}
 
 	/**
@@ -61,7 +61,7 @@ public class StudentService {
 		List<String> scores = new StudentAction().viewScore(sid, cid);
 		
 		request.setAttribute("scores", scores);
-	    return Response.ok(new Viewable("/viewScore.jsp", null)).build();
+	    return Response.ok(new Viewable("/viewScoreStu.jsp", null)).build();
 	}
 	
 	/**
@@ -77,7 +77,7 @@ public class StudentService {
 		List<String> homeworkList = new StudentAction().viewHomework(cid);
 		
 		request.setAttribute("homeworkList", homeworkList);
-	    return Response.ok(new Viewable("/viewHomework.jsp", null)).build();
+	    return Response.ok(new Viewable("/viewHwStu.jsp", null)).build();
 	}
 	
 	/**
@@ -93,7 +93,7 @@ public class StudentService {
 		List<List<String>> homeworkContent = new StudentAction().generateQuestion(aid);
 		
 		request.setAttribute("homeworkContent", homeworkContent);
-	    return Response.ok(new Viewable("/attemptHomework.jsp", null)).build();
+	    return Response.ok(new Viewable("/atmpHw.jsp", null)).build();
 	}
 
 	/**
@@ -111,7 +111,7 @@ public class StudentService {
 		List<String> submissionList = new StudentAction().viewSubmission(sid, cid);
 		
 		request.setAttribute("submissionList", submissionList);
-	    return Response.ok(new Viewable("/viewSubmission.jsp", null)).build();
+	    return Response.ok(new Viewable("/viewSubStu.jsp", null)).build();
 	}
 
 }

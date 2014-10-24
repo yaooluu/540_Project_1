@@ -24,7 +24,7 @@ public class MainService {
     	//check if logged in
     	String uid = (String)request.getSession().getAttribute("curUser");
     	Integer authority = (Integer)request.getSession().getAttribute("curAuthority");
-    	String forwardPage = "/login.jsp";
+    	String forwardPage = "/usrLog.jsp";
   
     	if(uid != null) {
     		if(authority.intValue() == 0)		
@@ -32,7 +32,7 @@ public class MainService {
     		else if(authority.intValue() == 1) 
     			forwardPage = "/indexTA.jsp";
     		else if(authority.intValue() == 2) 
-    			forwardPage = "/indexStudent.jsp";
+    			forwardPage = "/indexStu.jsp";
     	}
     	return Response.ok(new Viewable(forwardPage, null)).build();
     }
@@ -48,7 +48,7 @@ public class MainService {
 		System.out.println("/login called at: "+System.currentTimeMillis());
 		
 		int authority = new LoginAction().verify(uid, upass);
-		String forwardPage = "/indexStudent.jsp";	//set student page as default
+		String forwardPage = "/indexStu.jsp";	//set student page as default
 		
 		if(authority>0) {	 	//login succeed.
 			request.getSession().setAttribute("curUser", uid);
@@ -60,11 +60,11 @@ public class MainService {
 			else if(authority == 1) 
 				forwardPage = "/indexTA.jsp";
 			else {
-				forwardPage = "/indexStudent.jsp";
+				forwardPage = "/indexStu.jsp";
 				request.setAttribute("selectedCourses", new StudentAction().getSelectedCourses(uid));
 			}
 		} else {								
-			forwardPage = "/login.jsp";								//login failed.
+			forwardPage = "/usrLog.jsp";								//login failed.
 			request.setAttribute("loginResult", "Login Failed!");
 		}
 
@@ -84,10 +84,10 @@ public class MainService {
 		
 		if(new RegisterAction().register(uid, name, upass, authority)) {
 			request.setAttribute("registerResult", "Register succeed! Please Log in.");	
-		    return Response.ok(new Viewable("/login.jsp", null)).build();
+		    return Response.ok(new Viewable("/usrLog.jsp", null)).build();
 		}else {
 			request.setAttribute("registerResult", "Register Failed!");
-		    return Response.ok(new Viewable("/register.jsp", null)).build();
+		    return Response.ok(new Viewable("/usrReg.jsp", null)).build();
 		}
 	}
 	
