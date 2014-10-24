@@ -15,8 +15,8 @@
 			<a href="#" onclick="document.getElementById('myForm_1').submit()">View Scores</a>
 		</form><br>
 		
-		<form id="myForm_2" action="<%=request.getContextPath()+"/rest/student/attemptHomework"%>" method="post">
-			<a href="#" onclick="document.getElementById('myForm_2').submit()">Attempt Homework</a>
+		<form id="myForm_2" action="<%=request.getContextPath()+"/rest/student/viewHomework"%>" method="post">
+			<a href="#" onclick="document.getElementById('myForm_2').submit()">View Homework Due</a>
 		</form><br>
 		
 		<form id="myForm_3" action="<%=request.getContextPath()+"/rest/student/viewSubmission"%>" method="post">
