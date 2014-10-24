@@ -35,7 +35,7 @@ public class StudentService {
 	
 	/**
 	 * @author yaolu
-	 * @function add course by token
+	 * @function show course options
 	 */
 	@POST
 	@Path("courseOption")
@@ -49,7 +49,7 @@ public class StudentService {
 
 	/**
 	 * @author yaolu
-	 * @function add course by token
+	 * @function show final scores of all homework
 	 */
 	@POST
 	@Path("viewScore")
@@ -62,6 +62,56 @@ public class StudentService {
 		
 		request.setAttribute("scores", scores);
 	    return Response.ok(new Viewable("/viewScore.jsp", null)).build();
+	}
+	
+	/**
+	 * @author yaolu
+	 * @function show all current homework
+	 */
+	@POST
+	@Path("viewHomework")
+	public Response viewHomework(@Context HttpServletRequest request) throws Exception { 
+		System.out.println("/student/viewHomework called at: "+System.currentTimeMillis());
+		
+		String cid = (String) request.getSession().getAttribute("cid");
+		List<String> homeworkList = new StudentAction().viewHomework(cid);
+		
+		request.setAttribute("homeworkList", homeworkList);
+	    return Response.ok(new Viewable("/viewHomework.jsp", null)).build();
+	}
+	
+	/**
+	 * @author yaolu
+	 * @function attempt homework
+	 */
+	@POST
+	@Path("attemptHomework")
+	public Response attemptHomework(@Context HttpServletRequest request,
+			@FormParam("aid") String aid) throws Exception {  
+		System.out.println("/student/attemptHomework called at: "+System.currentTimeMillis());
+		
+		List<List<String>> homeworkContent = new StudentAction().generateQuestion(aid);
+		
+		request.setAttribute("homeworkContent", homeworkContent);
+	    return Response.ok(new Viewable("/attemptHomework.jsp", null)).build();
+	}
+
+	/**
+	 * @author yaolu
+	 * @function view past submissions
+	 */
+	@POST
+	@Path("viewSubmission")
+	public Response viewSubmission(@Context HttpServletRequest request,
+			@FormParam("aid") String aid) throws Exception {  
+		System.out.println("/student/viewSubmission called at: "+System.currentTimeMillis());
+		
+		String sid = (String) request.getSession().getAttribute("curUser");
+		String cid = (String) request.getSession().getAttribute("cid");
+		List<String> submissionList = new StudentAction().viewSubmission(sid, cid);
+		
+		request.setAttribute("submissionList", submissionList);
+	    return Response.ok(new Viewable("/viewSubmission.jsp", null)).build();
 	}
 
 }

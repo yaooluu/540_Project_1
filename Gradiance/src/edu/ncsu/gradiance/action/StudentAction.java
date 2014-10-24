@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Random;
 
 import edu.ncsu.gradiance.dao.*;
 import edu.ncsu.gradiance.util.DBConnection;
@@ -166,12 +167,229 @@ public class StudentAction {
 		} catch(Exception e){
 			e.printStackTrace();
 		}
-		System.out.println(scores);
 		return scores;
+	}
+
+	/**
+	 * @author yaolu
+	 * @function get all assessments by cid
+	 * @return a string list of "aid, title, tstart, tend"
+	 */
+	public List<String> viewHomework(String cid) {		
+		String sql = "select aid, title, tstart, tend from assessment where cid=?";
+		List<String> homeworks = new ArrayList<String>();
+		
+		try {
+			dbc = new DBConnection();
+			conn = dbc.getConnection();
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			
+			stmt.setString(1, cid);
+			ResultSet rs = stmt.executeQuery();
+			
+			while(rs.next()) {				
+				int aid = rs.getInt("aid");
+				String title = rs.getString("title");
+				String tstart = rs.getString("tstart");
+				String tend = rs.getString("tend");
+				
+				homeworks.add(aid+","+title+","+tstart+","+tend);
+			}
+		} catch(Exception e){
+			e.printStackTrace();
+		}
+		return homeworks;
+	}
+
+
+	/**
+	 * @author yaolu
+	 * @function generate homework by aid
+	 * @return List<List<String>> homeworks, structure like following:
+	 * 	[
+	 *		[Question 1?,Hint text Q1,detailed explanationQ1, Question 2?,Hint text Q2,detailed explanationQ2,...],
+			[3, 1],		//corPts and penalPts
+			[3, 3, 1],	//Answer Positions
+			[Incorrect ans 4,short explanation 4, Incorrect ans 3,short explanation 3, Incorrect ans 6,short explanation 6, Correct ans 2,no],
+			[Incorrect ans 6,short explanation 6, Incorrect ans 5,short explanation 5, Incorrect ans 4,short explanation 4, Correct ans 1,no],
+			[Incorrect ans 6v2,short explanation 6, Correct ans 3v2,no, Incorrect ans 4v2,short explanation 4, Incorrect ans 5v2,short explanation 5]
+		]
+	 */
+	public List<List<String>> generateQuestion(String aid) {		
+		String sql = "";
+		List<List<String>> homeworks = new ArrayList<List<String>>();
+
+		List<String> questions = new ArrayList<String>();
+		List<String> points = new ArrayList<String>();
+		List<String> ansPosList = new ArrayList<String>();
+		List<List<String>> answers = new ArrayList<List<String>>();
+		
+		try {
+			dbc = new DBConnection();
+			conn = dbc.getConnection();
+			
+			//find corrPts and penalPts for this homework
+			sql = "select corrPts,penalPts from assessment where aid="+aid;
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			ResultSet rs0 = stmt.executeQuery();
+			if(rs0.next()) {
+				points.add(""+rs0.getInt("corrPts"));
+				points.add(""+rs0.getInt("penalPts"));
+			}
+					
+			//find all questions of homework by aid
+			sql = "select qid from asshasq where aid=?";
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, aid);
+			ResultSet rs1 = stmt.executeQuery();		
+			while(rs1.next()) {				
+				String qid = rs1.getString("qid");
+				Random random = new Random();
+						
+				//for each qid, find all its seeds
+				sql = "select seed from seed where qid="+qid;
+				stmt = conn.prepareStatement(sql);
+				ResultSet rs2 = stmt.executeQuery();
+							
+				//random one seed
+				int seed = 1;
+				List<Integer> seeds = new ArrayList<Integer>();
+				while(rs2.next())
+					seeds.add(rs2.getInt("seed"));
+				random.setSeed(System.nanoTime());
+				seed = seeds.get(random.nextInt(seeds.size()));
+							
+				//for each (qid,seed), get all question(content,hint,explanation)
+				sql = "select content,hint,explanation from seed where qid="+qid+" and seed="+seed;
+				stmt = conn.prepareStatement(sql);
+				ResultSet rs3 = stmt.executeQuery();
+				
+				while(rs3.next())
+					questions.add(rs3.getString("content")+","+rs3.getString("hint")+","+rs3.getString("explanation"));
+				
+				//for each (qid,seed), get all correct answers(ansid,correct,content,expln)
+				sql = "select content,expln from answer where qid="+qid+" and seed="+seed+" and correct=0";
+				stmt = conn.prepareStatement(sql);
+				ResultSet rs4 = stmt.executeQuery();
+				
+				//random one correct answer
+				List<String> tmpAns = new ArrayList<String>();
+				while(rs4.next())
+					tmpAns.add(rs4.getString("content")+","+rs4.getString("expln"));
+				random.setSeed(System.nanoTime());
+				String corrAns = tmpAns.get(random.nextInt(tmpAns.size()));
+						
+				//for each (qid,seed), get all wrong answers(ansid,correct,content,expln)
+				sql = "select content,expln from answer where qid="+qid+" and seed="+seed+" and correct=1";
+				stmt = conn.prepareStatement(sql);
+				ResultSet rs5 = stmt.executeQuery();
+				
+				//random three wrong answers
+				tmpAns = new ArrayList<String>();
+				while(rs5.next())
+					tmpAns.add(rs5.getString("content")+","+rs5.getString("expln"));
+				List<String> wrongs = new ArrayList<String>();
+				
+				for(int i=0;i<3;i++) {
+					random.setSeed(System.nanoTime());
+					String wrongAns = tmpAns.get(random.nextInt(tmpAns.size()));
+					wrongs.add(wrongAns);
+					tmpAns.remove(wrongAns);
+				}
+				
+				//random one position to insert corrAns into wrongs
+				random.setSeed(System.nanoTime());
+				int pos = random.nextInt(4);
+				wrongs.add(pos, corrAns);
+				
+				//append pos to answerPosList, add four choices to answers
+				ansPosList.add(""+pos);
+				answers.add(wrongs);
+			}
+		} catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		//add all lists into homeworks
+		homeworks.add(questions);
+		homeworks.add(points);
+		homeworks.add(ansPosList);
+		for(int i=0;i<answers.size();i++)
+			homeworks.add(answers.get(i));
+		
+		return homeworks;
+	}
+	
+	/**
+	 * @author yaolu
+	 * @function get all past submissions by sid,cid
+	 * @return a string list of "title, tstart, tend, subtime, score"
+	 */
+	public List<String> viewSubmission(String sid, String cid) {		
+		String sql = "select aid, title, tstart, tend, corrPts from assessment where cid=?";
+		List<String> submissions = new ArrayList<String>();
+		
+		try {
+			dbc = new DBConnection();
+			conn = dbc.getConnection();
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			
+			stmt.setString(1, cid);
+			ResultSet rs = stmt.executeQuery();
+			
+			//for each assessment, get all past submissions
+			while(rs.next()) {				
+				int aid = rs.getInt("aid");
+				String title = rs.getString("title");
+				String tstart = rs.getString("tstart");
+				String tend = rs.getString("tend");
+				int corrPts = rs.getInt("corrPts");
+				List<String> subtimes = new ArrayList<String>();
+				List<Integer> finalScores = new ArrayList<Integer>();
+				
+				String totalScore = "N/A";
+	
+				//get totalScore
+				sql = "select count(*) from asshasq where aid="+aid;
+				stmt = conn.prepareStatement(sql);
+				ResultSet rs2 = stmt.executeQuery();
+				if(rs2.next()) {
+					int total = corrPts * rs2.getInt(1);
+					if(total>0)
+						totalScore = "" + total;
+				}
+				
+				//get finalScore of all submissions
+				sql = "select subtime,sum(point) from attempt where aid="+aid+" and sid='"+sid+"' group by atid,sid,aid,subtime order by subtime desc";
+				stmt = conn.prepareStatement(sql);
+				ResultSet rs3 = stmt.executeQuery();
+				while(rs3.next()) {
+					String subtime = rs3.getString(1); 			//2014-08-15 10:05:00.0
+					subtime = subtime.substring(0,subtime.indexOf('.')); 	//2014-08-15 10:05:00
+					subtimes.add(subtime);
+					finalScores.add(rs3.getInt(2));
+				}
+				
+				//add title, tstart, tend, subtime, score to result
+				for(int i=0;i<subtimes.size();i++) {
+					submissions.add(title+","+tstart+","+tend+","+subtimes.get(i)+","+finalScores.get(i)+"/"+totalScore);	
+				}
+			}
+		} catch(Exception e){
+			e.printStackTrace();
+		}
+		return submissions;
 	}
 	
 	public static void main(String[] args) {
+		System.out.println("test StudentAction");
 		StudentAction sa = new StudentAction();
-		sa.viewScore("mjones", "CSC540");
+		//sa.viewScore("mjones", "CSC540");
+		System.out.println(sa.viewSubmission("mjones", "CSC540"));
+		/*
+		List<List<String>> homeworks = sa.generateQuestion("1");
+		for(int i=0;i<homeworks.size();i++)
+			System.out.println(homeworks.get(i));
+			*/
 	}
 }

@@ -3,14 +3,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<link href="../css/style.css" rel="stylesheet" type="text/css" />
+	<link href="<%=request.getContextPath()+"/css/style.css"%>" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
-	<title>Select Homework</title>
-	<div id="header"><h1>Attempt Homework</h1></div>
+	<title>Current Homework Due</title>
+	<div id="header"><h1>Current Homework Due</h1></div><br>
+	<div align="center">
 	<%
-		List<String> l= (List<String>)request.getAttribute("homework");
+		List<String> l= (List<String>)request.getAttribute("homeworks");
 		if(l!=null&&l.size()>0){
 			String str="<form id='' action='' method='post'>";
 			for(int i=0;i<l.size();i++){
@@ -24,7 +25,7 @@
 	
 	%>
 
-
+	</div><br>
 	<div id="footer">Copyright @YY,YY,YY,DD</div>
 </body>
 </html>
