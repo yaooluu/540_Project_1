@@ -37,9 +37,9 @@
 								<tbody>
 									<tr>
 										<td>
-											<br> <br> •&nbsp; <a href="http://localhost:8080/Gradiance/jsp/loggedTA.jsp" style="color: black;">Home Page</a>
-											<br> <br> •&nbsp; <a href="http://localhost:8080/Gradiance/jsp/viewhwTA.jsp" style="color: black;">View Homework</a>  
-											<br> <br> •&nbsp; <a href="http://localhost:8080/Gradiance/jsp/reportsTA.jsp" style="color: black;">Reports</a> 
+											<br> <br> •&nbsp; <a href="http://localhost:8080/Gradiance/jsp/indexTA.jsp" style="color: black;">Home Page</a>
+											<br> <br> •&nbsp; <a href="http://localhost:8080/Gradiance/jsp/viewHwTA.jsp" style="color: black;">View Homework</a>  
+											<br> <br> •&nbsp; <a href="http://localhost:8080/Gradiance/jsp/rptTA.jsp" style="color: black;">Reports</a> 
 											<br> <br> •&nbsp; <a href="" style="color: black;">Log Out</a>
 										</td>
 									</tr>

@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Edit Homework</title>
+<title>Add Homework</title>
 <style>
 #header {
 	background-color: black;
@@ -14,6 +14,7 @@
     padding-left: 50px;
 }
 </style>
+
 <script type="text/javascript">
 	function HS_DateAdd(interval, number, date) {
 		number = parseInt(number);
@@ -249,6 +250,8 @@
 		inputObj.parentNode.insertBefore(calenderObj, inputObj.nextSibling);
 	}
 </script>
+
+
 </head>
 
 <body style="font-family: sans-serif; font-weight:lighter ">
@@ -272,13 +275,13 @@
 								<tbody>
 									<tr>
 										<td>
-											<br> <br> •&nbsp; <a href="http://localhost:8080/Gradiance/jsp/loggedProf.jsp" style="color: black;">Home Page</a>
-											<br> <br> •&nbsp; <a href="http://localhost:8080/Gradiance/jsp/addhw.jsp" style="color: black;">Add Homework</a> 
-											<br> <br> •&nbsp; <a href="http://localhost:8080/Gradiance/jsp/addrevQs.jsp" style="color: black;">Add/Remove Questions</a> 
-											<br> <br> •&nbsp; <a href="http://localhost:8080/Gradiance/jsp/edithw.jsp" style="color: black;">Edit Homework</a> 
-											<br> <br> •&nbsp; <a href="http://localhost:8080/Gradiance/jsp/viewhw.jsp" style="color: black;">View Homework</a> 
-											<br> <br> •&nbsp; <a href="http://localhost:8080/Gradiance/jsp/viewnotif.jsp" style="color: black;">View Notification</a> 
-											<br> <br> •&nbsp; <a href="http://localhost:8080/Gradiance/jsp/reports.jsp" style="color: black;">Reports</a> 
+											<br> <br> •&nbsp; <a href="http://localhost:8080/Gradiance/jsp/indexProf.jsp" style="color: black;">Home Page</a>
+											<br> <br> •&nbsp; <a href="http://localhost:8080/Gradiance/jsp/addHwProf.jsp" style="color: black;">Add Homework</a> 
+											<br> <br> •&nbsp; <a href="http://localhost:8080/Gradiance/jsp/addRmQsProf.jsp" style="color: black;">Add/Remove Questions</a> 
+											<br> <br> •&nbsp; <a href="http://localhost:8080/Gradiance/jsp/editHwProf.jsp" style="color: black;">Edit Homework</a> 
+											<br> <br> •&nbsp; <a href="http://localhost:8080/Gradiance/jsp/viewHwProf.jsp" style="color: black;">View Homework</a> 
+											<br> <br> •&nbsp; <a href="http://localhost:8080/Gradiance/jsp/viewNotifProf.jsp" style="color: black;">View Notification</a> 
+											<br> <br> •&nbsp; <a href="http://localhost:8080/Gradiance/jsp/rptProf.jsp" style="color: black;">rptProf</a> 
 											<br> <br> •&nbsp; <a href="" style="color: black;">Log Out</a>
 										</td>
 									</tr>
@@ -300,159 +303,118 @@
 								<tbody>
 									<tr>
 										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-										<td colspan="3" style="width: 586px"><font color="midnightblue" size="4"><br>Edit
-												Homework:<br></font></td>
+										<td colspan="3" style="width: 586px"><font color="midnightblue" size="4">
+											<br>Add a New Homework:<br></font></td>
 										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
 									</tr>
 									<tr><td colspan="5"><br></td></tr>
-									<tr>
-										<td colspan="5" align="center"
-											style="color: white; background-color: grey; height: 15px">
-											Existing Homework:</td>
-									</tr>
-									<tr><td colspan="5">&nbsp;</td></tr>
-									<tr>
-										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-										<td align="left" style="white-space: nowrap" >
-											<font size="2">•&nbsp;Choose A Homework:</font>
-										</td>
-										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-										<td align="left" style="white-space: nowrap">
-											<select style="width: 156px">
-												<option>&nbsp;</option>
-												<option>Homework 1</option>
-												<option>Homework 2</option>
-												<option>Homework 3</option>
-											</select>
-										</td>
-										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-									</tr>
-									<tr><td colspan="5"><br></td></tr>
-									<tr>
-										<td colspan="5" align="center"
-											style="color: white; background-color: grey; height: 15px">
-											Updating Homework Information:</td>
-									</tr>
-									<tr><td colspan="5">&nbsp;</td></tr>
 									<tr valign="top" style="color: black;">
 										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
 										<td align="left" style="white-space: nowrap" >
 											<font size="2">•&nbsp;Start Date:</font>	
 										</td>
 										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-										<td align="left" style="white-space: nowrap"><input type="text" style="width: 150px"
-											value="2014-10-22" onfocus="HS_setDate(this)"></td>
+										<td><input type="text" style="width: 150px"
+											onfocus="HS_setDate(this)"></td>
 										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
 									</tr>
-									<tr>
+									<tr valign="top" style="color: black;">
 										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
 										<td align="left" style="white-space: nowrap" >
 											<font size="2">•&nbsp;End Date:</font>	
 										</td>
 										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-										<td align="left" style="white-space: nowrap"><input type="text" style="width: 150px"
-											value="2014-10-22" onfocus="HS_setDate(this)"></td>
+										<td><input type="text" style="width: 150px"
+											onfocus="HS_setDate(this)"></td>
 										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
 									</tr>
-									<tr>
+									<tr valign="top" style="color: black;">
 										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
 										<td align="left" style="white-space: nowrap" >
 											<font size="2">•&nbsp;Attempt Numbers:</font>	
 										</td>
 										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-										<td align="left" style="white-space: nowrap"><input type="text" style="width: 150px"
-											name="attemptnum" placeholder="eg.5; and 0 for infinity" required></td>
+										<td><input type="text" style="width: 150px"
+											name="attemptnum" placeholder="eg.5; and 0 for infinity"
+											required></td>
 										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
 									</tr>
-									<tr>
+									<tr valign="top" style="color: black;">
 										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-										<td valign="top" align="left" style="white-space: nowrap" >
+										<td align="left" style="white-space: nowrap" >
 											<font size="2">•&nbsp;Topics:</font>	
 										</td>
 										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-										<td align="left" style="white-space: nowrap">
-											<select multiple="multiple" style="width: 156px" size="2">
-												<option value="intr">1. Introduction to database design</option>
-												<option value="data">2. Storing data: Disks and Files</option>
+										<td><select multiple="multiple" style="width: 156px" size="2">
+												<option value="intr">1. Introduction to database
+													design</option>
+												<option value="data">2. Storing data: Disks and
+													Files</option>
 												<option value="file">3. Primary File organizations</option>
 												<option value="tree">4. Tree Structures</option>
-											</select>
-										</td>
+										</select></td>
 										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
 									</tr>
-									<tr>
+									<tr valign="top" style="color: black;">
 										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
 										<td align="left" style="white-space: nowrap" >
 											<font size="2">•&nbsp;Difficulty:</font>	
 										</td>
 										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-										<td align="left" style="white-space: nowrap">
-											<font size="2">from&nbsp;
-											<select style="width: 38px">
+										<td><select style="width: 156px">
 												<option>1</option>
 												<option>2</option>
 												<option>3</option>
 												<option>4</option>
 												<option>5</option>
-											</select>
-											&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;to&nbsp;
-											<select style="width: 38px">
-												<option>1</option>
-												<option>2</option>
-												<option>3</option>
-												<option>4</option>
-												<option>5</option>
-											</select>
-											</font>
-										</td>
+												<option>6</option>
+										</select></td>
 										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
 									</tr>
-									<tr>
+									<tr valign="top" style="color: black;">
 										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
 										<td align="left" style="white-space: nowrap" >
 											<font size="2">•&nbsp;Score Selection:</font>	
 										</td>
 										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-										<td align="left" style="white-space: nowrap">
-											<select style="width: 156px">
+										<td><select style="width: 156px">
 												<option>latest attempt</option>
 												<option>maximum score</option>
 												<option>average score</option>
-											</select>
-										</td>
+										</select></td>
 										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
 									</tr>
-									<tr>
+									<tr valign="top" style="color: black;">
 										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
 										<td align="left" style="white-space: nowrap" >
 											<font size="2">•&nbsp;Question Numbers:</font>	
 										</td>
 										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-										<td align="left" style="white-space: nowrap">
-											<input type="text" style="width: 150px" name="questionnum" placeholder="eg.10" required>
-										</td>
+										<td><input type="text" style="width: 150px"
+											name="questionnum" placeholder="eg.10"
+											required></td>
 										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
 									</tr>
-									<tr>
+									<tr valign="top" style="color: black;">
 										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
 										<td align="left" style="white-space: nowrap" >
 											<font size="2">•&nbsp;Correct Answer Points:</font>	
 										</td>
 										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-										<td align="left" style="white-space: nowrap">
-											<input type="text" style="width: 150px" name="correctpts" placeholder="eg.4" required>
-										</td>
+										<td><input type="text" style="width: 150px"
+											name="correctpts" placeholder="eg.4"
+											required></td>
 										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
 									</tr>
-									<tr>
+									<tr valign="top" style="color: black;">
 										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
 										<td align="left" style="white-space: nowrap" >
 											<font size="2">•&nbsp;Incorrect Answer Points:</font>	
 										</td>
 										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-										<td align="left" style="white-space: nowrap">
-											<input type="text" style="width: 150px" name="incorrectpts" placeholder="eg.2" required>
-										</td>
+										<td><input type="text" style="width: 150px"
+											name="incorrectpts" placeholder="eg.2"
+											required></td>
 										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
 									</tr>
 								</tbody>
@@ -461,7 +423,7 @@
 					</tr>
 				</tbody>
 			</table>
-			<br><br>
+			
 			<input type="submit" onclick="f()" value="Submit">
 		</div>
 	</form>

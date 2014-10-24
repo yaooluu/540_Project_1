@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Logged in as Professor</title>
+<title>Logged in as TA</title>
 <style>
 #header {
 	background-color: black;
@@ -42,30 +42,16 @@
 
 	<div id="header">
 		<%--<button style="float: left" onclick="g();">Click Me!!!</button>--%>
-		<font size="5">Logged in as Professor</font>
+		<font size="5">Logged in as TA</font>
 	</div>
 
 	<form action="<%=request.getContextPath()+"/rest/login" %>" method="post">
 		<div align=center>
 			<font color="midnightblue" size="5"><br>Select Course<br></font> 
-			<a href="http://localhost:8080/Gradiance/jsp/profOption.jsp"><font color="blue" size="3"><br>CSC540</font></a>
+			<a href="http://localhost:8080/Gradiance/jsp/optTA.jsp"><font color="blue" size="3"><br>CSC540</font></a>
 			&nbsp;
 			<font color="black" size="3"> Database Management Systems</font>
 		</div>
-		<br>
-		<HR>
-		<br>
-
-		<div align=center>
-			<font color="midnightblue" size="5">Add Course<br></font> 
-			<font><br>(submit the form below to add a class as an professor)<br></font> 
-			<label for="classtoken"><br>ClassToken:</label> 
-			<input type="text" name="classtoken" placeholder="Enter Class Token" required>
-			<br>
-			<br>
-			<input type="submit" onclick="f()" value="Sign Up">
-			<%--<button type="submit" onclick="f()">Sign Up</button> --%>
-		</div>	
 	</form>
 
 </body>

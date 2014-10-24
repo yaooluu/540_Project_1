@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Professor View Homework</title>
+<title>Add/Remove Questions</title>
 <style>
 #header {
 	background-color: black;
@@ -20,13 +20,11 @@
 
 	<!-- Here we use this java code to get params from server and display ^_^ -->
 	<title><%=request.getAttribute("title") %></title> 
-
 	<div id="header">
 		<%--<button style="float: left" onclick="g();">Click Me!!!</button>--%>
 		<font size="5">Welcome to CSC540</font>
 		<font size="4"><br>Database Management Systems</font>
 	</div>
-
 	<form action="<%=request.getContextPath()+"/rest/login" %>" method="post">
 		<div align=center>
 			<table>
@@ -37,13 +35,13 @@
 								<tbody>
 									<tr>
 										<td>
-											<br> <br> •&nbsp; <a href="http://localhost:8080/Gradiance/jsp/loggedProf.jsp" style="color: black;">Home Page</a>
-											<br> <br> •&nbsp; <a href="http://localhost:8080/Gradiance/jsp/addhw.jsp" style="color: black;">Add Homework</a> 
-											<br> <br> •&nbsp; <a href="http://localhost:8080/Gradiance/jsp/addrevQs.jsp" style="color: black;">Add/Remove Questions</a> 
-											<br> <br> •&nbsp; <a href="http://localhost:8080/Gradiance/jsp/edithw.jsp" style="color: black;">Edit Homework</a> 
-											<br> <br> •&nbsp; <a href="http://localhost:8080/Gradiance/jsp/viewhw.jsp" style="color: black;">View Homework</a> 
-											<br> <br> •&nbsp; <a href="http://localhost:8080/Gradiance/jsp/viewnotif.jsp" style="color: black;">View Notification</a> 
-											<br> <br> •&nbsp; <a href="http://localhost:8080/Gradiance/jsp/reports.jsp" style="color: black;">Reports</a> 
+											<br> <br> •&nbsp; <a href="http://localhost:8080/Gradiance/jsp/indexProf.jsp" style="color: black;">Home Page</a>
+											<br> <br> •&nbsp; <a href="http://localhost:8080/Gradiance/jsp/addHwProf.jsp" style="color: black;">Add Homework</a> 
+											<br> <br> •&nbsp; <a href="http://localhost:8080/Gradiance/jsp/addRmQsProf.jsp" style="color: black;">Add/Remove Questions</a> 
+											<br> <br> •&nbsp; <a href="http://localhost:8080/Gradiance/jsp/editHwProf.jsp" style="color: black;">Edit Homework</a> 
+											<br> <br> •&nbsp; <a href="http://localhost:8080/Gradiance/jsp/viewHwProf.jsp" style="color: black;">View Homework</a> 
+											<br> <br> •&nbsp; <a href="http://localhost:8080/Gradiance/jsp/viewNotifProf.jsp" style="color: black;">View Notification</a> 
+											<br> <br> •&nbsp; <a href="http://localhost:8080/Gradiance/jsp/rptProf.jsp" style="color: black;">Reports</a> 
 											<br> <br> •&nbsp; <a href="" style="color: black;">Log Out</a>
 										</td>
 									</tr>
@@ -65,15 +63,15 @@
 								<tbody>
 									<tr>
 										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-										<td colspan="3" style="width: 586px"><font color="midnightblue" size="4"><br>View
-												Homework:<br></font></td>
+										<td colspan="3" style="width: 586px"><font color="midnightblue" size="4"><br>Add/Remove
+												Questions:<br></font></td>
 										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
 									</tr>
 									<tr><td colspan="5"><br></td></tr>
 									<tr>
 										<td colspan="5" align="center"
 											style="color: white; background-color: grey; height: 15px">
-											Existing Homework:</td>
+											Choose Homework & Operation:</td>
 									</tr>
 									<tr><td colspan="5">&nbsp;</td></tr>
 									<tr>
@@ -94,47 +92,35 @@
 									</tr>
 									<tr><td colspan="5"><br></td></tr>
 									<tr>
+										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+										<td align="left" style="white-space: nowrap" >
+											<font size="2">•&nbsp;Choose Operation:</font>
+										</td>
+										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+										<td align="left" style="white-space: nowrap">
+											<select style="width: 156px">
+												<option>&nbsp;</option>
+												<option>Add Questions</option>
+												<option>Remove Questions</option>
+											</select>
+										</td>
+										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+									</tr>
+									
+									<tr><td colspan="5"><br></td></tr>
+									<tr>
 										<td colspan="5" align="center"
 											style="color: white; background-color: grey; height: 15px">
-											Homework Information:</td>
+											Basic Homework Information:</td>
 									</tr>
 									<tr><td colspan="5">&nbsp;</td></tr>
 									<tr>
 										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-										<td align="left" style="white-space: nowrap" >
-											<font size="2">•&nbsp;Start Date:</font>	
-										</td>
-										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-										<td align="left" style="white-space: nowrap"><input type="date" style="width: 150px"
-											name="startdate" placeholder="2014-10-22"></td>
-										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-									</tr>
-									<tr>
-										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-										<td align="left" style="white-space: nowrap" >
-											<font size="2">•&nbsp;End Date:</font>	
-										</td>
-										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-										<td align="left" style="white-space: nowrap"><input type="date" style="width: 150px"
-											name="startdate" placeholder="2014-10-23"></td>
-									</tr>
-									<tr>
-										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-										<td align="left" style="white-space: nowrap" >
-											<font size="2">•&nbsp;Attempt Numbers:</font>	
-										</td>
-										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-										<td align="left" style="white-space: nowrap"><input type="text" style="width: 150px"
-											name="attemptnum" placeholder="10"></td>
-										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-									</tr>
-									<tr>
-										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-										<td valign="top" align="left" style="white-space: nowrap" >
+										<td valign="top" align="left" style="white-space: nowrap; width:268px" >
 											<font size="2">•&nbsp;Topics:</font>	
 										</td>
 										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-										<td align="left" style="white-space: nowrap">
+										<td align="left" style="white-space: nowrap; width:268px">
 											<textarea rows="2" readonly style="width:150px">1. Introduction to database design 
 												2. Storing data: Disks and Files 
 												3. Primary File organizations 
@@ -157,51 +143,6 @@
 										</td>
 										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
 									</tr>
-									<tr>
-										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-										<td align="left" style="white-space: nowrap" >
-											<font size="2">•&nbsp;Score Selection:</font>	
-										</td>
-										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-										<td align="left" style="white-space: nowrap">
-											<input type="text" style="width: 150px"
-											name="attemptnum" placeholder="latest attempt">
-										</td>
-										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-									</tr>
-									<tr>
-										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-										<td align="left" style="white-space: nowrap" >
-											<font size="2">•&nbsp;Question Numbers:</font>	
-										</td>
-										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-										<td align="left" style="white-space: nowrap">
-											<input type="text" style="width: 150px" name="questionnum" placeholder="eg.10">
-										</td>
-										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-									</tr>
-									<tr>
-										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-										<td align="left" style="white-space: nowrap" >
-											<font size="2">•&nbsp;Correct Answer Points:</font>	
-										</td>
-										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-										<td align="left" style="white-space: nowrap">
-											<input type="text" style="width: 150px" name="correctpts" placeholder="eg.4">
-										</td>
-										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-									</tr>
-									<tr>
-										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-										<td align="left" style="white-space: nowrap" >
-											<font size="2">•&nbsp;Incorrect Answer Points:</font>	
-										</td>
-										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-										<td align="left" style="white-space: nowrap">
-											<input type="text" style="width: 150px" name="incorrectpts" placeholder="eg.2">
-										</td>
-										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-									</tr>
 									
 									<tr><td colspan="5"><br></td></tr>
 									<tr>
@@ -209,9 +150,18 @@
 											style="color: white; background-color: grey; height: 15px">
 											Question List:</td>
 									</tr>
-									<tr><td colspan="5">&nbsp;</td></tr>								
+									<tr><td colspan="5">&nbsp;</td></tr>
 									<tr>
 										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+										<td colspan="3" align="left" style="width:574px">
+											<font size="2">•&nbsp;Please tick the Questions you want to add and untick the Questions you want to remove.
+											</font>		
+										</td>
+										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+									</tr>
+									<tr><td colspan="5">&nbsp;</td></tr>								
+									<tr>
+										<td valign="top" align="center" style="width: 50px;"><input type="checkbox" name="questions" value="checkbox" checked></td>
 										<td colspan="3" align="left" style=" word-wrap: break-word; width:574px">
 											<font size="2">1.&nbsp;&nbsp;Which of the following is necessarily true about the
 												City and State entity sets and their relationship In?<br>
@@ -229,7 +179,7 @@
 										<td></td>
 									</tr>
 									<tr>
-										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+										<td valign="top" align="center" style="width: 50px;"><input type="checkbox" name="questions" value="checkbox" checked></td>
 										<td colspan="3" align="left"
 											style="word-wrap: break-word; width:574px">
 											<font size="2">2.&nbsp;&nbsp;Translate the above E/R diagram to relations, 
@@ -254,6 +204,8 @@
 					</tr>
 				</tbody>
 			</table>
+			
+			<input type="submit" onclick="f()" value="Submit">
 		</div>
 	</form>
 
