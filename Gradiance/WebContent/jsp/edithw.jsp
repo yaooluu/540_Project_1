@@ -387,14 +387,23 @@
 										</td>
 										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
 										<td align="left" style="white-space: nowrap">
-											<select style="width: 156px">
+											<font size="2">from&nbsp;
+											<select style="width: 38px">
 												<option>1</option>
 												<option>2</option>
 												<option>3</option>
 												<option>4</option>
 												<option>5</option>
-												<option>6</option>
 											</select>
+											&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;to&nbsp;
+											<select style="width: 38px">
+												<option>1</option>
+												<option>2</option>
+												<option>3</option>
+												<option>4</option>
+												<option>5</option>
+											</select>
+											</font>
 										</td>
 										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
 									</tr>

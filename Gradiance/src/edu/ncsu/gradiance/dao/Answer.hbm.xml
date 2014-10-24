@@ -1,18 +1,29 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated Oct 15, 2014 11:57:20 AM by Hibernate Tools 4.3.1 -->
+<!-- Generated Oct 20, 2014 5:46:17 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="edu.ncsu.gradiance.dao.Answer" table="answer" catalog="gradiance" optimistic-lock="version">
-        <id name="id" type="java.lang.Integer">
-            <column name="id" />
-            <generator class="identity" />
-        </id>
-        <property name="qid" type="java.lang.Integer">
-            <column name="qid" />
-        </property>
-        <property name="valid" type="string">
-            <column name="valid" length="5" />
+        <composite-id name="id" class="edu.ncsu.gradiance.dao.AnswerId">
+            <key-property name="qid" type="int">
+                <column name="qid" />
+            </key-property>
+            <key-property name="seed" type="int">
+                <column name="seed" />
+            </key-property>
+            <key-property name="ansid" type="int">
+                <column name="ansid" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="question" class="edu.ncsu.gradiance.dao.Question" update="false" insert="false" fetch="select">
+            <column name="qid" not-null="true" />
+        </many-to-one>
+        <many-to-one name="seed" class="edu.ncsu.gradiance.dao.Seed" update="false" insert="false" fetch="select">
+            <column name="qid" not-null="true" />
+            <column name="seed" not-null="true" />
+        </many-to-one>
+        <property name="correct" type="java.lang.Integer">
+            <column name="correct" />
         </property>
         <property name="content" type="string">
             <column name="content" length="65535" />

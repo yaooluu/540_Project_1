@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Oct 20, 2014 5:46:17 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="edu.ncsu.gradiance.dao.Seed" table="seed" catalog="gradiance" optimistic-lock="version">
+        <composite-id name="id" class="edu.ncsu.gradiance.dao.SeedId">
+            <key-property name="qid" type="int">
+                <column name="qid" />
+            </key-property>
+            <key-property name="seed" type="int">
+                <column name="seed" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="question" class="edu.ncsu.gradiance.dao.Question" update="false" insert="false" fetch="select">
+            <column name="qid" not-null="true" />
+        </many-to-one>
+        <property name="content" type="string">
+            <column name="content" length="65535" />
+        </property>
+        <property name="hint" type="string">
+            <column name="hint" />
+        </property>
+        <property name="explanation" type="string">
+            <column name="explanation" length="65535" />
+        </property>
+        <set name="attempts" table="attempt" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="qid" not-null="true" />
+                <column name="seed" />
+            </key>
+            <one-to-many class="edu.ncsu.gradiance.dao.Attempt" />
+        </set>
+        <set name="answers" table="answer" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="qid" not-null="true" />
+                <column name="seed" not-null="true" />
+            </key>
+            <one-to-many class="edu.ncsu.gradiance.dao.Answer" />
+        </set>
+    </class>
+</hibernate-mapping>

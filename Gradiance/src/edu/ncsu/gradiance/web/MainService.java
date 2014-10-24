@@ -2,31 +2,39 @@ package edu.ncsu.gradiance.web;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.*;
+
 import com.sun.jersey.api.view.Viewable;
+
+import edu.ncsu.gradiance.action.*;
 
 @Path("/")
 public class MainService {
 	
 	/**
 	 * @author yaolu
-	 * @function forward to index page
+	 * @throws URISyntaxException 
+	 * @function forward to index or login page
 	 */
     @GET
     @Path("index")
-    public Viewable index(@Context HttpServletRequest request) {
-    	System.out.println("/index called");
-    	
-    	//if use code below, html page should contain request.getAttribute("title")
-    	request.setAttribute("title", new String("This title comes from jersey!")); 
-
-    	//if use code below, html page should contain session.getAttribute("title") 
-    	//request.getSession().setAttribute("title", new String("This title comes from jersey!"));      
-        
-    	//more knowledge: http://www.coderanch.com/t/462078/Struts/Difference-Request-scope-Session-scope
-    	
-    	//here the 2nd param named will be "it" in html
-    	return new Viewable("/index.jsp", new String("2nd param from server!!!"));	
+    public Response index(@Context HttpServletRequest request) {
+    	System.out.println("/index called at: "+System.currentTimeMillis());	
+    	//check if logged in
+    	String uid = (String)request.getSession().getAttribute("curUser");
+    	Integer authority = (Integer)request.getSession().getAttribute("curAuthority");
+    	String forwardPage = "/login.jsp";
+  
+    	if(uid != null) {
+    		if(authority.intValue() == 0)		
+    			forwardPage = "/indexTeacher.jsp";
+    		else if(authority.intValue() == 1) 
+    			forwardPage = "/indexTA.jsp";
+    		else if(authority.intValue() == 2) 
+    			forwardPage = "/indexStudent.jsp";
+    	}
+    	return Response.ok(new Viewable(forwardPage, null)).build();
     }
 	
 	/**
@@ -35,14 +43,52 @@ public class MainService {
 	 */
 	@POST
 	@Path("login")
-	public String login(@FormParam("uname") String uname, @FormParam("upass") String upass)
-	{ 
-		System.out.println(uname+", "+upass);
-		//here we will do database query and verify login, and there are two ways after that:
-		//1. use Viewable to navigate to different pages based on verification result
-		//2. simply return a message, let jsp do the navigate job (¡ú_¡ú)
-		return "Login Succeed!";
+	public Response login(@Context HttpServletRequest request,
+			@FormParam("uid") String uid, @FormParam("upass") String upass) throws Exception { 
+		System.out.println("/login called at: "+System.currentTimeMillis());
+		
+		int authority = new LoginAction().verify(uid, upass);
+		String forwardPage = "/indexStudent.jsp";	//set student page as default
+		
+		if(authority>0) {	 	//login succeed.
+			request.getSession().setAttribute("curUser", uid);
+			request.getSession().setAttribute("curUserName", new LoginAction().getUserName(uid));
+			request.getSession().setAttribute("curAuthority", authority);
+			
+			if(authority == 0)											//switch forward page to corresponding role
+				forwardPage = "/indexTeacher.jsp";
+			else if(authority == 1) 
+				forwardPage = "/indexTA.jsp";
+			else {
+				forwardPage = "/indexStudent.jsp";
+				request.setAttribute("selectedCourses", new StudentAction().getSelectedCourses(uid));
+			}
+		} else {								
+			forwardPage = "/login.jsp";								//login failed.
+			request.setAttribute("loginResult", "Login Failed!");
+		}
+
+		return Response.ok(new Viewable(forwardPage, null)).build();
 	}
-
-
+	
+	/**
+	 * @author yaolu
+	 * @function register user
+	 */
+	@POST
+	@Path("register")
+	public Response register(@Context HttpServletRequest request,
+			@FormParam("authority") int authority,@FormParam("name") String name, 
+			@FormParam("upass") String upass, @FormParam("uid") String uid) throws Exception { 
+		System.out.println("/register called at: "+System.currentTimeMillis());
+		
+		if(new RegisterAction().register(uid, name, upass, authority)) {
+			request.setAttribute("registerResult", "Register succeed! Please Log in.");	
+		    return Response.ok(new Viewable("/login.jsp", null)).build();
+		}else {
+			request.setAttribute("registerResult", "Register Failed!");
+		    return Response.ok(new Viewable("/register.jsp", null)).build();
+		}
+	}
+	
 }

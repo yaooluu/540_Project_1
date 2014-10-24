@@ -65,63 +65,277 @@
 								<tbody>
 									<tr>
 										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-										<td colspan="3" style="width: 586px"><font color="midnightblue" size="4"><br>
+										<td colspan="4"><font color="midnightblue" size="4"><br>
 												Reports:<br></font></td>
 										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
 									</tr>
-									<tr><td colspan="5"><br></td></tr>
+									<tr><td colspan="6"><br></td></tr>
 									<tr>
-										<td colspan="5" align="center"
+										<td colspan="6" align="center"
 											style="color: white; background-color: grey; height: 15px">
 											Retrieval/Reports Query:</td>
 									</tr>
-									<tr><td colspan="5">&nbsp;</td></tr>
+									<tr><td colspan="6">&nbsp;</td></tr>
 									<tr>
 										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
 										<td align="left" style="white-space: nowrap" >
 											<font size="2">•&nbsp;Choose A Query:</font>
 										</td>
-										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-										<td align="left" style="white-space: nowrap">
-											<select style="width: 156px">
+										<td colspan="3" align="left" style="white-space: nowrap">
+											<select style="width: 430px">
 												<option>&nbsp;</option>
-												<option>Find students who did not take homework 1.</option>
-												<option>Find students who scored the maximum score on the first attempt for homework 1.</option>
+												<option>Find students who did not take Homework 1.</option>
+												<option>Find students who scored the maximum score on the first attempt for Homework 1.</option>
 												<option>Find students who scored the maximum score on the first attempt for any homework.</option>
+												<option>For each student, show total score for each homework and average score overall homework.</option>
+												<option>For each homework and question, show the maximum and minimum score.</option>
+												<option>For each homework and question, show average number of attempts.</option>
 											</select>
 										</td>
 										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
 									</tr>
+									<tr><td colspan="6">&nbsp;</td></tr>
+									<tr>
+										<td colspan="6" align="center"
+											style="color: white; background-color: grey; height: 15px">
+											Query Result:</td>
+									</tr>
+									<tr><td colspan="6">&nbsp;</td></tr>
+									<tr>
+										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
+											Student ID</td>
+										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
+											Student Name</td>
+										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
+											Assignment</td>
+										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
+											Score</td>
+										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+									</tr>
+									<tr>
+										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
+											<font size="2">200067020</font></td>
+										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
+											<font size="2">Ting Dai</font></td>
+										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
+											<font size="2">HW 1</font></td>
+										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
+											<font size="2">N/A</font></td>
+										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+									</tr>
+									<tr><td colspan="6">&nbsp;</td></tr>
 									
 									<tr>
 										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap">
+										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
+											Student ID</td>
+										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
+											Student Name</td>
+										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
 											Assignment</td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap">
-											Total Score</td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap">
-											Create Time</td>
+										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
+											Max Score</td>
 										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
 									</tr>
 									<tr>
 										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-										<td align="left" style="background-color: lightgray; white-space: nowrap">
-											<font size="2">Data Modeling</font></td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap">
+										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
+											<font size="2">200067020</font></td>
+										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
+											<font size="2">Ting Dai</font></td>
+										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
+											<font size="2">HW 1</font></td>
+										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
 											<font size="2">32.0</font></td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap">
-											<font size="2">2014-09-05</font></td>
+										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+									</tr>
+									<tr><td colspan="6">&nbsp;</td></tr>
+									
+									<tr>
+										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
+											Student ID</td>
+										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
+											Student Name</td>
+										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
+											Assignment</td>
+										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
+											Max Score</td>
 										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
 									</tr>
 									<tr>
 										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-										<td align="left" style="background-color: lightgray; white-space: nowrap">
-											<font size="2">Function Dependency</font></td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap">
-											<font size="2">40.0</font></td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap">
-											<font size="2">2014-09-15</font></td>
+										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
+											<font size="2">200067020</font></td>
+										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
+											<font size="2">Ting Dai</font></td>
+										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
+											<font size="2">HW 1</font></td>
+										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
+											<font size="2">32.0</font></td>
 										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+									</tr>
+									<tr>
+										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
+											<font size="2">200067021</font></td>
+										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
+											<font size="2">Yao Lu</font></td>
+										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
+											<font size="2">HW 2</font></td>
+										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
+											<font size="2">32.0</font></td>
+										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+									</tr>
+									<tr><td colspan="6">&nbsp;</td></tr>
+									
+									<tr>
+										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
+											Student ID</td>
+										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
+											Student Name</td>
+										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
+											Assignment</td>
+										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
+											Max Score</td>
+										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+									</tr>
+									<tr>
+										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
+											<font size="2">200067020</font></td>
+										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
+											<font size="2">Ting Dai</font></td>
+										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
+											<font size="2">HW 1</font></td>
+										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
+											<font size="2">32.0</font></td>
+										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+									</tr>
+									<tr>
+										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
+											<font size="2">200067020</font></td>
+										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
+											<font size="2">Ting Dai</font></td>
+										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
+											<font size="2">HW 2</font></td>
+										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
+											<font size="2">32.0</font></td>
+										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+									</tr>
+									<tr>
+										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
+											<font size="2">200067020</font></td>
+										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
+											<font size="2">Ting Dai</font></td>
+										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
+											<font size="2">AVG</font></td>
+										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
+											<font size="2">32.0</font></td>
+										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+									</tr>
+									<tr><td colspan="6">&nbsp;</td></tr>
+									
+									<tr>
+										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
+											Assignment</td>
+										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
+											Question</td>
+										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
+											Max Score</td>
+										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
+											Mini Score</td>
+										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+									</tr>
+									<tr>
+										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
+											<font size="2">HW 1</font></td>
+										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
+											<font size="2">Q 1</font></td>
+										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
+											<font size="2">32.0</font></td>
+										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
+											<font size="2">10.0</font></td>
+										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+									</tr>
+									<tr>
+										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
+											<font size="2">HW 1</font></td>
+										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
+											<font size="2">--</font></td>
+										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
+											<font size="2">32.0</font></td>
+										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
+											<font size="2">10.0</font></td>
+										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+									</tr>
+									<tr>
+										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
+											<font size="2">HW 2</font></td>
+										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
+											<font size="2">Q 1</font></td>
+										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
+											<font size="2">32.0</font></td>
+										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
+											<font size="2">10.0</font></td>
+										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+									</tr>
+									<tr>
+										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
+											<font size="2">HW 2</font></td>
+										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
+											<font size="2">--</font></td>
+										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
+											<font size="2">32.0</font></td>
+										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
+											<font size="2">10.0</font></td>
+										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+									</tr>
+									<tr><td colspan="6">&nbsp;</td></tr>
+									
+									<tr>
+										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
+											Assignment</td>
+										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
+											Question</td>
+										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
+											AVG of Attempts</td>
+										<td style="width: 142px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+									</tr>
+									<tr>
+										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
+											<font size="2">HW 1</font></td>
+										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
+											<font size="2">Q 1</font></td>
+										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
+											<font size="2">10</font></td>
+										<td style="width: 142px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+									</tr>
+									<tr>
+										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
+											<font size="2">HW 1</font></td>
+										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
+											<font size="2">--</font></td>
+										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
+											<font size="2">12</font></td>
+										<td style="width: 142px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+										<tr><td colspan="6">&nbsp;</td></tr>
 									</tr>
 								</tbody>
 							</table>

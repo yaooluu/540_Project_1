@@ -99,7 +99,7 @@
 											Homework Information:</td>
 									</tr>
 									<tr><td colspan="5">&nbsp;</td></tr>
-									<tr valign="top" style="color: black;">
+									<tr>
 										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
 										<td align="left" style="white-space: nowrap" >
 											<font size="2">•&nbsp;Start Date:</font>	
@@ -135,7 +135,7 @@
 										</td>
 										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
 										<td align="left" style="white-space: nowrap">
-											<textarea rows="2" cols="20" readonly>1. Introduction to database design 
+											<textarea rows="2" readonly style="width:150px">1. Introduction to database design 
 												2. Storing data: Disks and Files 
 												3. Primary File organizations 
 												4. Tree Structures </textarea>
@@ -149,14 +149,11 @@
 										</td>
 										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
 										<td align="left" style="white-space: nowrap">
-											<select style="width: 156px">
-												<option>1</option>
-												<option>2</option>
-												<option>3</option>
-												<option>4</option>
-												<option>5</option>
-												<option>6</option>
-											</select>
+											<font size="2">from&nbsp;
+											<input type="text" style="width: 30px" name="attemptnum" placeholder="1">
+											&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;to&nbsp;
+											<input type="text" style="width: 30px" name="attemptnum" placeholder="5">
+											</font>
 										</td>
 										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
 									</tr>
@@ -167,11 +164,8 @@
 										</td>
 										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
 										<td align="left" style="white-space: nowrap">
-											<select style="width: 156px">
-												<option>latest attempt</option>
-												<option>maximum score</option>
-												<option>average score</option>
-											</select>
+											<input type="text" style="width: 150px"
+											name="attemptnum" placeholder="latest attempt">
 										</td>
 										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
 									</tr>
@@ -218,7 +212,7 @@
 									<tr><td colspan="5">&nbsp;</td></tr>								
 									<tr>
 										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-										<td colspan="3" align="left" style="width: 586px; word-wrap: break-word; word-break: normal; ">
+										<td colspan="3" align="left" style=" word-wrap: break-word; width:574px">
 											<font size="2">1.&nbsp;&nbsp;Which of the following is necessarily true about the
 												City and State entity sets and their relationship In?<br>
 												a)&nbsp;&nbsp;No person can be the mayor of two different cities.<br>
@@ -230,14 +224,14 @@
 										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
 									</tr>
 									<tr>
-										<td ></td>
+										<td></td>
 										<td colspan="3"><HR></td>
-										<td ></td>
+										<td></td>
 									</tr>
 									<tr>
 										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
 										<td colspan="3" align="left"
-											style="width: 586px; word-wrap: break-word; word-break: normal;">
+											style="word-wrap: break-word; width:574px">
 											<font size="2">2.&nbsp;&nbsp;Translate the above E/R diagram to relations, 
 												using the "E/R" approach to handling ISA hierarchies. Then, identify 
 												which of the following relations is NOT in the resulting database schema.<br> 
@@ -250,9 +244,9 @@
 										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
 									</tr>
 									<tr>
-										<td ></td>
+										<td></td>
 										<td colspan="3"><HR></td>
-										<td ></td>
+										<td></td>
 									</tr>
 								</tbody>
 							</table>

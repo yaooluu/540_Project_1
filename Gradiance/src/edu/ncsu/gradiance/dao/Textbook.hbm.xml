@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Oct 20, 2014 5:46:17 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="edu.ncsu.gradiance.dao.Textbook" table="textbook" catalog="gradiance" optimistic-lock="version">
+        <id name="isbn" type="string">
+            <column name="isbn" length="50" />
+            <generator class="assigned" />
+        </id>
+        <property name="title" type="string">
+            <column name="title" length="50" />
+        </property>
+        <property name="author" type="string">
+            <column name="author" length="50" />
+        </property>
+        <set name="courses" table="recommend" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="isbn" length="50" not-null="true" />
+            </key>
+            <many-to-many entity-name="edu.ncsu.gradiance.dao.Course">
+                <column name="cid" length="10" not-null="true" />
+            </many-to-many>
+        </set>
+        <set name="chapters" table="chapter" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="isbn" length="50" not-null="true" />
+            </key>
+            <one-to-many class="edu.ncsu.gradiance.dao.Chapter" />
+        </set>
+    </class>
+</hibernate-mapping>

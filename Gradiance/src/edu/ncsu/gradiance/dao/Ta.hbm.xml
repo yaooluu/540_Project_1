@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Oct 20, 2014 5:46:17 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="edu.ncsu.gradiance.dao.Ta" table="ta" catalog="gradiance" optimistic-lock="version">
+        <id name="sid" type="string">
+            <column name="sid" length="50" />
+            <generator class="foreign">
+                <param name="property">student</param>
+            </generator>
+        </id>
+        <one-to-one name="student" class="edu.ncsu.gradiance.dao.Student" constrained="true"></one-to-one>
+        <property name="name" type="string">
+            <column name="name" length="50" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

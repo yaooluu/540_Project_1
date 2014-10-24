@@ -1,15 +1,18 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated Oct 15, 2014 11:57:20 AM by Hibernate Tools 4.3.1 -->
+<!-- Generated Oct 20, 2014 5:46:17 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="edu.ncsu.gradiance.dao.Course" table="course" catalog="gradiance" optimistic-lock="version">
-        <id name="id" type="string">
-            <column name="id" length="10" />
+        <id name="cid" type="string">
+            <column name="cid" length="10" />
             <generator class="assigned" />
         </id>
+        <many-to-one name="faculty" class="edu.ncsu.gradiance.dao.Faculty" fetch="select">
+            <column name="fid" length="50" not-null="true" />
+        </many-to-one>
         <property name="token" type="string">
-            <column name="token" length="10" />
+            <column name="token" length="20" />
         </property>
         <property name="name" type="string">
             <column name="name" length="50" />
@@ -26,17 +29,46 @@
         <property name="volume" type="java.lang.Integer">
             <column name="volume" />
         </property>
-        <property name="enroll" type="java.lang.Integer">
-            <column name="enroll" />
+        <property name="maxenroll" type="java.lang.Integer">
+            <column name="maxenroll" />
         </property>
-        <property name="pid" type="java.lang.Integer">
-            <column name="pid" />
-        </property>
-        <property name="taid" type="java.lang.Integer">
-            <column name="taid" />
-        </property>
-        <property name="bid" type="java.lang.Integer">
-            <column name="bid" />
-        </property>
+        <set name="textbooks" table="recommend" inverse="false" lazy="true" fetch="select">
+            <key>
+                <column name="cid" length="10" not-null="true" />
+            </key>
+            <many-to-many entity-name="edu.ncsu.gradiance.dao.Textbook">
+                <column name="isbn" length="50" not-null="true" />
+            </many-to-many>
+        </set>
+        <set name="students" table="stusecour" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="cid" length="50" not-null="true" />
+            </key>
+            <many-to-many entity-name="edu.ncsu.gradiance.dao.Student">
+                <column name="sid" length="50" not-null="true" />
+            </many-to-many>
+        </set>
+        <set name="students_1" table="courseta" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="cid" length="10" not-null="true" />
+            </key>
+            <many-to-many entity-name="edu.ncsu.gradiance.dao.Student">
+                <column name="sid" length="50" not-null="true" />
+            </many-to-many>
+        </set>
+        <set name="assessments" table="assessment" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="cid" length="10" not-null="true" />
+            </key>
+            <one-to-many class="edu.ncsu.gradiance.dao.Assessment" />
+        </set>
+        <set name="topics" table="cover" inverse="false" lazy="true" fetch="select">
+            <key>
+                <column name="cid" length="10" not-null="true" />
+            </key>
+            <many-to-many entity-name="edu.ncsu.gradiance.dao.Topic">
+                <column name="tid" not-null="true" />
+            </many-to-many>
+        </set>
     </class>
 </hibernate-mapping>

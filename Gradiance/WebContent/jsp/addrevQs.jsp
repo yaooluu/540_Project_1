@@ -71,47 +71,132 @@
 									<tr>
 										<td colspan="5" align="center"
 											style="color: white; background-color: grey; height: 15px">
-											Existing Homework:</td>
+											Choose Homework & Operation:</td>
 									</tr>
 									<tr><td colspan="5">&nbsp;</td></tr>
 									<tr>
 										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
 										<td align="left" style="white-space: nowrap" >
-											<input type="radio" name="hws" value="radiobutton" checked><font size="2">&nbsp;&nbsp;Homework 1</font>
+											<font size="2">•&nbsp;Choose A Homework:</font>
 										</td>
 										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-										<td align="left" style="white-space: nowrap"><font size="2">Data Modeling</font></td>
+										<td align="left" style="white-space: nowrap">
+											<select style="width: 156px">
+												<option>&nbsp;</option>
+												<option>Homework 1</option>
+												<option>Homework 2</option>
+												<option>Homework 3</option>
+											</select>
+										</td>
 										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
 									</tr>
-									
-									
 									<tr><td colspan="5"><br></td></tr>
 									<tr>
 										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
 										<td align="left" style="white-space: nowrap" >
-											<input type="radio" name="hws" value="radiobutton"><font size="2">&nbsp;&nbsp;Homework 2</font>
+											<font size="2">•&nbsp;Choose Operation:</font>
 										</td>
 										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-										<td align="left" style="white-space: nowrap"><font size="2">Functional Dependency</font></td>
+										<td align="left" style="white-space: nowrap">
+											<select style="width: 156px">
+												<option>&nbsp;</option>
+												<option>Add Questions</option>
+												<option>Remove Questions</option>
+											</select>
+										</td>
 										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
 									</tr>
+									
 									<tr><td colspan="5"><br></td></tr>
 									<tr>
 										<td colspan="5" align="center"
 											style="color: white; background-color: grey; height: 15px">
-											Choose Operations:</td>
+											Basic Homework Information:</td>
 									</tr>
 									<tr><td colspan="5">&nbsp;</td></tr>
 									<tr>
 										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+										<td valign="top" align="left" style="white-space: nowrap; width:268px" >
+											<font size="2">•&nbsp;Topics:</font>	
+										</td>
+										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+										<td align="left" style="white-space: nowrap; width:268px">
+											<textarea rows="2" readonly style="width:150px">1. Introduction to database design 
+												2. Storing data: Disks and Files 
+												3. Primary File organizations 
+												4. Tree Structures </textarea>
+										</td>
+										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+									</tr>
+									<tr>
+										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
 										<td align="left" style="white-space: nowrap" >
-											<input type="radio" name="addorrev" value="radiobutton" checked><font size="2">&nbsp;&nbsp;Search & Add Questions</font>
+											<font size="2">•&nbsp;Difficulty:</font>	
 										</td>
 										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-										<td >
-											<input type="radio" name="addorrev" value="radiobutton"><font size="2">&nbsp;&nbsp;Remove Questions</font>
+										<td align="left" style="white-space: nowrap">
+											<font size="2">from&nbsp;
+											<input type="text" style="width: 30px" name="attemptnum" placeholder="1">
+											&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;to&nbsp;
+											<input type="text" style="width: 30px" name="attemptnum" placeholder="5">
+											</font>
 										</td>
 										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+									</tr>
+									
+									<tr><td colspan="5"><br></td></tr>
+									<tr>
+										<td colspan="5" align="center"
+											style="color: white; background-color: grey; height: 15px">
+											Question List:</td>
+									</tr>
+									<tr><td colspan="5">&nbsp;</td></tr>
+									<tr>
+										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+										<td colspan="3" align="left" style="width:574px">
+											<font size="2">•&nbsp;Please tick the Questions you want to add and untick the Questions you want to remove.
+											</font>		
+										</td>
+										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+									</tr>
+									<tr><td colspan="5">&nbsp;</td></tr>								
+									<tr>
+										<td valign="top" align="center" style="width: 50px;"><input type="checkbox" name="questions" value="checkbox" checked></td>
+										<td colspan="3" align="left" style=" word-wrap: break-word; width:574px">
+											<font size="2">1.&nbsp;&nbsp;Which of the following is necessarily true about the
+												City and State entity sets and their relationship In?<br>
+												a)&nbsp;&nbsp;No person can be the mayor of two different cities.<br>
+												b)&nbsp;&nbsp;No person can be a mayor and a governor at the same time.<br>
+												c)&nbsp;&nbsp;No person can be the mayor of Cities In two different States.<br>
+												d)&nbsp;&nbsp;No two Cities In the same State can have the same name.<br>
+											</font>		
+										</td>
+										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+									</tr>
+									<tr>
+										<td></td>
+										<td colspan="3"><HR></td>
+										<td></td>
+									</tr>
+									<tr>
+										<td valign="top" align="center" style="width: 50px;"><input type="checkbox" name="questions" value="checkbox" checked></td>
+										<td colspan="3" align="left"
+											style="word-wrap: break-word; width:574px">
+											<font size="2">2.&nbsp;&nbsp;Translate the above E/R diagram to relations, 
+												using the "E/R" approach to handling ISA hierarchies. Then, identify 
+												which of the following relations is NOT in the resulting database schema.<br> 
+												a)&nbsp;&nbsp;F(c,d)<br> 
+												b)&nbsp;&nbsp;G(a,b,c,e)<br>
+												c)&nbsp;&nbsp;H(g,h)<br> 
+												d)&nbsp;&nbsp;S(a,c,f,g)<br>
+											</font>
+										</td>
+										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+									</tr>
+									<tr>
+										<td></td>
+										<td colspan="3"><HR></td>
+										<td></td>
 									</tr>
 								</tbody>
 							</table>
