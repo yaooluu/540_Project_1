@@ -11,20 +11,28 @@
 	<div id="header"><h1>Current Homework Due</h1></div><br>
 	<div align="center">
 	<%
-		List<String> l= (List<String>)request.getAttribute("homeworks");
+		List<String> l= (List<String>)request.getAttribute("++++++++++++++++");
 		if(l!=null&&l.size()>0){
-			String str="<form id='' action='' method='post'>";
+			String str="<table  style='width:100%'>";
+			
 			for(int i=0;i<l.size();i++){
-				str+="<input type='radio' name='hwTitle'>"+l.indexOf(i)+"</input>";
+				String[] s=l.get(i).split(",");
+				str+="<tr><td>"+s[1]+"</td><td>"+s[2]+"</td><td>"+s[3]+"</td><td>"+
+				"<form id='"+s[0]+"' action='++++++++++++++++' method='post'>"+
+				"<a href='atmpHw.jsp+++++++++' onclick='document.getElementById('"+s[0]+"').submit()'>attempt</a>"+
+				"</form></td></tr>";
 			}
-			str+="<button type='submit' value='do homework'/></form>";
+			str+="</table>";
 			out.println(str);
 		}else{
-			out.println("no homework right now!");
+			out.println("no homeworks right now!");
 		}
 	
 	%>
-
+	
+	
+		
+		
 	</div><br>
 	<div id="footer">Copyright @YY,YY,YY,DD</div>
 </body>
