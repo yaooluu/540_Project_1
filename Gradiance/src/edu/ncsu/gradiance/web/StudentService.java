@@ -93,7 +93,7 @@ public class StudentService {
 		List<List<String>> homeworkContent = new StudentAction().generateQuestion(aid);
 		
 		request.setAttribute("homeworkContent", homeworkContent);
-	    return Response.ok(new Viewable("/atmpHw.jsp", null)).build();
+	    return Response.ok(new Viewable("/atmpHwStu.jsp", null)).build();
 	}
 
 	/**

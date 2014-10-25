@@ -3,9 +3,11 @@ package edu.ncsu.gradiance.action;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -177,7 +179,7 @@ public class StudentAction {
 	 */
 	public List<String> viewHomework(String cid) {		
 		String sql = "select aid, title, tstart, tend from assessment where cid=?";
-		List<String> homeworks = new ArrayList<String>();
+		List<String> homeworkList = new ArrayList<String>();
 		
 		try {
 			dbc = new DBConnection();
@@ -193,12 +195,16 @@ public class StudentAction {
 				String tstart = rs.getString("tstart");
 				String tend = rs.getString("tend");
 				
-				homeworks.add(aid+","+title+","+tstart+","+tend);
+				//check if homework is within due range
+				DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+				String curDate = df.format(new Date()); 
+				if(tstart.compareTo(curDate)<=0 && tend.compareTo(curDate)>=0)
+					homeworkList.add(aid+","+title+","+tstart+","+tend);
 			}
 		} catch(Exception e){
 			e.printStackTrace();
 		}
-		return homeworks;
+		return homeworkList;
 	}
 
 
