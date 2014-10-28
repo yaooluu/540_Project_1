@@ -17,7 +17,7 @@
 				for(var j=0;j<4;j++) {
 					if(choices[j].checked) {
 						str += choices[j].value + ",";
-					}
+					} 
 				}
 			}
 			str+='@';
