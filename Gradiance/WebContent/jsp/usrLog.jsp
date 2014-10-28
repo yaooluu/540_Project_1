@@ -2,39 +2,45 @@
 <!DOCTYPE html>
 <html>
 <head>
+<title>Log in</title>
 	<link href="../css/style.css" rel="stylesheet" type="text/css" />
+
 </head>
 
-<body>
-	<title>Login</title>
+<body style="font-family: sans-serif; font-weight:lighter ">
 	
-	<div id="header">
-		<h1>
-			<%
-				if(request.getAttribute("registerResult")!=null) out.print(request.getAttribute("registerResult"));
-				else if(request.getAttribute("loginResult")!=null) out.print(request.getAttribute("loginResult"));
-				else out.print("Welcome! Guest.");
-			 %>
-		</h1>
-	</div><br>
+	<h1 id="header" style="font-family: sans-serif; font-weight:lighter; font-size:5">
+		<%
+			if (request.getAttribute("registerResult") != null)
+				out.print(request.getAttribute("registerResult"));
+			else if (request.getAttribute("loginResult") != null)
+				out.print(request.getAttribute("loginResult"));
+			else
+				out.print("Welcome! Guest.");
+		%>
+	</h1>
+	<br>
 	<div align="center">
-	
-	<form action="<%=request.getContextPath()+"/rest/login"%>" method="post">
-	        <div>
-	          <label for="user">Username:</label>
-	          <input type="text" name="uid" placeholder="Enter unity id" required>
-	        </div>
-	        <div class="form-group">
-	          <label for="pwd">Password:</label>
-	          <input type="password" name="upass" placeholder="Enter password" required>
-	        </div>
-	        <button type="submit">Login</button>
-		<input type="button" value="Exit" onclick="self.close()">
-	</form>
-	
-	<a href="usrReg.jsp">Register</a>
-
-	</div><br>
-	<div id="footer">Copyright @YY,YY,YY,DD</div>
+		<form action="<%=request.getContextPath() + "/rest/login"%>"
+			method="post">
+			<div>
+				<label for="user">Username:</label>&nbsp;&nbsp; 
+				<input type="text" name="uid" placeholder="Enter unity id" required>
+			</div>
+			<br>
+			<div class="form-group">
+				<label for="pwd">Password:</label>&nbsp;&nbsp; 
+				<input type="password" name="upass" placeholder="Enter password" required>
+			</div>
+			<br>
+			<input type="submit" value="Login" style="width:50px">
+			&nbsp;&nbsp;&nbsp;&nbsp;
+			<input type="button" value="Exit" onclick="self.close()" style="width:50px">
+		</form>
+		<br><HR><br>
+		<a href="usrReg.jsp" style="color: midnightblue;">Create New Account</a>
+	</div>
+	<br><br><br><br><br>
+	<div id="footer">Copyright ©2014 YYYD Database Team.</div>
 </body>
 </html>

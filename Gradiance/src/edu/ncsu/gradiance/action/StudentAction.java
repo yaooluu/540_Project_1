@@ -101,6 +101,31 @@ public class StudentAction {
 	
 	/**
 	 * @author yaolu
+	 * @function get courses title by cid
+	 */
+	public String getCourseTitle(String cid) {		
+		String sql = "select name from course where cid=?";
+		String courseTitle = "N/A";
+	
+		try {
+			dbc = new DBConnection();
+			conn = dbc.getConnection();
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			
+			stmt.setString(1, cid);
+			ResultSet rs = stmt.executeQuery();
+			if(rs.next()) {
+				courseTitle = rs.getString("name");
+			}
+			conn.close();
+		} catch(Exception e){
+			e.printStackTrace();
+		}
+		return courseTitle;
+	}
+	
+	/**
+	 * @author yaolu
 	 * @function get final scores for all assessments by sid,cid
 	 * @return a string list of "assesment name, final score, total score"
 	 */
@@ -222,6 +247,7 @@ public class StudentAction {
 			["Incorrect ans 6,short explanation 6", "Incorrect ans 5,short explanation 5", "Incorrect ans 4,short explanation 4", "Correct ans 1,no"],
 			["Incorrect ans 6v2,short explanation 6", "Correct ans 3v2,no", "Incorrect ans 4v2,short explanation 4", "Incorrect ans 5v2,short explanation 5"],
 			["1, 1, 1","1, 1, 1","1, 1, 1"]			//idList(aid,seed,qid)
+			["1,4,5,6","1,4,5,6","1,4,5,6"]			//ansIdList
 			["3, 3, 1"],							//Correct Answer Positions
 			["3, 1"],								//corPts and penalPts
 			
@@ -235,7 +261,8 @@ public class StudentAction {
 		List<List<String>> answers = new ArrayList<List<String>>();
 		List<String> ansPosList = new ArrayList<String>();
 		List<String> points = new ArrayList<String>();
-		List<String> idList = new ArrayList<String>(); 
+		List<String> idList = new ArrayList<String>();
+		List<String> ansIdList = new ArrayList<String>(); 
 
 		String ansPosStr = "";
 		
@@ -284,45 +311,72 @@ public class StudentAction {
 					questions.add(rs3.getString("content")+"@"+rs3.getString("hint")+"@"+rs3.getString("explanation"));
 				
 				//for each (qid,seed), get all correct answers(ansid,correct,content,expln)
-				sql = "select content,expln from answer where qid="+qid+" and seed="+seed+" and correct=0";
+				sql = "select ansid,content,expln from answer where qid="+qid+" and seed="+seed+" and correct=0";
 				stmt = conn.prepareStatement(sql);
 				ResultSet rs4 = stmt.executeQuery();
 				
-				//random one correct answer
+
+				//get all correct answers
 				List<String> tmpAns = new ArrayList<String>();
-				while(rs4.next())
+				List<String> tmpAnsIdList = new ArrayList<String>();
+				List<String> tmpAnsIdListAll = new ArrayList<String>(); 
+				
+				while(rs4.next()) {
 					tmpAns.add(rs4.getString("content")+"@"+rs4.getString("expln"));
+					tmpAnsIdList.add(rs4.getString("ansid"));
+				}
+
+				//random one correct answer				
 				random.setSeed(System.nanoTime());
-				String corrAns = tmpAns.get(random.nextInt(tmpAns.size()));
-						
+				int index = random.nextInt(tmpAns.size());
+				String corrAns = tmpAns.get(index);
+				String corrAnsId = tmpAnsIdList.get(index);
+				
+				
 				//for each (qid,seed), get all wrong answers(ansid,correct,content,expln)
-				sql = "select content,expln from answer where qid="+qid+" and seed="+seed+" and correct=1";
+				sql = "select ansid,content,expln from answer where qid="+qid+" and seed="+seed+" and correct=1";
 				stmt = conn.prepareStatement(sql);
 				ResultSet rs5 = stmt.executeQuery();
 				
-				//random three wrong answers
+				//get all wrong answers
 				tmpAns = new ArrayList<String>();
-				while(rs5.next())
+				tmpAnsIdList = new ArrayList<String>();
+				
+				while(rs5.next()) {
 					tmpAns.add(rs5.getString("content")+"@"+rs5.getString("expln"));
+					tmpAnsIdList.add(rs5.getString("ansid"));
+				}
 				List<String> wrongs = new ArrayList<String>();
 				
+				//random three wrong answers
 				for(int i=0;i<3;i++) {
 					random.setSeed(System.nanoTime());
-					String wrongAns = tmpAns.get(random.nextInt(tmpAns.size()));
+					index = random.nextInt(tmpAns.size());
+					
+					String wrongAns = tmpAns.get(index);
 					wrongs.add(wrongAns);
 					tmpAns.remove(wrongAns);
+					
+					String wrongAnsId = tmpAnsIdList.get(index);
+					tmpAnsIdList.remove(wrongAnsId);
+					tmpAnsIdListAll.add(wrongAnsId);
 				}
 				
 				//random one position to insert corrAns into wrongs
 				random.setSeed(System.nanoTime());
 				int pos = random.nextInt(4);
 				wrongs.add(pos, corrAns);
+				tmpAnsIdListAll.add(pos, corrAnsId);
 				
 				//append pos to answerPosList, add four choices to answers
 				ansPosList.add(""+pos);
 				
 				answers.add(wrongs);
-				idList.add(aid+","+qid+","+seed);
+				idList.add(aid+","+seed+","+qid);
+				
+				//change tmpAnsIdListAll["1","4","5","6"] to "1,4,5,6" and add it to ansIdList
+				List<String> l = tmpAnsIdListAll;
+				ansIdList.add(l.get(0)+","+l.get(1)+","+l.get(2)+","+l.get(3));				
 			}
 			conn.close();
 		} catch(Exception e){
@@ -342,6 +396,7 @@ public class StudentAction {
 			homeworks.add(answers.get(i));
 
 		homeworks.add(idList);
+		homeworks.add(ansIdList);
 		homeworks.add(ansPosList);
 		homeworks.add(points);
 
@@ -417,6 +472,102 @@ public class StudentAction {
 		return submissions;
 	}
 	
+	/**
+	 * @author yaolu
+	 * @function submit homework to database table attempt
+	 * @parms	ansPosList				"0@2@1"
+	 * 			points					"3@1"
+	 * 			useruserAnsAndIdLists 
+	 * 								consists of "userAnsPos@idList1@idList2...@ansIdList1@ansIdList2@...@numOfQs"
+	 * 							   it's data like "0,0,0,@1,1,1@1,2,1@1,3,1@2,5,4,6@5,6,1,7@6,2,7,5@3"
+	 * @return aid of this submission
+	 */
+	public String submitHomework(String sid, String ansPosList, String points, String userAnsAndIdLists) {		
+		String sql = "select max(atid) from attempt";
+		String aid = "";
+		
+		String[] infos = userAnsAndIdLists.split("@");
+		
+		aid = infos[1].split(",")[0];
+		String[] corAnsPos = ansPosList.split("@");
+		String[] usrAnsPos = infos[0].split(",");
+		int numOfQs = Integer.parseInt(infos[infos.length-1]);
+				
+		try {
+			dbc = new DBConnection();
+			conn = dbc.getConnection();
+
+			int atid = -1;
+			
+			//get new insert atid
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+			if(rs.next())
+				atid = rs.getInt(1) + 1;
+				
+			if(atid>=0) {
+				//insert user attempt into database
+				for(int i=0;i<numOfQs;i++) {
+					
+					int seed = Integer.parseInt(infos[i+1].split(",")[1]);
+					int qid = Integer.parseInt(infos[i+1].split(",")[2]);
+					String curTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
+					int answer = Integer.parseInt(usrAnsPos[i]);
+					String ansList = infos[i+1+numOfQs];
+					int usrPoint = 0;
+					if(corAnsPos[i].compareTo(usrAnsPos[i])==0)
+						usrPoint = Integer.parseInt(points.split("@")[0]);
+					else
+						usrPoint = -1 * Integer.parseInt(points.split("@")[1]);
+							
+					sql = "insert into attempt (atid, sid, aid, seed, qid, subtime, answer, ansList, point) values(?,?,?,?,?,?,?,?,?)";
+					stmt = conn.prepareStatement(sql);
+					stmt.setInt(1,atid);
+					stmt.setString(2,sid);
+					stmt.setInt(3,Integer.parseInt(aid));
+					stmt.setInt(4,seed);
+					stmt.setInt(5,qid);
+					stmt.setString(6,curTime);
+					stmt.setInt(7,answer);
+					stmt.setString(8,ansList);
+					stmt.setInt(9,usrPoint);
+					
+					stmt.executeUpdate();
+				}
+			}else{
+				System.out.println("Submit homework failed in StudentAction().submitHomework!");
+			}
+			
+			conn.close();
+		} catch(Exception e){
+			e.printStackTrace();
+		}
+		return aid;
+	}
+	
+	/**
+	 * @author yaolu
+	 * @function submit homework to database table attempt
+	 * @return aid of this submission
+	 */
+	public List<String> viewSubmissionDetail(String aid, String sid) {		
+		String sql = "";
+		List<String> submissionDetail = new ArrayList<String>();
+		
+		
+		try {
+			dbc = new DBConnection();
+			conn = dbc.getConnection();
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			
+			conn.close();
+		} catch(Exception e){
+			e.printStackTrace();
+		}
+		return submissionDetail;
+	}
+
+	
 	public static void main(String[] args) {
 		System.out.println("test StudentAction");
 		StudentAction sa = new StudentAction();
@@ -424,7 +575,7 @@ public class StudentAction {
 		//System.out.println(sa.viewSubmissionList("mjones", "CSC540"));
 		///*
 		List<List<String>> homeworks = sa.generateQuestion("1");
-		for(int i=0;i<homeworks.size();i++);
+		//for(int i=0;i<homeworks.size();i++)
 			//System.out.println(homeworks.get(i));
 			//*/
 	}

@@ -5,16 +5,22 @@ body {
 div {
 	align-content:center;
 }
+
 #header {
-    background-color:black;
-    color:white;
-    text-align:center;
-    padding:5px;
+	background-color: black;
+	color: white;
+	text-align: center;
+	padding-top: 20px;
+	padding-right: 50px;
+	padding-bottom: 20px;
+	padding-left: 50px;
 }
+
 #footer {
-    background-color:black;
-    color:white;
-    clear:both;
-    text-align:center;
-   padding:5px;	 	 
+	background-color: black;
+	color: white;
+	clear: both;
+	text-align: center;
+	font-size: 12px;
+	padding: 5px;
 }

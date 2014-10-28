@@ -49,6 +49,7 @@ public class StudentService {
 		System.out.println("/student/courseOption called at: "+System.currentTimeMillis());
 		
 		request.getSession().setAttribute("cid", cid);
+		request.getSession().setAttribute("courseTitle", new StudentAction().getCourseTitle(cid));
 	    return Response.ok(new Viewable("/optStu.jsp", null)).build();
 	}
 
@@ -102,6 +103,8 @@ public class StudentService {
 		request.setAttribute("submissionList", submissionList);
 	    return Response.ok(new Viewable("/viewSubStu.jsp", null)).build();
 	}
+	
+
 
 	/**
 	 * @author yaolu
@@ -133,9 +136,29 @@ public class StudentService {
 		System.out.println(ansPosList);
 		System.out.println(points);
 		System.out.println(userAnsAndIdLists);
-		//List<List<String>> homeworkContent = new StudentAction().generateQuestion(aid);
 		
-		//request.setAttribute("homeworkContent", homeworkContent);
-	    return Response.ok(new Viewable("/atmpHwStu.jsp", null)).build();
+		String sid = (String) request.getSession().getAttribute("curUser"); 
+		String aid = new StudentAction().submitHomework(sid,ansPosList,points,userAnsAndIdLists);
+		
+		List<String> submissionDetail = new StudentAction().viewSubmissionDetail(aid, sid);
+	
+	    return Response.ok(new Viewable("/viewSubDtlStu.jsp", null)).build();
+	}
+
+	/**
+	 * @author yaolu
+	 * @function view submission details
+	 */
+	@POST
+	@Path("viewSubmissionDetail")
+	public Response viewSubmissionDetail(@Context HttpServletRequest request,
+			@FormParam("aid") String aid) throws Exception {  
+		System.out.println("/student/viewSubmissionDetail called at: "+System.currentTimeMillis());
+		
+		String sid = (String) request.getSession().getAttribute("curUser");
+		List<String> submissionDetail = new StudentAction().viewSubmissionDetail(aid, sid);
+		
+		request.setAttribute("submissionDetail", submissionDetail);
+	    return Response.ok(new Viewable("/viewSubDtlStu.jsp", null)).build();
 	}
 }

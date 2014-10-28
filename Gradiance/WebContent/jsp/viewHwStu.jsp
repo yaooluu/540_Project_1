@@ -25,7 +25,7 @@
 		<font size="4"><br>Database Management Systems</font>
 	</div>
 	
-	<form action="<%=request.getContextPath()+"/rest/login" %>" method="post">
+
 		<div align=center>
 			<table>
 				<tbody valign="top">
@@ -39,24 +39,24 @@
 								<tbody>
 									<tr>
 										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-										<td colspan="6"><font color="midnightblue" size="4"><br>
+										<td colspan="5"><font color="midnightblue" size="4"><br>
 												Attempt Homework:<br></font></td>
 										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
 									</tr>
-									<tr><td colspan="8">&nbsp;</td></tr>
+									<tr><td colspan="7">&nbsp;</td></tr>
 
 									<tr>
 										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 180px;">
+										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 280px;">
 											Homework#</td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 80px;">
+										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 100px;">
 											StartDate</td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 80px;">
+										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 100px;">
 											EndDate</td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 57px;">
+										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 100px;">
 											Detail</td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 57px;">
-											Remain</td>
+										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 100px;">
+											Remaining</td>
 										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
 									</tr>
 									
@@ -68,29 +68,31 @@
 										if(list!=null&&list.size()>0){
 											for(int i=0;i<list.size();i++){
 												String[] s=list.get(i).split(",");
-												str = "<tr><td style='width: 50px;'>&nbsp;&nbsp;&nbsp;&nbsp;</td><td align='left' style='background-color: lightgray; word-break: normal; width: 180px;'><font size='2'>"
+												str = "<tr><td style='width: 50px;'>&nbsp;&nbsp;&nbsp;&nbsp;</td>"
+													+ "<td align='left' style='background-color: lightgray; word-break: normal; width: 280px;'><font size='2'>"
 													+  s[1]
-												    +  "</font></td><td align='center' style='background-color: lightgray; white-space: nowrap; width: 80px;'><font size='2'>"
+												    +  "</font></td><td align='center' style='background-color: lightgray; white-space: nowrap; width: 100px;'><font size='2'>"
 												    +  s[2]
-												    +  "</font></td><td align='center' style='background-color: lightgray; white-space: nowrap; width: 80px;'><font size='2'>"
+												    +  "</font></td><td align='center' style='background-color: lightgray; white-space: nowrap; width: 100px;'><font size='2'>"
 												    +  s[3]
-												    +  "</font></td><td align='center' style='background-color: lightgray; white-space: nowrap; width: 57px;'>"
+												    +  "</font></td><td align='center' style='background-color: lightgray; white-space: nowrap; width: 100px;'>"
 												    +  "<form id='"+s[0]+"' action=" + request.getContextPath()+"/rest/student/attemptHomework" + " method='post'>"
 												    +  "<a href='#' onclick=\"document.getElementById('"+s[0]+"').submit()\"><font size='2'>Attempt</font></a>"
 												    +  "<input type='hidden' name='aid' value='"+s[0]+"'/>"
-												    +  "</form></td><td style='width: 57px;'>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>";
+												    +  "</form></td>"
+												    +  "<td style='width: 50px;'>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>";
 												out.println(str);
 											}
 										}else{
-											str = "<tr><td style='width: 50px;'>&nbsp;&nbsp;&nbsp;&nbsp;</td><td align='center' style='background-color: lightgray; word-break: normal; width: 180px;'><font size='2'>"
+											str = "<tr><td style='width: 50px;'>&nbsp;&nbsp;&nbsp;&nbsp;</td><td align='center' style='background-color: lightgray; word-break: normal; width: 280px;'><font size='2'>"
 													+  "NULL"
-												    +  "</font></td><td align='center' style='background-color: lightgray; white-space: nowrap; width: 80px;'><font size='2'>"
+												    +  "</font></td><td align='center' style='background-color: lightgray; white-space: nowrap; width: 100px;'><font size='2'>"
 												    +  "NULL"
-												    +  "</font></td><td align='center' style='background-color: lightgray; white-space: nowrap; width: 80px;'><font size='2'>"
+												    +  "</font></td><td align='center' style='background-color: lightgray; white-space: nowrap; width: 100px;'><font size='2'>"
 												    +  "NULL"
-												    +  "</font></td><td align='center' style='background-color: lightgray; white-space: nowrap; width: 57px;'><font size='2'>"
+												    +  "</font></td><td align='center' style='background-color: lightgray; white-space: nowrap; width: 100px;'><font size='2'>"
 												    +  "NULL"
-												    +  "</font></td><td align='center' style='background-color: lightgray; white-space: nowrap; width: 57px;'><font size='2'>"
+												    +  "</font></td><td align='center' style='background-color: lightgray; white-space: nowrap; width: 100px;'><font size='2'>"
 													+  "NULL"
 												    +  "</font></td><td style='width: 50px;'>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>";
 											out.println(str);
@@ -104,7 +106,6 @@
 				</tbody>
 			</table>
 		</div>
-	</form>
 	
 </body>
 </html>
