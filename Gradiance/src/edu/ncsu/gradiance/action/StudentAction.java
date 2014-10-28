@@ -56,10 +56,11 @@ public class StudentAction {
 					stmt.setInt(1, volume+1);
 					stmt.setString(2, cid);
 					result = result + stmt.executeUpdate();
-					if(result == 2) addCourseResult = "Course enrolled!.";
+					if(result == 2) addCourseResult = "Course enrolled!";
 					else addCourseResult = "Oops! Something wrong when executing SQL.";
 				}
 			}
+			conn.close();
 		} catch(Exception e){
 			e.printStackTrace();
 		}
@@ -91,6 +92,7 @@ public class StudentAction {
 				
 				selectedCourses.add(c);
 			}
+			conn.close();
 		} catch(Exception e){
 			e.printStackTrace();
 		}
@@ -102,7 +104,7 @@ public class StudentAction {
 	 * @function get final scores for all assessments by sid,cid
 	 * @return a string list of "assesment name, final score, total score"
 	 */
-	public List<String> viewScore(String sid, String cid) {		
+	public List<String> viewScoreList(String sid, String cid) {		
 		String sql = "select aid, title, corrPts, scoreSelect from assessment where cid=?";
 		List<String> scores = new ArrayList<String>();
 		
@@ -166,6 +168,7 @@ public class StudentAction {
 				}
 				scores.add(title+","+finalScore+","+totalScore);
 			}
+			conn.close();
 		} catch(Exception e){
 			e.printStackTrace();
 		}
@@ -177,7 +180,7 @@ public class StudentAction {
 	 * @function get all assessments by cid
 	 * @return a string list of "aid, title, tstart, tend"
 	 */
-	public List<String> viewHomework(String cid) {		
+	public List<String> viewHomeworkList(String cid) {		
 		String sql = "select aid, title, tstart, tend from assessment where cid=?";
 		List<String> homeworkList = new ArrayList<String>();
 		
@@ -201,6 +204,7 @@ public class StudentAction {
 				if(tstart.compareTo(curDate)<=0 && tend.compareTo(curDate)>=0)
 					homeworkList.add(aid+","+title+","+tstart+","+tend);
 			}
+			conn.close();
 		} catch(Exception e){
 			e.printStackTrace();
 		}
@@ -213,12 +217,13 @@ public class StudentAction {
 	 * @function generate homework by aid
 	 * @return List<List<String>> homeworks, structure like following:
 	 * 	[
-	 *		[Question 1?,Hint text Q1,detailed explanationQ1, Question 2?,Hint text Q2,detailed explanationQ2,...],
+	 *		["Question 1?,Hint text Q1,detailed explanationQ1", "Question 2?,Hint text Q2,detailed explanationQ2",...],
+			["Incorrect ans 4,short explanation 4", "Incorrect ans 3,short explanation 3", "Incorrect ans 6,short explanation 6", "Correct ans 2,no"],
+			["Incorrect ans 6,short explanation 6", "Incorrect ans 5,short explanation 5", "Incorrect ans 4,short explanation 4", "Correct ans 1,no"],
+			["Incorrect ans 6v2,short explanation 6", "Correct ans 3v2,no", "Incorrect ans 4v2,short explanation 4", "Incorrect ans 5v2,short explanation 5"],
+			[3, 3, 1],	//Correct Answer Positions
 			[3, 1],		//corPts and penalPts
-			[3, 3, 1],	//Answer Positions
-			[Incorrect ans 4,short explanation 4, Incorrect ans 3,short explanation 3, Incorrect ans 6,short explanation 6, Correct ans 2,no],
-			[Incorrect ans 6,short explanation 6, Incorrect ans 5,short explanation 5, Incorrect ans 4,short explanation 4, Correct ans 1,no],
-			[Incorrect ans 6v2,short explanation 6, Correct ans 3v2,no, Incorrect ans 4v2,short explanation 4, Incorrect ans 5v2,short explanation 5]
+			[1, 1, 1]	//aid,seed,qid
 		]
 	 */
 	public List<List<String>> generateQuestion(String aid) {		
@@ -226,9 +231,11 @@ public class StudentAction {
 		List<List<String>> homeworks = new ArrayList<List<String>>();
 
 		List<String> questions = new ArrayList<String>();
-		List<String> points = new ArrayList<String>();
-		List<String> ansPosList = new ArrayList<String>();
 		List<List<String>> answers = new ArrayList<List<String>>();
+		List<String> ansPosList = new ArrayList<String>();
+		List<String> points = new ArrayList<String>();
+		List<String> infos = new ArrayList<String>(); //contains
+
 		
 		try {
 			dbc = new DBConnection();
@@ -271,7 +278,7 @@ public class StudentAction {
 				ResultSet rs3 = stmt.executeQuery();
 				
 				while(rs3.next())
-					questions.add(rs3.getString("content")+","+rs3.getString("hint")+","+rs3.getString("explanation"));
+					questions.add(rs3.getString("content")+"@"+rs3.getString("hint")+"@"+rs3.getString("explanation"));
 				
 				//for each (qid,seed), get all correct answers(ansid,correct,content,expln)
 				sql = "select content,expln from answer where qid="+qid+" and seed="+seed+" and correct=0";
@@ -281,7 +288,7 @@ public class StudentAction {
 				//random one correct answer
 				List<String> tmpAns = new ArrayList<String>();
 				while(rs4.next())
-					tmpAns.add(rs4.getString("content")+","+rs4.getString("expln"));
+					tmpAns.add(rs4.getString("content")+"@"+rs4.getString("expln"));
 				random.setSeed(System.nanoTime());
 				String corrAns = tmpAns.get(random.nextInt(tmpAns.size()));
 						
@@ -293,7 +300,7 @@ public class StudentAction {
 				//random three wrong answers
 				tmpAns = new ArrayList<String>();
 				while(rs5.next())
-					tmpAns.add(rs5.getString("content")+","+rs5.getString("expln"));
+					tmpAns.add(rs5.getString("content")+"@"+rs5.getString("expln"));
 				List<String> wrongs = new ArrayList<String>();
 				
 				for(int i=0;i<3;i++) {
@@ -312,26 +319,29 @@ public class StudentAction {
 				ansPosList.add(""+pos);
 				answers.add(wrongs);
 			}
+			conn.close();
 		} catch(Exception e){
 			e.printStackTrace();
 		}
 		
 		//add all lists into homeworks
 		homeworks.add(questions);
-		homeworks.add(points);
-		homeworks.add(ansPosList);
 		for(int i=0;i<answers.size();i++)
 			homeworks.add(answers.get(i));
-		
+		homeworks.add(ansPosList);
+		homeworks.add(points);
+
+		for(int i=0;i<homeworks.size();i++)
+			System.out.println(homeworks.get(i).size()+" @ "+homeworks.get(i));
 		return homeworks;
 	}
 	
 	/**
 	 * @author yaolu
 	 * @function get all past submissions by sid,cid
-	 * @return a string list of "title, tstart, tend, subtime, score"
+	 * @return a string list of "atid, title, tstart, tend, subtime, score"
 	 */
-	public List<String> viewSubmission(String sid, String cid) {		
+	public List<String> viewSubmissionList(String sid, String cid) {		
 		String sql = "select aid, title, tstart, tend, corrPts from assessment where cid=?";
 		List<String> submissions = new ArrayList<String>();
 		
@@ -350,6 +360,7 @@ public class StudentAction {
 				String tstart = rs.getString("tstart");
 				String tend = rs.getString("tend");
 				int corrPts = rs.getInt("corrPts");
+				List<Integer> atids = new ArrayList<Integer>();
 				List<String> subtimes = new ArrayList<String>();
 				List<Integer> finalScores = new ArrayList<Integer>();
 				
@@ -366,21 +377,26 @@ public class StudentAction {
 				}
 				
 				//get finalScore of all submissions
-				sql = "select subtime,sum(point) from attempt where aid="+aid+" and sid='"+sid+"' group by atid,sid,aid,subtime order by subtime desc";
+				sql = "select atid,subtime,sum(point) from attempt where aid="+aid+" and sid='"+sid+"' group by atid,sid,aid,subtime order by subtime desc";
 				stmt = conn.prepareStatement(sql);
 				ResultSet rs3 = stmt.executeQuery();
 				while(rs3.next()) {
-					String subtime = rs3.getString(1); 			//2014-08-15 10:05:00.0
+					int atid = rs3.getInt(1);
+					atids.add(atid);
+					
+					String subtime = rs3.getString(2); 						//2014-08-15 10:05:00.0
 					subtime = subtime.substring(0,subtime.indexOf('.')); 	//2014-08-15 10:05:00
 					subtimes.add(subtime);
-					finalScores.add(rs3.getInt(2));
+					
+					finalScores.add(rs3.getInt(3));
 				}
 				
 				//add title, tstart, tend, subtime, score to result
 				for(int i=0;i<subtimes.size();i++) {
-					submissions.add(title+","+tstart+","+tend+","+subtimes.get(i)+","+finalScores.get(i)+"/"+totalScore);	
+					submissions.add(atids.get(i)+","+title+","+tstart+","+tend+","+subtimes.get(i)+","+finalScores.get(i)+"/"+totalScore);	
 				}
 			}
+			conn.close();
 		} catch(Exception e){
 			e.printStackTrace();
 		}
@@ -390,8 +406,8 @@ public class StudentAction {
 	public static void main(String[] args) {
 		System.out.println("test StudentAction");
 		StudentAction sa = new StudentAction();
-		//sa.viewScore("mjones", "CSC540");
-		System.out.println(sa.viewSubmission("mjones", "CSC540"));
+		//sa.viewScoreList("mjones", "CSC540");
+		System.out.println(sa.viewSubmissionList("mjones", "CSC540"));
 		/*
 		List<List<String>> homeworks = sa.generateQuestion("1");
 		for(int i=0;i<homeworks.size();i++)

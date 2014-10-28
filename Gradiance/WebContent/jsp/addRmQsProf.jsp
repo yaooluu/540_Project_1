@@ -25,37 +25,12 @@
 		<font size="5">Welcome to CSC540</font>
 		<font size="4"><br>Database Management Systems</font>
 	</div>
-	<form action="<%=request.getContextPath()+"/rest/login" %>" method="post">
 		<div align=center>
 			<table>
 				<tbody valign="top">
 					<tr>
 						<td style="width: 220px;">
-							<table>
-								<tbody>
-									<tr>
-										<td>
-											<br> <br> •&nbsp; <a href="http://localhost:8080/Gradiance/jsp/indexProf.jsp" style="color: black;">Home Page</a>
-											<br> <br> •&nbsp; <a href="http://localhost:8080/Gradiance/jsp/addHwProf.jsp" style="color: black;">Add Homework</a> 
-											<br> <br> •&nbsp; <a href="http://localhost:8080/Gradiance/jsp/addRmQsProf.jsp" style="color: black;">Add/Remove Questions</a> 
-											<br> <br> •&nbsp; <a href="http://localhost:8080/Gradiance/jsp/editHwProf.jsp" style="color: black;">Edit Homework</a> 
-											<br> <br> •&nbsp; <a href="http://localhost:8080/Gradiance/jsp/viewHwProf.jsp" style="color: black;">View Homework</a> 
-											<br> <br> •&nbsp; <a href="http://localhost:8080/Gradiance/jsp/viewNotifProf.jsp" style="color: black;">View Notification</a> 
-											<br> <br> •&nbsp; <a href="http://localhost:8080/Gradiance/jsp/rptProf.jsp" style="color: black;">Reports</a> 
-											<br> <br> •&nbsp; <a href="" style="color: black;">Log Out</a>
-										</td>
-									</tr>
-									<tr>
-										<td>&nbsp;</td>
-									</tr>
-									<tr>
-										<td><HR></td>
-									</tr>
-									<tr style="color: black; height: 20px;">
-										<td valign="middle"><font size="1">Copyright © 2014&nbsp;YYYD Database Team.</font></td>
-									</tr>
-								</tbody>
-							</table>
+							<jsp:include page="../jsp/menuProf.jsp"/>
 						</td>
 						<td style="width: 2px; background-color: grey;"></td>
 						<td style="width: 686px;">
@@ -71,7 +46,7 @@
 									<tr>
 										<td colspan="5" align="center"
 											style="color: white; background-color: grey; height: 15px">
-											Choose Homework & Operation:</td>
+											Choose Homework:</td>
 									</tr>
 									<tr><td colspan="5">&nbsp;</td></tr>
 									<tr>
@@ -79,34 +54,26 @@
 										<td align="left" style="white-space: nowrap" >
 											<font size="2">•&nbsp;Choose A Homework:</font>
 										</td>
-										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-										<td align="left" style="white-space: nowrap">
-											<select style="width: 156px">
+										<td colspan="3" align="left" style="white-space: nowrap">
+											<form action="<%=request.getContextPath()+"/rest/prof/getHomeworkQuestion"%>" method="post">
+												<select name="aid" style="width: 300px">
 												<option>&nbsp;</option>
-												<option>Homework 1</option>
-												<option>Homework 2</option>
-												<option>Homework 3</option>
-											</select>
+												<%
+													String html = "";
+													String str = (String)request.getAttribute("homeworkList");
+													if(str!=null) {
+														String[] s = str.split(",");
+														for(int i=0;i<s.length;i+=2) {
+															html += "<option value="+s[i]+">"+s[i+1]+"</option>";
+														}
+													}
+													out.println(html);
+												%>
+												</select> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+												<input type="submit" value="Choose">
+											</form>
 										</td>
-										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-									</tr>
-									<tr><td colspan="5"><br></td></tr>
-									<tr>
-										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-										<td align="left" style="white-space: nowrap" >
-											<font size="2">•&nbsp;Choose Operation:</font>
-										</td>
-										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-										<td align="left" style="white-space: nowrap">
-											<select style="width: 156px">
-												<option>&nbsp;</option>
-												<option>Add Questions</option>
-												<option>Remove Questions</option>
-											</select>
-										</td>
-										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-									</tr>
-									
+									</tr>									
 									<tr><td colspan="5"><br></td></tr>
 									<tr>
 										<td colspan="5" align="center"
@@ -151,52 +118,63 @@
 											Question List:</td>
 									</tr>
 									<tr><td colspan="5">&nbsp;</td></tr>
+									
+									<tr>
+									<td colspan="5">
+									
+									
+									<form action="<%=request.getContextPath()+"/rest/prof/addRmQuestion"%>" method="post">
+									<table>
+									<tbody>
 									<tr>
 										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-										<td colspan="3" align="left" style="width:574px">
-											<font size="2">•&nbsp;Please tick the Questions you want to add and untick the Questions you want to remove.
+										<td colspan="3" align="center" style="width:574px">
+											<font size="2">(Please tick the Questions you want to add and untick the Questions you want to remove.)
 											</font>		
 										</td>
 										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
 									</tr>
-									<tr><td colspan="5">&nbsp;</td></tr>								
+									<tr><td><br><td></tr>
+									<%
+										String list = (String) request.getAttribute("homeworkQuestion");
+										String str2="";
+										
+										if(list!=null&&list.length()>0){
+											String[] s=list.split("@");
+											for(int i=0;i<s.length;i+=3){
+												
+												str2 = "<tr><td valign='top' align='center' style='width: 50px;'><input type='checkbox' name='questions' value='"+s[i]+"'";
+												if (s[i+1].compareTo("1")==0){
+													str2+= "checked";}
+												str2+= "></td><td colspan='3' align='left' style='word-wrap: break-word; width:574px'><font size='2'>[";
+												str2+=  s[i];
+												str2+=  "]&nbsp;&nbsp;";
+												str2+=  s[i+2];
+												str2+=  "</font></td><td style='width: 50px;'></td></tr>";
+												str2+=  "<tr><td></td><td colspan='3'><HR></td><td></td></tr>";
+												out.println(str2);
+											}
+										}else{
+											str2 = "<tr><td valign='top' align='center' style='width: 50px;'></td>"
+												+  "<td colspan='3' align='center' style='word-wrap: break-word; width:574px'>"
+												+  "<font size='2'>Sorry, there is no Question to Add or Remove."
+												+  "</font></td><td style='width: 50px;'></td></tr>";
+												
+											out.println(str2);
+											
+										}
+									%>		
+									
+									<tr><td><br><td></tr>
 									<tr>
-										<td valign="top" align="center" style="width: 50px;"><input type="checkbox" name="questions" value="checkbox" checked></td>
-										<td colspan="3" align="left" style=" word-wrap: break-word; width:574px">
-											<font size="2">1.&nbsp;&nbsp;Which of the following is necessarily true about the
-												City and State entity sets and their relationship In?<br>
-												a)&nbsp;&nbsp;No person can be the mayor of two different cities.<br>
-												b)&nbsp;&nbsp;No person can be a mayor and a governor at the same time.<br>
-												c)&nbsp;&nbsp;No person can be the mayor of Cities In two different States.<br>
-												d)&nbsp;&nbsp;No two Cities In the same State can have the same name.<br>
-											</font>		
+										<td colspan="5" align="center">
+											<input type="submit" value="Confirm">
 										</td>
-										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
 									</tr>
-									<tr>
-										<td></td>
-										<td colspan="3"><HR></td>
-										<td></td>
-									</tr>
-									<tr>
-										<td valign="top" align="center" style="width: 50px;"><input type="checkbox" name="questions" value="checkbox" checked></td>
-										<td colspan="3" align="left"
-											style="word-wrap: break-word; width:574px">
-											<font size="2">2.&nbsp;&nbsp;Translate the above E/R diagram to relations, 
-												using the "E/R" approach to handling ISA hierarchies. Then, identify 
-												which of the following relations is NOT in the resulting database schema.<br> 
-												a)&nbsp;&nbsp;F(c,d)<br> 
-												b)&nbsp;&nbsp;G(a,b,c,e)<br>
-												c)&nbsp;&nbsp;H(g,h)<br> 
-												d)&nbsp;&nbsp;S(a,c,f,g)<br>
-											</font>
-										</td>
-										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-									</tr>
-									<tr>
-										<td></td>
-										<td colspan="3"><HR></td>
-										<td></td>
+									</tbody>
+									</table>
+									</form>
+									</td>
 									</tr>
 								</tbody>
 							</table>
@@ -204,10 +182,7 @@
 					</tr>
 				</tbody>
 			</table>
-			
-			<input type="submit" onclick="f()" value="Submit">
 		</div>
-	</form>
 
 </body>
 </html>

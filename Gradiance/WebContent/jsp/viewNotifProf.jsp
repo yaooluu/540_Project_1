@@ -33,31 +33,7 @@
 				<tbody valign="top">
 					<tr>
 						<td style="width: 220px;">
-							<table>
-								<tbody>
-									<tr>
-										<td>
-											<br> <br> •&nbsp; <a href="http://localhost:8080/Gradiance/jsp/indexProf.jsp" style="color: black;">Home Page</a>
-											<br> <br> •&nbsp; <a href="http://localhost:8080/Gradiance/jsp/addHwProf.jsp" style="color: black;">Add Homework</a> 
-											<br> <br> •&nbsp; <a href="http://localhost:8080/Gradiance/jsp/addRmQsProf.jsp" style="color: black;">Add/Remove Questions</a> 
-											<br> <br> •&nbsp; <a href="http://localhost:8080/Gradiance/jsp/editHwProf.jsp" style="color: black;">Edit Homework</a> 
-											<br> <br> •&nbsp; <a href="http://localhost:8080/Gradiance/jsp/viewHwProf.jsp" style="color: black;">View Homework</a> 
-											<br> <br> •&nbsp; <a href="http://localhost:8080/Gradiance/jsp/viewNotifProf.jsp" style="color: black;">View Notification</a> 
-											<br> <br> •&nbsp; <a href="http://localhost:8080/Gradiance/jsp/rptProf.jsp" style="color: black;">Reports</a> 
-											<br> <br> •&nbsp; <a href="" style="color: black;">Log Out</a>
-										</td>
-									</tr>
-									<tr>
-										<td>&nbsp;</td>
-									</tr>
-									<tr>
-										<td><HR></td>
-									</tr>
-									<tr style="color: black; height: 20px;">
-										<td valign="middle"><font size="1">Copyright © 2014&nbsp;YYYD Database Team.</font></td>
-									</tr>
-								</tbody>
-							</table>
+							<jsp:include page="../jsp/menuProf.jsp"/>
 						</td>
 						<td style="width: 2px; background-color: grey;"></td>
 						<td style="width: 686px;">

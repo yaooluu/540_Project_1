@@ -3,32 +3,94 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<title>Student View Score</title>
 	<link href="<%=request.getContextPath()+"/css/style.css"%>" rel="stylesheet" type="text/css" />
+	<style>
+	#header {
+	background-color: black;
+	color: white;
+	text-align: center;
+	padding-top: 20px;
+    padding-right: 50px;
+    padding-bottom: 20px;
+    padding-left: 50px;
+}
+</style>
 </head>
 
-<body>
-	<title>View Score</title>
-	<div id="header"><h1>View Score</h1></div><br>
-	<div align="center">
-	<%
-			List<String> list = (List<String>) request.getAttribute("scores"); 
-			String str;
-			
-			if(list != null&&list.size()>0) {
-				str="<table border='1' style='width:90%'>";
-				str+="<tr><th>Homework Title</th><th>Your Final Score</th><th>Total Score</th>";
-				 for(String c : list) {
-					 String[] s=c.split(",");
-					 str+="<tr><td>"+s[0]+"</td><td>"+s[1]+"</td><td>"+s[2]+"</td></tr>";
-				 }
-				 str+="</table>";
-				 out.println(str);
-			}else{
-				out.println("No result found!");
-			}
-		%>
+<body style="font-family: sans-serif; font-weight:lighter ">
+	
+	<div id="header">
+		<font size="5">Welcome to CSC540</font>
+		<font size="4"><br>Database Management Systems</font>
+	</div>
+	
+		<div align=center>
+			<table>
+				<tbody valign="top">
+					<tr>
+						<td style="width: 220px;">
+							<jsp:include page="../jsp/menuStu.jsp"/>
+						</td>
+						<td style="width: 2px; background-color: grey;"></td>
+						<td style="width: 686px;">
+							<table>
+								<tbody>
+									<tr>
+										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+										<td colspan="4"><font color="midnightblue" size="4"><br>
+												View Scores:<br></font></td>
+										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+									</tr>
+									<tr><td colspan="6">&nbsp;</td></tr>
 
-	</div><br>
-	<div id="footer">Copyright @YY,YY,YY,DD</div>
+									<tr>
+										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
+											Homework Title</td>
+										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
+											Your Score</td>
+										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
+											Total Score</td>
+										<td style="width: 142px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+									</tr>
+
+									<%
+										List<String> list = (List<String>) request.getAttribute("scoreList");
+										String str="";
+
+										if (list != null && list.size() > 0) {
+											for (String c : list) {
+												String[] s = c.split(",");
+												str += "<tr><td style='width: 50px;'>&nbsp;&nbsp;&nbsp;&nbsp;</td><td align='left' style='background-color: lightgray; white-space: nowrap; width: 142px;'><font size='2'>"
+														+ s[0]
+														+ "</font></td><td align='center' style='background-color: lightgray; white-space: nowrap; width: 142px;'><font size='2'>"
+														+ s[1]
+														+ "</font></td><td align='center' style='background-color: lightgray; white-space: nowrap; width: 142px;'><font size='2'>"
+														+ s[2]
+														+ "</font></td><td style='width: 142px;'>&nbsp;&nbsp;&nbsp;&nbsp;</td><td style='width: 50px;'>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>";
+											}		
+										} else {
+											str = "<tr><td style='width: 50px;'>&nbsp;&nbsp;&nbsp;&nbsp;</td><td align='center' style='background-color: lightgray; white-space: nowrap; width: 142px;'><font size='2'>"
+													+ "NULL"
+													+ "</font></td><td align='center' style='background-color: lightgray; white-space: nowrap; width: 142px;'><font size='2'>"
+													+ "NULL"
+													+ "</font></td><td align='center' style='background-color: lightgray; white-space: nowrap; width: 142px;'><font size='2'>"
+													+ "NULL"
+													+ "</font></td><td style='width: 142px;'>&nbsp;&nbsp;&nbsp;&nbsp;</td><td style='width: 50px;'>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>";											
+										}
+										out.println(str);
+									%>
+									
+								</tbody>
+							</table>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</form>
+	
 </body>
 </html>

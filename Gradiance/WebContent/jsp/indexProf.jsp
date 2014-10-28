@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"%>
+<%@ page import="java.util.*,edu.ncsu.gradiance.dao.*" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,50 +24,52 @@
 }
 </style>
 
-<script>
-	function f() {
-		alert("To Yiyang and DD: we can do more here after clicking button, like redirecting maybe, and like this alert windows~");
-	}
-	
-	function g() {
-		//alert("Using javascript, we can dynamically change the content of html, like the title, like whatever you want.");
-		document.getElementById("myHead").innerHTML = "Course Options for Professor";	
-	}
-</script>
 </head>
 
 <body style="font-family: sans-serif; font-weight:lighter ">
 
 	<!-- Here we use this java code to get params from server and display ^_^ -->
-	<title><%=request.getAttribute("title") %></title> 
+	<title>Professor Index</title> 
 
 	<div id="header">
-		<%--<button style="float: left" onclick="g();">Click Me!!!</button>--%>
-		<font size="5">Logged in as Professor</font>
+		<h1><%out.println("Welcome back, " + session.getAttribute("curUserName"));%></h1>	
 	</div>
 
-	<form action="<%=request.getContextPath()+"/rest/login" %>" method="post">
-		<div align=center>
-			<font color="midnightblue" size="5"><br>Select Course<br></font> 
-			<a href="http://localhost:8080/Gradiance/jsp/optProf.jsp"><font color="blue" size="3"><br>CSC540</font></a>
-			&nbsp;
-			<font color="black" size="3"> Database Management Systems</font>
-		</div>
-		<br>
-		<HR>
-		<br>
-
+	<div align="center">
+		<font color="midnightblue" size="5"><br>Select Course<br><br></font>
+				
+		<!-- here we use jsp to load current student's selected courses. -->
+		<%
+			List<Course> list = (List<Course>) request.getAttribute("selectedCourses"); 
+			if(list != null && list.size()>0) {
+				int i=0;
+				for(Course c : list) {
+					i++;
+					out.println("<form id='myForm_"+i+"' action='" + request.getContextPath()+"/rest/prof/courseOption" + "' method='post'>");
+					out.println("<a href='#' onclick=\"document.getElementById('myForm_"+i+"').submit()\">"+c.getCid()+"</a> &nbsp;"+c.getName()+"<br>");
+					out.println("<input type='hidden' name='cid' value='"+c.getCid()+"'/>");
+					out.println("</form>");
+				}
+			}else
+				out.println("You haven't selected any course yet.");
+		%>
+	</div>
+		
+	<br><HR><br>
+	
+	<form action="<%=request.getContextPath()+"/rest/prof/addCourse" %>" method="post">
 		<div align=center>
 			<font color="midnightblue" size="5">Add Course<br></font> 
 			<font><br>(submit the form below to add a class as an professor)<br></font> 
-			<label for="classtoken"><br>ClassToken:</label> 
-			<input type="text" name="classtoken" placeholder="Enter Class Token" required>
-			<br>
-			<br>
-			<input type="submit" onclick="f()" value="Sign Up">
-			<%--<button type="submit" onclick="f()">Sign Up</button> --%>
+			<%
+				if(request.getAttribute("addCourseResult")!=null) out.print("<font color='red'>("+request.getAttribute("addCourseResult")+")</font>");
+			%>
+			<label for="classtoken"><br>Course Token:</label> 
+			<input type="text" name="token" placeholder="Enter Course Token" required>
+			<input type="submit" value="Add Course"><br><br>
 		</div>	
 	</form>
+	
 
 </body>
 </html>

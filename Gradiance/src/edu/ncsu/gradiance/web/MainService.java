@@ -27,12 +27,16 @@ public class MainService {
     	String forwardPage = "/usrLog.jsp";
   
     	if(uid != null) {
-    		if(authority.intValue() == 0)		
-    			forwardPage = "/indexTeacher.jsp";
+    		if(authority.intValue() == 0) {		
+    			forwardPage = "/indexProf.jsp";
+    			request.setAttribute("selectedCourses", new ProfessorAction().getSelectedCourses(uid));
+    		}
     		else if(authority.intValue() == 1) 
     			forwardPage = "/indexTA.jsp";
-    		else if(authority.intValue() == 2) 
+    		else if(authority.intValue() == 2) {
     			forwardPage = "/indexStu.jsp";
+    			request.setAttribute("selectedCourses", new StudentAction().getSelectedCourses(uid));
+    		}
     	}
     	return Response.ok(new Viewable(forwardPage, null)).build();
     }
@@ -50,13 +54,15 @@ public class MainService {
 		int authority = new LoginAction().verify(uid, upass);
 		String forwardPage = "/indexStu.jsp";	//set student page as default
 		
-		if(authority>0) {	 	//login succeed.
+		if(authority>=0) {	 	//login succeed.
 			request.getSession().setAttribute("curUser", uid);
 			request.getSession().setAttribute("curUserName", new LoginAction().getUserName(uid));
 			request.getSession().setAttribute("curAuthority", authority);
 			
-			if(authority == 0)											//switch forward page to corresponding role
-				forwardPage = "/indexTeacher.jsp";
+			if(authority == 0)	{									//switch forward page to corresponding role
+				forwardPage = "/indexProf.jsp";
+				request.setAttribute("selectedCourses", new ProfessorAction().getSelectedCourses(uid));
+			}
 			else if(authority == 1) 
 				forwardPage = "/indexTA.jsp";
 			else {

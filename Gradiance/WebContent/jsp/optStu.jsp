@@ -2,28 +2,53 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<link href="<%=request.getContextPath()+"/css/style.css"%>" rel="stylesheet" type="text/css" />
+<title>Course Options for Student</title>
+<link href="<%=request.getContextPath() + "/css/style.css"%>" rel="stylesheet" type="text/css" />
+<style>
+#header {
+	background-color: black;
+	color: white;
+	text-align: center;
+	padding-top: 20px;
+	padding-right: 50px;
+	padding-bottom: 20px;
+	padding-left: 50px;
+}
+</style>
 </head>
 
-<body>
-	<title>Course Options</title>
-	<div id="header"><h1>Course Options</h1></div><br>
-	
-	<div align="center">
-		
-		<form id="myForm_1" action="<%=request.getContextPath()+"/rest/student/viewScore"%>" method="post">
-			<a href="#" onclick="document.getElementById('myForm_1').submit()">View Scores</a>
-		</form><br>
-		
-		<form id="myForm_2" action="<%=request.getContextPath()+"/rest/student/viewHomework"%>" method="post">
-			<a href="#" onclick="document.getElementById('myForm_2').submit()">View Homework Due</a>
-		</form><br>
-		
-		<form id="myForm_3" action="<%=request.getContextPath()+"/rest/student/viewSubmission"%>" method="post">
-			<a href="#" onclick="document.getElementById('myForm_3').submit()">View Submissions</a>
-		</form><br>
+<body style="font-family: sans-serif; font-weight:lighter ">
+	<div id="header">
+		<font size="5">Welcome to CSC540</font> 
+		<font size="4"><br>Database Management Systems</font>
 	</div>
-
-	<div id="footer">Copyright @YY,YY,YY,DD</div>
+	
+	<div align=center>
+		<table>
+			<tbody valign="top">
+				<tr>
+					<td style="width: 220px;">
+					<jsp:include page="../jsp/menuStu.jsp"/>
+					</td>
+					<td style="width: 2px; background-color: grey;"></td>
+					<td style="width: 686px;">
+						<br> <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<font size="2">•&nbsp; Click Home Page to go back the the logged in page.</font>							
+						<br> <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<font size="2">•&nbsp; Click View Scores to view how much score you have gotten.</font>
+						<br> <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<font size="2">•&nbsp; Click Attempt Homework to do a new Homework or redo an old one</font> 
+						<br> <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+						<font size="2">•&nbsp; Click View Past Submission to see all the results you have submitted</font>
+						<br> <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<font size="2">•&nbsp; Click View Notification to see the notifications </font>
+						<br> <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<font size="2">•&nbsp; Click Log Out to logout of the system</font>							
+					</td>	
+				</tr>
+			</tbody>
+		</table>
+		<br> <br>			
+	</div>
 </body>
 </html>

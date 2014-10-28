@@ -26,7 +26,7 @@
 			str+="</table>";
 			out.println(str);
 		}else{
-			out.println("No homeworks right now!");
+			out.println("No homework right now!");
 		}
 	%>
 			
