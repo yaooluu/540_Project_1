@@ -31,19 +31,34 @@
 					<jsp:include page="../jsp/menuStu.jsp"/>
 					</td>
 					<td style="width: 2px; background-color: grey;"></td>
-					<td style="width: 686px;">
-						<br> <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<font size="2">•&nbsp; Click Home Page to go back the the logged in page.</font>							
-						<br> <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<font size="2">•&nbsp; Click View Scores to view how much score you have gotten.</font>
-						<br> <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<font size="2">•&nbsp; Click Attempt Homework to do a new Homework or redo an old one</font> 
-						<br> <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-						<font size="2">•&nbsp; Click View Past Submission to see all the results you have submitted</font>
-						<br> <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<font size="2">•&nbsp; Click View Notification to see the notifications </font>
-						<br> <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<font size="2">•&nbsp; Click Log Out to logout of the system</font>							
+					<td style="width: 20px;"></td>
+					<td style="width: 666px;">
+						<table><tbody>
+							<tr><td><br></td></tr>
+							<tr><td>
+								<font size="2">•&nbsp; Click Home Page to go back the the logged in page.</font>
+							</td></tr>
+							<tr><td><br></td></tr>
+							<tr><td>
+								<font size="2">•&nbsp; Click View Scores to view how much score you have gotten.</font>
+							</td></tr>
+							<tr><td><br></td></tr>
+							<tr><td>
+								<font size="2">•&nbsp; Click Attempt Homework to do a new Homework or redo an old one</font> 
+							</td></tr>
+							<tr><td><br></td></tr>
+							<tr><td>
+								<font size="2">•&nbsp; Click View Past Submission to see all the results you have submitted</font>
+							</td></tr>
+							<tr><td><br></td></tr>
+							<tr><td>
+								<font size="2">•&nbsp; Click View Notification to see the notifications </font>
+							</td></tr>
+							<tr><td><br></td></tr>
+							<tr><td>
+								<font size="2">•&nbsp; Click Log Out to logout of the system</font>	
+							</td></tr>
+						</tbody></table>												
 					</td>	
 				</tr>
 			</tbody>

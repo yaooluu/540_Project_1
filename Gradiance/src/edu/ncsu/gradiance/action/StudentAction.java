@@ -221,9 +221,9 @@ public class StudentAction {
 			["Incorrect ans 4,short explanation 4", "Incorrect ans 3,short explanation 3", "Incorrect ans 6,short explanation 6", "Correct ans 2,no"],
 			["Incorrect ans 6,short explanation 6", "Incorrect ans 5,short explanation 5", "Incorrect ans 4,short explanation 4", "Correct ans 1,no"],
 			["Incorrect ans 6v2,short explanation 6", "Correct ans 3v2,no", "Incorrect ans 4v2,short explanation 4", "Incorrect ans 5v2,short explanation 5"],
-			[3, 3, 1],	//Correct Answer Positions
+			["3, 3, 1"],	//Correct Answer Positions
 			[3, 1],		//corPts and penalPts
-			[1, 1, 1]	//aid,seed,qid
+			["1, 1, 1","1, 1, 1","1, 1, 1"]	//idList(aid,seed,qid)
 		]
 	 */
 	public List<List<String>> generateQuestion(String aid) {		
@@ -234,7 +234,7 @@ public class StudentAction {
 		List<List<String>> answers = new ArrayList<List<String>>();
 		List<String> ansPosList = new ArrayList<String>();
 		List<String> points = new ArrayList<String>();
-		List<String> infos = new ArrayList<String>(); //contains
+		List<String> idList = new ArrayList<String>(); //contains
 
 		
 		try {
@@ -318,6 +318,7 @@ public class StudentAction {
 				//append pos to answerPosList, add four choices to answers
 				ansPosList.add(""+pos);
 				answers.add(wrongs);
+				idList.add(aid+","+qid+","+seed);
 			}
 			conn.close();
 		} catch(Exception e){
@@ -330,6 +331,7 @@ public class StudentAction {
 			homeworks.add(answers.get(i));
 		homeworks.add(ansPosList);
 		homeworks.add(points);
+		homeworks.add(idList);
 
 		for(int i=0;i<homeworks.size();i++)
 			System.out.println(homeworks.get(i).size()+" @ "+homeworks.get(i));

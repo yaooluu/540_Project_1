@@ -8,19 +8,40 @@
 <body>
 <table>
 	<tbody>
-		<tr><td style="width: 200px;">
-			<br><br>•&nbsp; <a href="<%=request.getContextPath()+"/rest/index"%>" style="color: black;">Home Page</a>
-			<br><br> <form id="myForm_1" action="<%=request.getContextPath()+"/rest/student/viewScoreList"%>" method="post">
+		<tr><td style="width: 220px;">
+		    <table><tbody>
+		    <tr><td><br></td></tr> 
+		    <tr><td>
+		    	•&nbsp; <a href="<%=request.getContextPath()+"/rest/index"%>" style="color: black;">Home Page</a>
+		    </td></tr>
+		    <tr><td><br></td></tr>
+		    <tr><td>
+		    	<form id="myForm_1" action="<%=request.getContextPath()+"/rest/student/viewScoreList"%>" method="post">
 					•&nbsp; <a href="#" style="color: black;" onclick="document.getElementById('myForm_1').submit()">View Scores</a>
 				</form>
-				<br> <form id="myForm_2" action="<%=request.getContextPath()+"/rest/student/viewHomeworkList"%>" method="post">
+		    </td></tr>
+		    <tr><td><br></td></tr>
+		    <tr><td>
+		    	<form id="myForm_2" action="<%=request.getContextPath()+"/rest/student/viewHomeworkList"%>" method="post">
 					•&nbsp; <a href="#" style="color: black;" onclick="document.getElementById('myForm_2').submit()">Attempt Homework</a>
-				</form> 
-				<br> <form id="myForm_3" action="<%=request.getContextPath()+"/rest/student/viewSubmissionList"%>" method="post">
+				</form>
+		    </td></tr>
+		    <tr><td><br></td></tr>
+		    <tr><td>
+		    	<form id="myForm_3" action="<%=request.getContextPath()+"/rest/student/viewSubmissionList"%>" method="post">
 					•&nbsp; <a href="#" style="color: black;" onclick="document.getElementById('myForm_3').submit()">View Submissions</a>
-				</form> 
-				<br> •&nbsp; <a href="http://localhost:8080/Gradiance/jsp/viewNotifStu.jsp" style="color: black;">View Notification</a>  
-			<br> <br> •&nbsp; <a href="#" style="color: black;">Log Out</a>
+				</form>
+		    </td></tr>
+		    <tr><td><br></td></tr>
+		    <tr><td>
+		    	•&nbsp; <a href="http://localhost:8080/Gradiance/jsp/viewNotifStu.jsp" style="color: black;">View Notification</a>
+		    </td></tr>
+		    <tr><td><br></td></tr>
+		    <tr><td>
+		    	•&nbsp; <a href="#" style="color: black;">Log Out</a>
+		    </td></tr>
+		    </tbody></table>
+			
 		</td></tr>
 		
 		<tr><td>&nbsp;</td></tr>
