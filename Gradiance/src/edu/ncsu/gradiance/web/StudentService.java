@@ -84,22 +84,6 @@ public class StudentService {
 		request.setAttribute("homeworkList", homeworkList);
 	    return Response.ok(new Viewable("/viewHwStu.jsp", null)).build();
 	}
-	
-	/**
-	 * @author yaolu
-	 * @function attempt homework
-	 */
-	@POST
-	@Path("attemptHomework")
-	public Response attemptHomework(@Context HttpServletRequest request,
-			@FormParam("aid") String aid) throws Exception {  
-		System.out.println("/student/attemptHomework called at: "+System.currentTimeMillis());
-		
-		List<List<String>> homeworkContent = new StudentAction().generateQuestion(aid);
-		
-		request.setAttribute("homeworkContent", homeworkContent);
-	    return Response.ok(new Viewable("/atmpHwStu.jsp", null)).build();
-	}
 
 	/**
 	 * @author yaolu
@@ -119,4 +103,39 @@ public class StudentService {
 	    return Response.ok(new Viewable("/viewSubStu.jsp", null)).build();
 	}
 
+	/**
+	 * @author yaolu
+	 * @function attempt homework
+	 */
+	@POST
+	@Path("attemptHomework")
+	public Response attemptHomework(@Context HttpServletRequest request,
+			@FormParam("aid") String aid) throws Exception {  
+		System.out.println("/student/attemptHomework called at: "+System.currentTimeMillis());
+		
+		List<List<String>> homeworkContent = new StudentAction().generateQuestion(aid);
+		
+		request.setAttribute("homeworkContent", homeworkContent);
+	    return Response.ok(new Viewable("/atmpHwStu.jsp", null)).build();
+	}
+	
+	/**
+	 * @author yaolu
+	 * @function submit homework
+	 */
+	@POST
+	@Path("submitHomework")
+	public Response submitHomework(@Context HttpServletRequest request,
+			@FormParam("ansPosList") String ansPosList,@FormParam("points") String points,
+			@FormParam("userAnsAndIdLists") String userAnsAndIdLists) throws Exception {  
+		System.out.println("/student/submitHomework called at: "+System.currentTimeMillis());
+		
+		System.out.println(ansPosList);
+		System.out.println(points);
+		System.out.println(userAnsAndIdLists);
+		//List<List<String>> homeworkContent = new StudentAction().generateQuestion(aid);
+		
+		//request.setAttribute("homeworkContent", homeworkContent);
+	    return Response.ok(new Viewable("/atmpHwStu.jsp", null)).build();
+	}
 }

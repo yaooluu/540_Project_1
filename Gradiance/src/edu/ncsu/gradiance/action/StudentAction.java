@@ -221,9 +221,10 @@ public class StudentAction {
 			["Incorrect ans 4,short explanation 4", "Incorrect ans 3,short explanation 3", "Incorrect ans 6,short explanation 6", "Correct ans 2,no"],
 			["Incorrect ans 6,short explanation 6", "Incorrect ans 5,short explanation 5", "Incorrect ans 4,short explanation 4", "Correct ans 1,no"],
 			["Incorrect ans 6v2,short explanation 6", "Correct ans 3v2,no", "Incorrect ans 4v2,short explanation 4", "Incorrect ans 5v2,short explanation 5"],
-			["3, 3, 1"],	//Correct Answer Positions
-			[3, 1],		//corPts and penalPts
-			["1, 1, 1","1, 1, 1","1, 1, 1"]	//idList(aid,seed,qid)
+			["1, 1, 1","1, 1, 1","1, 1, 1"]			//idList(aid,seed,qid)
+			["3, 3, 1"],							//Correct Answer Positions
+			["3, 1"],								//corPts and penalPts
+			
 		]
 	 */
 	public List<List<String>> generateQuestion(String aid) {		
@@ -234,8 +235,9 @@ public class StudentAction {
 		List<List<String>> answers = new ArrayList<List<String>>();
 		List<String> ansPosList = new ArrayList<String>();
 		List<String> points = new ArrayList<String>();
-		List<String> idList = new ArrayList<String>(); //contains
+		List<String> idList = new ArrayList<String>(); 
 
+		String ansPosStr = "";
 		
 		try {
 			dbc = new DBConnection();
@@ -246,8 +248,9 @@ public class StudentAction {
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			ResultSet rs0 = stmt.executeQuery();
 			if(rs0.next()) {
-				points.add(""+rs0.getInt("corrPts"));
-				points.add(""+rs0.getInt("penalPts"));
+				//points.add(""+rs0.getInt("corrPts"));
+				//points.add(""+rs0.getInt("penalPts"));
+				points.add(rs0.getInt("corrPts")+"@"+rs0.getInt("penalPts"));
 			}
 					
 			//find all questions of homework by aid
@@ -317,6 +320,7 @@ public class StudentAction {
 				
 				//append pos to answerPosList, add four choices to answers
 				ansPosList.add(""+pos);
+				
 				answers.add(wrongs);
 				idList.add(aid+","+qid+","+seed);
 			}
@@ -325,13 +329,21 @@ public class StudentAction {
 			e.printStackTrace();
 		}
 		
+		//change ansPos ["1","2","3"] to ["1@2@3"]
+		for(int i=0;i<ansPosList.size();i++) {
+			ansPosStr += ansPosList.get(i) + "@";
+		}
+		ansPosList.clear();
+		ansPosList.add(ansPosStr.substring(0,ansPosStr.length()-1));
+		
 		//add all lists into homeworks
 		homeworks.add(questions);
 		for(int i=0;i<answers.size();i++)
 			homeworks.add(answers.get(i));
+
+		homeworks.add(idList);
 		homeworks.add(ansPosList);
 		homeworks.add(points);
-		homeworks.add(idList);
 
 		for(int i=0;i<homeworks.size();i++)
 			System.out.println(homeworks.get(i).size()+" @ "+homeworks.get(i));
@@ -409,11 +421,11 @@ public class StudentAction {
 		System.out.println("test StudentAction");
 		StudentAction sa = new StudentAction();
 		//sa.viewScoreList("mjones", "CSC540");
-		System.out.println(sa.viewSubmissionList("mjones", "CSC540"));
-		/*
+		//System.out.println(sa.viewSubmissionList("mjones", "CSC540"));
+		///*
 		List<List<String>> homeworks = sa.generateQuestion("1");
-		for(int i=0;i<homeworks.size();i++)
-			System.out.println(homeworks.get(i));
-			*/
+		for(int i=0;i<homeworks.size();i++);
+			//System.out.println(homeworks.get(i));
+			//*/
 	}
 }
