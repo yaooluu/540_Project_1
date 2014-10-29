@@ -174,7 +174,7 @@ public class ProfessorAction {
 			//stmt.setString(4, aid);
 			
 			if(stmt.executeUpdate() > 0)
-				editHomeworkResult = "Homework Edited!";
+				editHomeworkResult = "Homework Updated!";
 			
 			conn.close();	
 		} catch(Exception e){
@@ -186,37 +186,58 @@ public class ProfessorAction {
 	/**
 	 * @author yaolu
 	 * @function get homework basic info by aid
-	 * @return 
+	 * @return  ["title@tstart@tend@minDif@maxDif@retry@corrPts@penalPts@scoreSelect",
+	 * 			 "tid1,tid2,tid3...",
+	 *           "topic1@topic2@topic3@..."]
 	 */
-	public String getHomeworkBasic(String aid) {		
-		String sql = "select title,tstart,tend,minDif,maxDif,retry,corrPts,penalPts,scoreSelect from assessment where aid="+aid;
-		String homework = "";
+	public List<String> getHomeworkBasic(String aid) {		
+		String sql = "select title,tstart,tend,minDif,maxDif,retry,corrPts,penalPts,scoreSelect,tidList from assessment where aid="+aid;
+		List<String> homeworkBasic = new ArrayList<String>();
 		
+		String currentLine = "";
 		try {
 			dbc = new DBConnection();
 			conn = dbc.getConnection();
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			
-			//stmt.setString(1, aid);
+			String tidList = "";
 			ResultSet rs = stmt.executeQuery();
 			if(rs.next()) {
 				for(int i=1;i<=9;i++)
-					homework += rs.getString(i) + ",";
+					currentLine += rs.getString(i) + "@";
+				currentLine += aid;
+				homeworkBasic.add(currentLine);
+				
+				tidList = rs.getString(10);
+				homeworkBasic.add(tidList);
 			}
-			homework = homework + aid;
+			
+			//get topic names
+			if(tidList!=null && tidList.length()>0) {
+				String[] tids = tidList.split(",");
+				currentLine = "";
+				for(int i=0;i<tids.length;i++) {
+					sql = "select name from topic where tid="+tids[i];
+					stmt = conn.prepareStatement(sql);
+					ResultSet rs2 = stmt.executeQuery();
+					if(rs2.next())
+						currentLine += rs2.getString("name") + "@";
+				}
+				homeworkBasic.add(currentLine.substring(0,currentLine.length()-1));
+			}
 			
 			conn.close();	
 		} catch(Exception e){
 			e.printStackTrace();
 		}
-		System.out.println("getHomeworkBasic:"+homework);
-		return homework;
+		//System.out.println("getHomeworkBasic:"+homeworkBasic);
+		return homeworkBasic;
 	}
 	
 	/**
 	 * @author yaolu
-	 * @function get homework basic info by aid
-	 * @return 
+	 * @function get homework questions info by aid
+	 * @return "qid@selected@content@qid@selected@content@aid"
 	 */
 	public String getHomeworkQuestion(String aid) {		
 		String sql = "select minDif,maxDif,tidList from assessment where aid="+aid;
@@ -271,8 +292,10 @@ public class ProfessorAction {
 					
 					homeworkQuestion += qid + "@" + selected + "@" + content+"@";
 				}
-				homeworkQuestion = homeworkQuestion.substring(0,homeworkQuestion.length()-1);
-				System.out.println(homeworkQuestion);
+				
+				//homeworkQuestion = homeworkQuestion.substring(0,homeworkQuestion.length()-1);
+				homeworkQuestion += aid;
+				//System.out.println(homeworkQuestion);
 			}			
 			conn.close();	
 		} catch(Exception e){
@@ -280,6 +303,48 @@ public class ProfessorAction {
 		}
 		
 		return homeworkQuestion;
+	}
+
+	/**
+	 * @author yaolu
+	 * @function get homework basic info by aid
+	 * @return 
+	 */
+	public String editHomeworkQuestion(String aid, String selectedQidList) {		
+		String sql = "delete from asshasq where aid="+aid;
+		String editQsResult = "Edit Question Failed!";
+		String[] qids = selectedQidList.split(",");
+		boolean flag = true;
+		
+		//elimate duplicate qid
+		List<String> qidList = new ArrayList<String>();
+		for(int i=0;i<qids.length;i++)
+			if(qidList.contains(qids[i])==false)
+				qidList.add(qids[i]);
+		
+		//System.out.println("selectedQidList:"+selectedQidList);
+		try {
+			dbc = new DBConnection();
+			conn = dbc.getConnection();
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			
+			if(stmt.executeUpdate()>=0 && selectedQidList.length()>0) {
+				sql = "insert into asshasq values(?,?)";
+				
+				for(int i=0;i<qidList.size();i++) {
+					stmt = conn.prepareStatement(sql);
+					stmt.setInt(1, Integer.parseInt(aid));
+					stmt.setInt(2, Integer.parseInt(qidList.get(i)));
+					if(stmt.executeUpdate() < 0) flag=false;
+				}
+			}
+			conn.close();	
+		} catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		if(flag) editQsResult = "Edit Question Succeed!";
+		return editQsResult;
 	}
 	
 	public static void main(String[] args) {

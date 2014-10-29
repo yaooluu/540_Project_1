@@ -88,7 +88,7 @@ public class ProfessorService {
 
 	/**
 	 * @author yaolu
-	 * @function get homework list(aid,title)
+	 * @function get homework list(aid,title), and basic info(if aid)
 	 */
 	@POST
 	@Path("editHwProf")
@@ -98,41 +98,14 @@ public class ProfessorService {
 		String cid = (String)request.getSession().getAttribute("cid");
 		request.setAttribute("homeworkList", new ProfessorAction().getHomeworkList(cid));
 		
-	    return Response.ok(new Viewable("/editHwProf.jsp", null)).build();
-	}
-	
-	/**
-	 * @author yaolu
-	 * @function get homework list(aid,title)
-	 */
-	@POST
-	@Path("addRmQsProf")
-	public Response addRmQsProf(@Context HttpServletRequest request,@FormParam("aid") String aid) throws Exception { 
-		System.out.println("/prof/addRmQsProf called at: "+System.currentTimeMillis());
-			
-		String cid = (String)request.getSession().getAttribute("cid");
-		request.setAttribute("homeworkList", new ProfessorAction().getHomeworkList(cid));
+		if(aid!=null && aid.length()>0) {
+			List<String> homeworkBasic = new ProfessorAction().getHomeworkBasic(aid);
+			request.setAttribute("homeworkBasic", homeworkBasic);	
+		}
 		
-	    return Response.ok(new Viewable("/addRmQsProf.jsp", null)).build();
+	    return Response.ok(new Viewable("/editHwProf.jsp", null)).build();
 	}
 
-	/**
-	 * @author yaolu
-	 * @function get homework basic
-	 */
-	@POST
-	@Path("getHomeworkBasic")
-	public Response getHomeworkBasic(@Context HttpServletRequest request,@FormParam("aid") String aid) throws Exception { 
-		System.out.println("/prof/getHomeworkBasic called at: "+System.currentTimeMillis());
-		
-		String cid = (String)request.getSession().getAttribute("cid");
-		request.setAttribute("homeworkList", new ProfessorAction().getHomeworkList(cid));
-		
-		String homeworkBasic = new ProfessorAction().getHomeworkBasic(aid);
-		request.setAttribute("homeworkBasic", homeworkBasic);	
-			
-	    return Response.ok(new Viewable("/editHwProf.jsp", null)).build();
-	}
 	
 	
 	/**
@@ -158,25 +131,57 @@ public class ProfessorService {
 	    return Response.ok(new Viewable("/editHwProf.jsp", null)).build();
 	}
 	
+	
 	/**
 	 * @author yaolu
-	 * @function get homework basic and questions with difficulty range
+	 * @function get homework list(aid,title)
 	 */
 	@POST
-	@Path("getHomeworkQuestion")
-	public Response getHomeworkQuestion(@Context HttpServletRequest request,@FormParam("aid") String aid) throws Exception { 
-		System.out.println("/prof/getHomeworkBasic called at: "+System.currentTimeMillis());
+	@Path("addRmQsProf")
+	public Response addRmQsProf(@Context HttpServletRequest request,
+			@FormParam("aid") String aid, @FormParam("selectedQidList") String selectedQidList) throws Exception { 
+		System.out.println("/prof/addRmQsProf called at: "+System.currentTimeMillis());
+			
+		String cid = (String)request.getSession().getAttribute("cid");
+		request.setAttribute("homeworkList", new ProfessorAction().getHomeworkList(cid));
+		
+		if(aid!=null && aid.length()>0) {
+			List<String> homeworkBasic = new ProfessorAction().getHomeworkBasic(aid);
+			request.setAttribute("homeworkBasic", homeworkBasic);	
+			
+			String homeworkQuestion = new ProfessorAction().getHomeworkQuestion(aid);
+			request.setAttribute("homeworkQuestion", homeworkQuestion);	
+			
+			if(selectedQidList!=null && selectedQidList.length()>0) {
+				String editQsResult = new ProfessorAction().editHomeworkQuestion(aid,selectedQidList);
+				request.setAttribute("editQsResult", editQsResult);	
+			}
+		}	
+	    return Response.ok(new Viewable("/addRmQsProf.jsp", null)).build();
+	}
+	
+	
+	/**
+	 * @author yaolu
+	 * @function view homework's 
+	 */
+	@POST
+	@Path("viewHwProf")
+	public Response viewHwProf(@Context HttpServletRequest request,@FormParam("aid") String aid) throws Exception { 
+		System.out.println("/prof/viewHwProf called at: "+System.currentTimeMillis());
 		
 		String cid = (String)request.getSession().getAttribute("cid");
 		request.setAttribute("homeworkList", new ProfessorAction().getHomeworkList(cid));
 		
-		String homeworkBasic = new ProfessorAction().getHomeworkBasic(aid);
-		request.setAttribute("homeworkBasic", homeworkBasic);	
-		
-		String homeworkQuestion = new ProfessorAction().getHomeworkQuestion(aid);
-		request.setAttribute("homeworkQuestion", homeworkQuestion);	
+		if(aid!=null && aid.length()>0) {
+			List<String> homeworkBasic = new ProfessorAction().getHomeworkBasic(aid);
+			request.setAttribute("homeworkBasic", homeworkBasic);	
 			
-	    return Response.ok(new Viewable("/addRmQsProf.jsp", null)).build();
+			String homeworkQuestion = new ProfessorAction().getHomeworkQuestion(aid);
+			request.setAttribute("homeworkQuestion", homeworkQuestion);	
+		}
+		
+	    return Response.ok(new Viewable("/viewHwProf.jsp", null)).build();
 	}
 	
 }

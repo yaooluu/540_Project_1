@@ -7,6 +7,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -383,6 +384,15 @@ public class StudentAction {
 			e.printStackTrace();
 		}
 		
+		//System.out.println(questions.size()+"#"+answers.size()+"#"+idList.size()+"#"+ansIdList.size()+"#"+ansPosList.size());
+		//shuffle question sequence and corresponding items
+		long seed = System.nanoTime();
+		Collections.shuffle(questions, new Random(seed));
+		Collections.shuffle(answers, new Random(seed));
+		Collections.shuffle(idList, new Random(seed));
+		Collections.shuffle(ansIdList, new Random(seed));
+		Collections.shuffle(ansPosList, new Random(seed));
+		
 		//change ansPos ["1","2","3"] to ["1@2@3"]
 		for(int i=0;i<ansPosList.size();i++) {
 			ansPosStr += ansPosList.get(i) + "@";
@@ -400,8 +410,9 @@ public class StudentAction {
 		homeworks.add(ansPosList);
 		homeworks.add(points);
 
-		for(int i=0;i<homeworks.size();i++)
-			System.out.println(homeworks.get(i).size()+" @ "+homeworks.get(i));
+		//System.out.println("=======generate homeworks========");
+		//for(int i=0;i<homeworks.size();i++)
+			//System.out.println(homeworks.get(i).size()+" @ "+homeworks.get(i));
 		return homeworks;
 	}
 	
@@ -480,15 +491,15 @@ public class StudentAction {
 	 * 			useruserAnsAndIdLists 
 	 * 								consists of "userAnsPos@idList1@idList2...@ansIdList1@ansIdList2@...@numOfQs"
 	 * 							   it's data like "0,0,0,@1,1,1@1,2,1@1,3,1@2,5,4,6@5,6,1,7@6,2,7,5@3"
-	 * @return aid of this submission
+	 * @return atid of this submission
 	 */
 	public String submitHomework(String sid, String ansPosList, String points, String userAnsAndIdLists) {		
-		String sql = "select max(atid) from attempt";
-		String aid = "";
+		String sql = "select max(atid) from attempt where sid="+sid;
+		int atid = -1;
 		
 		String[] infos = userAnsAndIdLists.split("@");
 		
-		aid = infos[1].split(",")[0];
+		String aid = infos[1].split(",")[0];
 		String[] corAnsPos = ansPosList.split("@");
 		String[] usrAnsPos = infos[0].split(",");
 		int numOfQs = Integer.parseInt(infos[infos.length-1]);
@@ -497,7 +508,7 @@ public class StudentAction {
 			dbc = new DBConnection();
 			conn = dbc.getConnection();
 
-			int atid = -1;
+
 			
 			//get new insert atid
 			PreparedStatement stmt = conn.prepareStatement(sql);
@@ -542,28 +553,135 @@ public class StudentAction {
 		} catch(Exception e){
 			e.printStackTrace();
 		}
-		return aid;
+		return atid+"";
 	}
 	
 	/**
 	 * @author yaolu
 	 * @function submit homework to database table attempt
-	 * @return aid of this submission
+	 * @return List<String> submissionDetail, structure like following:
+	 * 	[
+	 *		"Question 1@Question 2@Question 3",
+	 *		"hint 1@hint 2@hint 3",
+			"Incorrect ans 4@Incorrect ans 3@Incorrect ans 6",
+			"Incorrect ans 6@Incorrect ans 5@Incorrect ans 4",
+			"Incorrect ans 6v2@Correct ans 3v2@Incorrect ans 4v2@Incorrect ans 5v2",
+			"0@1@2",					//user's answers
+			"expl1@expl2@expl3",		//each question's expln, depend on correctness	
+			"yourScore@totalScore@subtime"
+		]
 	 */
-	public List<String> viewSubmissionDetail(String aid, String sid) {		
-		String sql = "";
+	public List<String> viewSubmissionDetail(String atid, String sid) {		
+		String sql = "select aid,seed,qid,subtime,answer,ansList,point from attempt where atid="+atid+" and sid=?";
 		List<String> submissionDetail = new ArrayList<String>();
+		
+		String tmpQs = "";
+		String tmpHints = "";
+		List<String> tmpAnsList = new ArrayList<String>();
+		String userAns = "";
+		String explns = "";
+		int yourScore = 0;
+		int totalScore = 0;
+		String subtime = "N/A";
 		
 		
 		try {
 			dbc = new DBConnection();
 			conn = dbc.getConnection();
 			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setString(1, sid);
+			ResultSet rs = stmt.executeQuery();
+	
+			while(rs.next()) {
+				int aid = rs.getInt("aid");
+				int qid = rs.getInt("qid");
+				int seed = rs.getInt("seed");
+				subtime = rs.getString("subtime");
+				subtime = subtime.substring(0,subtime.length()-2);
+				int answer = rs.getInt("answer");
+				String ansList = rs.getString("ansList");
+				int point = rs.getInt("point");
+				
+				userAns += answer+"@";
+				yourScore += point;
+				
+				//select question content by (qid,seed)
+				sql = "select content,hint,explanation from seed where qid="+qid+" and seed="+seed;
+				stmt = conn.prepareStatement(sql);
+				ResultSet rs2 = stmt.executeQuery();
+				if(rs2.next()) {
+					String content = rs2.getString("content");
+					String hint = rs2.getString("hint");
+					String explanation = rs2.getString("explanation");
+					
+					tmpQs += content+"@";
+					tmpHints += hint+"@";
+					if(point>0)
+						explns += explanation+"@";
+				}			
+				
+				//get answers by (qid,seed,ansid)
+				String[] ansId = ansList.split(",");
+				String answers = "";
+				
+				for(int i=0;i<ansId.length;i++) {
+					sql = "select content, expln from answer where qid="+qid+" and seed="+seed+" and ansid="+ansId[i];
+					stmt = conn.prepareStatement(sql);
+					ResultSet rs3 = stmt.executeQuery();
+					if(rs3.next()) {
+						String content = rs3.getString("content");
+						String expln = rs3.getString("expln");
+						answers += content+"@";
+						if(answer==i && point<=0)	//user chose this wrong answer, need to show this answer's expln
+							explns += expln+"@";
+					}
+				}
+				tmpAnsList.add(answers);
+				
+				//get totalScore
+				int corrPts = 0;
+				sql = "select corrPts from assessment where aid="+aid;
+				stmt = conn.prepareStatement(sql);
+				ResultSet rs4 = stmt.executeQuery();
+				if(rs4.next())
+					corrPts = rs4.getInt("corrPts");
+								
+				sql = "select count(*) from asshasq where aid="+aid;
+				stmt = conn.prepareStatement(sql);
+				ResultSet rs5 = stmt.executeQuery();
+				if(rs5.next()) {
+					int total = corrPts * rs5.getInt(1);
+					if(total>0)
+						totalScore = total;
+				}
+			}
 			
 			conn.close();
 		} catch(Exception e){
 			e.printStackTrace();
 		}
+		
+		submissionDetail.add(tmpQs);
+		submissionDetail.add(tmpHints);
+		for(int i=0;i<tmpAnsList.size();i++)
+			submissionDetail.add(tmpAnsList.get(i));
+		submissionDetail.add(userAns);
+		submissionDetail.add(explns);
+		
+		//cut tail @
+		for(int i=0;i<submissionDetail.size();i++) {
+			String s = submissionDetail.get(i);
+			s = s.substring(0,s.length()-1);
+			submissionDetail.remove(i);
+			submissionDetail.add(i, s);
+		}
+		
+		submissionDetail.add(yourScore+"@"+totalScore+"@"+subtime);
+		
+		//System.out.println("=======submission detail========");
+		//for(int i=0;i<submissionDetail.size();i++)
+			//System.out.println(submissionDetail.get(i));
+		
 		return submissionDetail;
 	}
 
@@ -574,9 +692,14 @@ public class StudentAction {
 		//sa.viewScoreList("mjones", "CSC540");
 		//System.out.println(sa.viewSubmissionList("mjones", "CSC540"));
 		///*
-		List<List<String>> homeworks = sa.generateQuestion("1");
+		//List<List<String>> homeworks = sa.generateQuestion("1");
 		//for(int i=0;i<homeworks.size();i++)
 			//System.out.println(homeworks.get(i));
+			//*/
+		
+		List<String> submissionDetail = sa.viewSubmissionDetail("3","mjones");
+		for(int i=0;i<submissionDetail.size();i++)
+			System.out.println(submissionDetail.get(i));
 			//*/
 	}
 }

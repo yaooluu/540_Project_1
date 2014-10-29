@@ -133,14 +133,15 @@ public class StudentService {
 			@FormParam("userAnsAndIdLists") String userAnsAndIdLists) throws Exception {  
 		System.out.println("/student/submitHomework called at: "+System.currentTimeMillis());
 		
-		System.out.println(ansPosList);
-		System.out.println(points);
-		System.out.println(userAnsAndIdLists);
+		//System.out.println(ansPosList);
+		//System.out.println(points);
+		//System.out.println(userAnsAndIdLists);
 		
 		String sid = (String) request.getSession().getAttribute("curUser"); 
-		String aid = new StudentAction().submitHomework(sid,ansPosList,points,userAnsAndIdLists);
+		String atid = new StudentAction().submitHomework(sid,ansPosList,points,userAnsAndIdLists);
 		
-		List<String> submissionDetail = new StudentAction().viewSubmissionDetail(aid, sid);
+		List<String> submissionDetail = new StudentAction().viewSubmissionDetail(atid, sid);
+		request.setAttribute("submissionDetail", submissionDetail);
 	
 	    return Response.ok(new Viewable("/viewSubDtlStu.jsp", null)).build();
 	}
@@ -152,11 +153,11 @@ public class StudentService {
 	@POST
 	@Path("viewSubmissionDetail")
 	public Response viewSubmissionDetail(@Context HttpServletRequest request,
-			@FormParam("aid") String aid) throws Exception {  
+			@FormParam("atid") String atid) throws Exception {  
 		System.out.println("/student/viewSubmissionDetail called at: "+System.currentTimeMillis());
 		
 		String sid = (String) request.getSession().getAttribute("curUser");
-		List<String> submissionDetail = new StudentAction().viewSubmissionDetail(aid, sid);
+		List<String> submissionDetail = new StudentAction().viewSubmissionDetail(atid, sid);
 		
 		request.setAttribute("submissionDetail", submissionDetail);
 	    return Response.ok(new Viewable("/viewSubDtlStu.jsp", null)).build();

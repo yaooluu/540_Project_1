@@ -79,9 +79,9 @@
 												    +  "</font></td><td align='center' style='background-color: lightgray; white-space: nowrap; width: 52px;'><font size='2'>"
 												    +  s[5]
 												    +  "</font></td><td align='center' style='background-color: lightgray; white-space: nowrap; width: 57px;'>"
-												    +  "<form id='"+s[0]+"' action='++++++++++' method='post'>"
+												    +  "<form id='"+s[0]+"' action='"+request.getContextPath()+"/rest/student/viewSubmissionDetail' method='post'>"
 												    +  "<a href='#' onclick=\"document.getElementById('"+s[0]+"').submit()\"><font size='2'>Submission</font></a>"
-												    +  "<input type='hidden' name='aid' value='"+s[0]+"'/>"
+												    +  "<input type='hidden' name='atid' value='"+s[0]+"'/>"
 												    +  "</form></td><td style='width: 50px;'>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>";
 												out.println(str);
 											}

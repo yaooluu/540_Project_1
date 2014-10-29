@@ -1,11 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-	<link href="<%=request.getContextPath()+"/css/style.css"%>" rel="stylesheet" type="text/css" />
-</head>
 
-<body>
 <table>
 <tbody>
 	<tr><td style="width: 220px;">
@@ -20,19 +14,21 @@
 		    </td></tr>
 		    <tr><td><br></td></tr>
 		    <tr><td>
-		    	<form id="myForm1" action="<%=request.getContextPath()+"/rest/prof/addRmQsProf"%>" method="post">
-					  •&nbsp; <a href="#" style="color: black;" onclick="document.getElementById('myForm1').submit()">Add/Remove Questions</a>
+		    	<form id="addRmQsProfForm" action="<%=request.getContextPath()+"/rest/prof/addRmQsProf"%>" method="post">
+					  •&nbsp; <a href="#" style="color: black;" onclick="document.getElementById('addRmQsProfForm').submit()">Add/Remove Questions</a>
 				</form>
 		    </td></tr>
 		    <tr><td><br></td></tr>
 		    <tr><td>
-		    	<form id="myForm" action="<%=request.getContextPath()+"/rest/prof/editHwProf"%>" method="post">
-					  •&nbsp; <a href="#" style="color: black;" onclick="document.getElementById('myForm').submit()">Edit Homework</a>
+		    	<form id="editHwProfForm" action="<%=request.getContextPath()+"/rest/prof/editHwProf"%>" method="post">
+					  •&nbsp; <a href="#" style="color: black;" onclick="document.getElementById('editHwProfForm').submit()">Edit Homework</a>
 				</form>
 		    </td></tr>
 		    <tr><td><br></td></tr>
 		    <tr><td>
-		    	•&nbsp; <a href="<%=request.getContextPath()+"/jsp/viewHwProf.jsp" %>" style="color: black;">View Homework</a>
+		    	<form id="viewHwProfForm" action="<%=request.getContextPath()+"/rest/prof/viewHwProf"%>" method="post">
+					  •&nbsp; <a href="#" style="color: black;" onclick="document.getElementById('viewHwProfForm').submit()">View Homework</a>
+				</form>
 		    </td></tr>
 		    <tr><td><br></td></tr>
 		    <tr><td>
@@ -59,5 +55,3 @@
 		</tr>
 	</tbody>
 </table>
-</body>
-</html>

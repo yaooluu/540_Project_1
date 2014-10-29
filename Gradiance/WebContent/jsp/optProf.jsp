@@ -23,7 +23,6 @@
 		<font size="4"><br>Database Management Systems</font>
 	</div>
 
-	<form action="<%=request.getContextPath()+"/rest/login" %>" method="post">
 		<div align=center>
 			<table>
 				<tbody valign="top">
@@ -76,7 +75,6 @@
 			</table>
 			<br> <br>			
 		</div>
-	</form>
 
 </body>
 </html>
