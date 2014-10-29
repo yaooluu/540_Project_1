@@ -398,7 +398,8 @@ public class StudentAction {
 			ansPosStr += ansPosList.get(i) + "@";
 		}
 		ansPosList.clear();
-		ansPosList.add(ansPosStr.substring(0,ansPosStr.length()-1));
+		if(ansPosStr.length()>0)
+			ansPosList.add(ansPosStr.substring(0,ansPosStr.length()-1));
 		
 		//add all lists into homeworks
 		homeworks.add(questions);
@@ -413,7 +414,12 @@ public class StudentAction {
 		//System.out.println("=======generate homeworks========");
 		//for(int i=0;i<homeworks.size();i++)
 			//System.out.println(homeworks.get(i).size()+" @ "+homeworks.get(i));
-		return homeworks;
+		
+		//make sure homeworks has questions, or return null
+		if(ansPosStr.length()>0)
+			return homeworks;
+		else 
+			return null;
 	}
 	
 	/**
@@ -494,7 +500,7 @@ public class StudentAction {
 	 * @return atid of this submission
 	 */
 	public String submitHomework(String sid, String ansPosList, String points, String userAnsAndIdLists) {		
-		String sql = "select max(atid) from attempt where sid="+sid;
+		String sql = "select max(atid) from attempt where sid=?";
 		int atid = -1;
 		
 		String[] infos = userAnsAndIdLists.split("@");
@@ -508,10 +514,9 @@ public class StudentAction {
 			dbc = new DBConnection();
 			conn = dbc.getConnection();
 
-
-			
 			//get new insert atid
 			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setString(1, sid);
 			ResultSet rs = stmt.executeQuery();
 			if(rs.next())
 				atid = rs.getInt(1) + 1;
