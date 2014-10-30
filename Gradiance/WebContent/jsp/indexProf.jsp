@@ -28,12 +28,12 @@
 
 <body style="font-family: sans-serif; font-weight:lighter ">
 
-	<!-- Here we use this java code to get params from server and display ^_^ -->
-	<title>Professor Index</title> 
+	<!-- Here we use this java code to get params from server and display ^_^ -->	
 
 	<div id="header">
-		<h1><%out.println("Welcome back, " + session.getAttribute("curUserName"));%></h1>	
+		<%out.println("<font size='5'>Welcome back</font><font size='4'><br>" + session.getAttribute("curUserName")+"</font>");%>	
 	</div>
+
 
 	<div align="center">
 		<font color="midnightblue" size="5"><br>Select Course<br><br></font>

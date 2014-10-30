@@ -21,8 +21,8 @@
 <body style="font-family: sans-serif; font-weight:lighter ">
 	
 	<div id="header">
-		<font size="5">Welcome to CSC540</font>
-		<font size="4"><br>Database Management Systems</font>
+		<font size="5">Welcome to <%=session.getAttribute("cid") %></font>
+		<font size="4"><br><%=session.getAttribute("courseTitle") %></font>
 	</div>
 	
 		<div align=center>

@@ -29,12 +29,9 @@
 
 <body style="font-family: sans-serif; font-weight:lighter ">
 	
-	<h1 id="header"
-		style="font-family: sans-serif; font-weight: lighter; font-size: 5">
-		<%
-			out.println("Welcome back, " + session.getAttribute("curUserName"));
-		%>
-	</h1>
+	<div id="header">
+		<%out.println("<font size='5'>Welcome back</font><font size='4'><br>" + session.getAttribute("curUserName")+"</font>");%>	
+	</div>
 
 	<div align="center">
 		<font color="midnightblue" size="5"><br>Select Course<br><br></font>

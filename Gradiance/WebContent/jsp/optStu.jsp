@@ -19,7 +19,7 @@
 
 <body style="font-family: sans-serif; font-weight:lighter ">
 	<div id="header">
-		<font size="5"><%=session.getAttribute("cid") %></font> 
+		<font size="5">Welcome to <%=session.getAttribute("cid") %></font>
 		<font size="4"><br><%=session.getAttribute("courseTitle") %></font>
 	</div>
 	

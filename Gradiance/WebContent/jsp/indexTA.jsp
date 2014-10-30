@@ -37,12 +37,8 @@
 
 <body style="font-family: sans-serif; font-weight:lighter ">
 
-	<!-- Here we use this java code to get params from server and display ^_^ -->
-	<title><%=request.getAttribute("title") %></title> 
-
 	<div id="header">
-		<%--<button style="float: left" onclick="g();">Click Me!!!</button>--%>
-		<font size="5">Logged in as TA</font>
+		<%out.println("<font size='5'>Welcome back</font><font size='4'><br>" + session.getAttribute("curUserName")+"</font>");%>	
 	</div>
 
 	<form action="<%=request.getContextPath()+"/rest/login" %>" method="post">

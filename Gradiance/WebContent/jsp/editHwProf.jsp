@@ -22,13 +22,10 @@
 </head>
 
 <body style="font-family: sans-serif; font-weight:lighter ">
-	<title><%=request.getAttribute("title") %></title> 
-
 	<div id="header">
 		<font size="5">Welcome to <%=session.getAttribute("cid") %></font>
-		<font size="4"><br><%=session.getAttribute("cname") %></font>
+		<font size="4"><br><%=session.getAttribute("courseTitle") %></font>
 	</div>
-
 	
 		<div align=center>
 			<table>

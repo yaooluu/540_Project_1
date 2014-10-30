@@ -41,12 +41,11 @@
 <body style="font-family: sans-serif; font-weight:lighter ">
 
 	<!-- Here we use this java code to get params from server and display ^_^ -->
-	<title><%=request.getAttribute("title") %></title> 
 	<div id="header">
-		<%--<button style="float: left" onclick="g();">Click Me!!!</button>--%>
-		<font size="5">Welcome to CSC540</font>
-		<font size="4"><br>Database Management Systems</font>
+		<font size="5">Welcome to <%=session.getAttribute("cid") %></font>
+		<font size="4"><br><%=session.getAttribute("courseTitle") %></font>
 	</div>
+	
 		<div align=center>
 			<table>
 				<tbody valign="top">

@@ -2,11 +2,11 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<title>Register</title>
 	<link href="../css/style.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
-	<title>Register</title>
 	<div id="header">
 		<h1>
 			<%
