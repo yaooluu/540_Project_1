@@ -49,6 +49,7 @@ public class ProfessorService {
 		System.out.println("/prof/courseOption called at: "+System.currentTimeMillis());
 		
 		request.getSession().setAttribute("cid", cid);
+		request.getSession().setAttribute("courseTitle", new StudentAction().getCourseTitle(cid));
 	    return Response.ok(new Viewable("/optProf.jsp", null)).build();
 	}
 	

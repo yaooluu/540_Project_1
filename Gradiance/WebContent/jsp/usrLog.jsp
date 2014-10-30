@@ -4,7 +4,17 @@
 <head>
 <title>Log in</title>
 	<link href="../css/style.css" rel="stylesheet" type="text/css" />
-
+<style>
+#header {
+	background-color: black;
+	color: white;
+	text-align: center;
+	padding-top: 30px;
+    padding-right: 50px;
+    padding-bottom: 30px;
+    padding-left: 50px;
+} 
+</style>
 </head>
 
 <body style="font-family: sans-serif; font-weight:lighter ">
@@ -38,7 +48,7 @@
 			<input type="button" value="Exit" onclick="self.close()" style="width:50px">
 		</form>
 		<br><HR><br>
-		<a href="usrReg.jsp" style="color: midnightblue;">Create New Account</a>
+		<a href="<%=request.getContextPath()+"/jsp/usrReg.jsp"%>" style="color: midnightblue;">Create New Account</a>
 	</div>
 	<br><br><br><br><br>
 	<div id="footer">Copyright ©2014 YYYD Database Team.</div>

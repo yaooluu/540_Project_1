@@ -267,7 +267,7 @@ public class ProfessorAction {
 					selectedQidList.add(""+rs1.getInt("qid"));
 				
 				//get contents of all qids that meet requirement
-				sql = "select qid,content from seed where qid in (select qid from question where difficulty>="+minDif+" and difficulty<="+maxDif;
+				sql = "select qid,max(content) from seed where qid in (select qid from question where difficulty>="+minDif+" and difficulty<="+maxDif;
 				
 				if(tidList.size()>0) {	//Add topic constraints if had
 					sql += " and (";
@@ -278,14 +278,14 @@ public class ProfessorAction {
 					}
 					sql +=" )";
 				} 
-				sql += ")";
+				sql += ") group by seed.qid";
 				//System.out.println("SQL in add/remove question:"+sql);
 				
 				stmt = conn.prepareStatement(sql);
 				ResultSet rs2 = stmt.executeQuery();
 				while(rs2.next()) {
 					String qid = ""+rs2.getInt("qid");
-					String content = rs2.getString("content");
+					String content = rs2.getString(2);
 					String selected = "0";
 					if(selectedQidList.contains(qid))
 						selected = "1";

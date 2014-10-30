@@ -97,4 +97,17 @@ public class MainService {
 		}
 	}
 	
+	/**
+	 * @author yaolu
+	 * @function logout
+	 */
+	@GET
+	@Path("logout")
+	public Response logout(@Context HttpServletRequest request) throws Exception { 
+		System.out.println("/logout called at: "+System.currentTimeMillis());
+		
+		request.getSession().invalidate();
+		return Response.ok(new Viewable("/usrLog.jsp", null)).build();
+
+	}
 }

@@ -40,7 +40,7 @@
 		    </td></tr>
 		    <tr><td><br></td></tr>
 		    <tr><td>
-		    	•&nbsp; <a href="" style="color: black;">Log Out</a>
+		    	•&nbsp; <a href="<%=request.getContextPath()+"/rest/logout"%>" style="color: black;">Log Out</a>
 		    </td></tr>
 		    </tbody></table>
 	</td></tr>
