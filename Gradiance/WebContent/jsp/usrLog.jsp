@@ -19,38 +19,52 @@
 
 <body style="font-family: sans-serif; font-weight:lighter ">
 	
-	<h1 id="header" style="font-family: sans-serif; font-weight:lighter; font-size:5">
+	<div id="header">
 		<%
 			if (request.getAttribute("registerResult") != null)
-				out.print(request.getAttribute("registerResult"));
+				out.print("<font size='5'>" +request.getAttribute("registerResult")+ "</font>");
 			else if (request.getAttribute("loginResult") != null)
-				out.print(request.getAttribute("loginResult"));
+				out.print("<font size='5'>"+request.getAttribute("loginResult")+ "</font>");
 			else
-				out.print("Welcome! Guest.");
+				out.print("<font size='5'>Welcome! Guest</font>");
 		%>
-	</h1>
-	<br>
+	</div>
+	<br><br><br>
 	<div align="center">
-		<form action="<%=request.getContextPath() + "/rest/login"%>"
-			method="post">
-			<div>
-				<label for="user">Username:</label>&nbsp;&nbsp; 
-				<input type="text" name="uid" placeholder="Enter unity id" required>
-			</div>
-			<br>
-			<div class="form-group">
-				<label for="pwd">Password:</label>&nbsp;&nbsp; 
-				<input type="password" name="upass" placeholder="Enter password" required>
-			</div>
-			<br>
-			<input type="submit" value="Login" style="width:50px">
-			&nbsp;&nbsp;&nbsp;&nbsp;
-			<input type="button" value="Exit" onclick="self.close()" style="width:50px">
+		<form action="<%=request.getContextPath() + "/rest/login"%>" method="post">
+		<table><tbody>
+			<tr>
+				<td>
+					<label for="user">Username:</label>
+				</td>
+				<td >
+					<input type="text" name="uid" placeholder="Enter unity id" required>
+				</td>
+			</tr>
+			<tr><td><br></td></tr>
+			<tr>
+				<td>
+					<label for="pwd">Password:</label>
+				</td>
+				<td>
+					<input type="password" name="upass" placeholder="Enter password" required>
+				</td>
+			</tr>
+			<tr><td><br></td></tr>
+			<tr>
+				<td colspan="2" align="center">
+					<input type="submit" value="Login" style="width:50px">
+					&nbsp;&nbsp;&nbsp;&nbsp;
+					<input type="button" value="Exit" onclick="self.close()" style="width:50px">
+				</td>
+			</tr>			
+		</tbody></table>	
 		</form>
+		
 		<br><HR><br>
 		<a href="<%=request.getContextPath()+"/jsp/usrReg.jsp"%>" style="color: midnightblue;">Create New Account</a>
 	</div>
-	<br><br><br><br><br>
+	<br><br><br>
 	<div id="footer">Copyright ©2014 YYYD Database Team.</div>
 </body>
 </html>
