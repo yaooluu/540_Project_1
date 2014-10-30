@@ -76,7 +76,7 @@
 				<td colspan="2" align="center">
 					<input type="submit" value="Create" style="width:50px">
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<input type="submit" value="Back" style="width:50px">
+					<input type='button' value="Back" style="width:50px" onclick="window.location.href='../jsp/usrLog.jsp'">
 				</td>
 			</tr>
 			

@@ -80,7 +80,8 @@ public class StudentService {
 		System.out.println("/student/viewHomeworkList called at: "+System.currentTimeMillis());
 		
 		String cid = (String) request.getSession().getAttribute("cid");
-		List<String> homeworkList = new StudentAction().viewHomeworkList(cid);
+		String sid = (String) request.getSession().getAttribute("curUser");
+		List<String> homeworkList = new StudentAction().viewHomeworkList(cid,sid);
 		
 		request.setAttribute("homeworkList", homeworkList);
 	    return Response.ok(new Viewable("/viewHwStu.jsp", null)).build();

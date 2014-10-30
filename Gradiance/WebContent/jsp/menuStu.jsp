@@ -44,7 +44,10 @@
 		<tr><td><HR></td></tr>
 		
 		<tr style="color: black; height: 20px;">
-			<td valign="middle"><font size="1">Copyright © 2014&nbsp;YYYD Database Team.</font></td>
+			<td valign="middle"><font size="2">YYYD Database Team.</font></td>
+		</tr>
+		<tr style="color: black; height: 20px;">
+			<td valign="middle"><font size="2">Copyright © 2014</font></td>
 		</tr>
 	</tbody>
 </table>

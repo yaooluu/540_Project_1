@@ -56,7 +56,7 @@
 										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 100px;">
 											Detail</td>
 										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 100px;">
-											Remaining</td>
+											Chance Left</td>
 										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
 									</tr>
 									
@@ -75,12 +75,22 @@
 												    +  s[2]
 												    +  "</font></td><td align='center' style='background-color: lightgray; white-space: nowrap; width: 100px;'><font size='2'>"
 												    +  s[3]
-												    +  "</font></td><td align='center' style='background-color: lightgray; white-space: nowrap; width: 100px;'>"
-												    +  "<form id='"+s[0]+"' action=" + request.getContextPath()+"/rest/student/attemptHomework" + " method='post'>"
-												    +  "<a href='#' onclick=\"document.getElementById('"+s[0]+"').submit()\"><font size='2'>Attempt</font></a>"
-												    +  "<input type='hidden' name='aid' value='"+s[0]+"'/>"
-												    +  "</form></td>"
-												    +  "<td style='width: 50px;'>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>";
+												    +  "</font></td><td align='center' style='background-color: lightgray; white-space: nowrap; width: 100px;'>";
+
+												    int remain = Integer.parseInt(s[4]); 
+												    if(remain!=0) {	//has chance or unlimited
+													    str +=  "<form id='"+s[0]+"' action=" + request.getContextPath()+"/rest/student/attemptHomework" + " method='post'>"
+															    +  "<a href='#' onclick=\"document.getElementById('"+s[0]+"').submit()\"><font size='2'>Attempt</font></a>"
+															    +  "<input type='hidden' name='aid' value='"+s[0]+"'/>"
+															    +  "</form></td>";
+												    }else if(remain==0){//no chance
+												    		str += "<font size='2'>No Chance</font></td>";	
+												    }
+												    str += "<td align='center' style='background-color: lightgray; white-space: nowrap; width: 100px;'><font size='2'>";
+											    	if(remain>=0)
+											    		str += s[4]+"</font></td>";
+											    	else
+											    		str += "Unlimited</font></td>";
 												out.println(str);
 											}
 										}else{
@@ -94,7 +104,8 @@
 												    +  "NULL"
 												    +  "</font></td><td align='center' style='background-color: lightgray; white-space: nowrap; width: 100px;'><font size='2'>"
 													+  "NULL"
-												    +  "</font></td><td style='width: 50px;'>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>";
+													+  "</font></td><td align='center' style='background-color: lightgray; white-space: nowrap; width: 100px;'><font size='2'>"
+													+  "NULL";
 											out.println(str);
 										}
 									%>		

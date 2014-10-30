@@ -204,10 +204,10 @@ public class StudentAction {
 	/**
 	 * @author yaolu
 	 * @function get all assessments by cid
-	 * @return a string list of "aid, title, tstart, tend"
+	 * @return a string list of "aid, title, tstart, tend, remain"
 	 */
-	public List<String> viewHomeworkList(String cid) {		
-		String sql = "select aid, title, tstart, tend from assessment where cid=?";
+	public List<String> viewHomeworkList(String cid, String sid) {		
+		String sql = "select aid, title, tstart, tend, retry from assessment where cid=?";
 		List<String> homeworkList = new ArrayList<String>();
 		
 		try {
@@ -223,12 +223,29 @@ public class StudentAction {
 				String title = rs.getString("title");
 				String tstart = rs.getString("tstart");
 				String tend = rs.getString("tend");
+				int retry = rs.getInt("retry");
 				
-				//check if homework is within due range
+				
+				//get attempt count
+				int count = 0;
+				sql = "select count(distinct subtime) from attempt where aid=? and sid=?";
+				stmt = conn.prepareStatement(sql);
+				stmt.setInt(1, aid);
+				stmt.setString(2, sid);
+				ResultSet rs2 = stmt.executeQuery();
+				if(rs2.next()) {
+					count = rs2.getInt(1);
+				}
+				
+				int remain = 0;
+				if(retry==0) remain = -1;	//unlimited retry
+				else remain = retry - count;
+				
+				//check if homework is within due range and has remaining chance
 				DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 				String curDate = df.format(new Date()); 
 				if(tstart.compareTo(curDate)<=0 && tend.compareTo(curDate)>=0)
-					homeworkList.add(aid+","+title+","+tstart+","+tend);
+					homeworkList.add(aid+","+title+","+tstart+","+tend+","+remain);
 			}
 			conn.close();
 		} catch(Exception e){

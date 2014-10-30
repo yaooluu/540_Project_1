@@ -30,7 +30,7 @@
 										<td colspan="3"><font color="midnightblue" size="4"><br>
 												Attempt Information&nbsp;&nbsp;&nbsp;Score: <%
 												List<String> l = (List<String>) request.getAttribute("submissionDetail"); 
-												out.print(l.get(l.size()-1).split("@")[0]+"/"+l.get(l.size()-1).split("@")[1]+"&nbsp;&nbsp;&nbsp;Submit Time: "+l.get(l.size()-1).split("@")[2]);
+												out.print("<font color='red'>"+l.get(l.size()-1).split("@")[0]+"/"+l.get(l.size()-1).split("@")[1]+"</font>&nbsp;&nbsp;&nbsp;Submit Time: "+l.get(l.size()-1).split("@")[2]);
 												%><br></font></td>
 										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
 									</tr>
