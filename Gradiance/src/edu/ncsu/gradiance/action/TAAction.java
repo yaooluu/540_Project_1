@@ -44,7 +44,36 @@ public class TAAction {
 					stmt.setString(2, cid);
 					int result = stmt.executeUpdate();
 					
-					if(result == 1) addCourseResult = "TA course added!";
+					if(result == 1) {
+						addCourseResult = "TA course added!";
+						
+						//Notification: if isTA and course added have overlap topic with TA's course, then notify Professor
+						sql = "SELECT CV1.cid, CV2.cid"
+								+" FROM gradiance.stusecour AS SC, gradiance.courseta AS CT, gradiance.cover AS CV1, gradiance.cover AS CV2"
+								+" WHERE SC.sid=CT.sid"
+								+" AND SC.sid=?"
+								+" AND CT.cid=CV1.cid"
+								+" AND SC.cid=CV2.cid"
+								+" AND CV1.tid=CV2.tid"
+								+" GROUP BY CV1.cid, CV2.cid";
+						
+						stmt = conn.prepareStatement(sql);
+						stmt.setString(1, sid);
+						ResultSet rs2 = stmt.executeQuery();
+						while(rs2.next()){	//have overlap, notify professor
+							String cid1 = rs2.getString(1);
+							String cid2 = rs2.getString(2);
+							
+							sql = "select fid from course where cid=?";
+							stmt = conn.prepareStatement(sql);
+							stmt.setString(1, cid);
+							ResultSet rs3 = stmt.executeQuery();
+							if(rs3.next()) {
+								String fid = rs3.getString("fid");
+								new NotifAction().addNotif(fid, "Overlap Topic", "Overlap Topic between "+cid1+" and "+cid2);
+							}
+						}
+					}
 					else addCourseResult = "Oops! You have already added that course!";
 				}
 			}

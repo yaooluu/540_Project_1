@@ -50,6 +50,12 @@ public class ProfessorService {
 		
 		request.getSession().setAttribute("cid", cid);
 		request.getSession().setAttribute("courseTitle", new StudentAction().getCourseTitle(cid));
+		
+		String uid = (String) request.getSession().getAttribute("curUser");
+		//get nofitications for user and don't delete from db
+		String notif = new NotifAction().getNotif(uid,false);
+		request.getSession().setAttribute("notif", notif);
+		
 	    return Response.ok(new Viewable("/optProf.jsp", null)).build();
 	}
 	

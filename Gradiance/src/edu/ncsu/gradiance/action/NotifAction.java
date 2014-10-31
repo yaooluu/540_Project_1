@@ -73,7 +73,7 @@ public class NotifAction {
 			if(stmt.executeUpdate()>0)
 				addNotifResult = "Add Notif Succeeded!";
 
-			conn.close();
+			//conn.close();
 		} catch(Exception e){
 			e.printStackTrace();
 		}
@@ -115,25 +115,24 @@ public class NotifAction {
 				if(curTime.compareTo(oneDayBefore)==0) {
 					
 					//if student don't have attempted, then notify
-					sql = "select * from attempt where aid="+aid+" and sid=?";
+					sql = "select count(*) from attempt where aid="+aid+" and sid=?";
 					stmt = conn.prepareStatement(sql);
 					stmt.setString(1,sid);
 					ResultSet rs2 = stmt.executeQuery();
-					if(rs2.next()==false) {
+					if(rs2.next()==true) {
+						if(rs2.getInt(1)==0) {
 						hasUrgentDue = true;
-						break;
+						addNotif(sid, "Urgent Due", "You have an unattempted due\""+title+"\" that will expire with a day.");
+						}
 					}
 				}
 			}
 				
-			conn.close();
+			//conn.close();
 		} catch(Exception e){
 			e.printStackTrace();
 		}
-		
-		if(hasUrgentDue)
-			addNotif(sid, "Urgent Due", "You have an unattempted due\""+title+"\" that will expire with a day.");
-		
+			
 		return hasUrgentDue;
 	}
 	
