@@ -64,7 +64,7 @@ public class ReportAction {
 		
 		//Find students who did not take Homework 1.
 		sql[1] = "";
-		sql[1] += "SELECT STU.sid,  STU.name, ASS.title"
+		sql[1] += "SELECT STU.sid AS Student_ID,  STU.name AS Student_Name, ASS.title AS Homework_1"
 				+ " FROM gradiance.student STU, gradiance.assessment ASS"
 				+ " WHERE ASS.aid=1"
 				+ " AND STU.sid not in "
@@ -75,7 +75,7 @@ public class ReportAction {
 
 		//Find students who scored the maximum score on the first attempt for Homework 1.
 		sql[2] = "";
-		sql[2] += "SELECT TEMP.sid, STU.name, ASS.title, TEMP.ScoreAtt1"
+		sql[2] += "SELECT TEMP.sid AS Student_ID, STU.name AS Student_Name, ASS.title AS Homework_1, TEMP.ScoreAtt1 AS Max_Score"
 				+ " FROM(	SELECT ATT.sid, ATT.aid, SUM(ATT.point) AS ScoreAtt1"
 				+ " 		FROM gradiance.attempt ATT"
 				+ " 		WHERE ATT.aid=1 AND ATT.atid=1"
@@ -93,7 +93,7 @@ public class ReportAction {
 
 		//Find students who scored the maximum score on the first attempt for each homework.
 		sql[3] = "";
-		sql[3] += "SELECT TEMP.sid, STU.name, ASS.title, TEMP.ScoreAtt1"
+		sql[3] += "SELECT TEMP.sid AS Student_ID, STU.name AS Student_Name, ASS.title AS Homework, TEMP.ScoreAtt1 AS Max_Score"
 				+ " FROM (	SELECT ATT.sid, ATT.aid, SUM(ATT.point) AS ScoreAtt1"
 				+ " 		FROM gradiance.attempt ATT"
 				+ "         WHERE ATT.atid=1"
@@ -112,7 +112,7 @@ public class ReportAction {
 
 		//For each student, show total score for each homework and average score overall homework.
 		sql[4] = "";
-		sql[4] += "SELECT TEMPOUT.sid, STU.name, ASS.title,"
+		sql[4] += "SELECT TEMPOUT.sid AS Student_ID, STU.name AS Student_Name, ASS.title AS Homework,"
 				+ " 	(CASE "
 				+ " 		WHEN TEMPOUT.scoreSelect='latest attempt'"
 				+ " 			THEN(	SELECT TEMP.ScoreAtt1 AS LatestScore"

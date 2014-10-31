@@ -58,12 +58,33 @@ public class StudentAction {
 						stmt.setInt(1, volume+1);
 						stmt.setString(2, cid);
 						result = result + stmt.executeUpdate();
-						if(result == 2) addCourseResult = "Course enrolled!";
+						if(result == 2) {
+							addCourseResult = "Course enrolled!";
+							
+							//Notification: if isTA and course added have overlap topic with TA's course, then notify Professor
+							sql = "SELECT CV1.tid"
+							+ "FROM gradiance.stusecour AS SC, gradiance.courseta AS CT, gradiance.cover AS CV1, gradiance.cover AS CV2"
+							+ "WHERE SC.sid=CT.sid"
+							+ "AND SC.sid=?"
+							+ "AND CT.cid=CV1.cid"
+							+ "AND SC.cid=CV2.cid"
+							+ "AND CV1.tid=CV2.tid"
+							+ "GROUP BY CV1.tid";
+							stmt.setString(1, sid);
+							
+							ResultSet rs2 = stmt.executeQuery();
+							if(rs2.next()){	//have overlap, notify professor
+								sql = "";
+							}
+						}
 						else addCourseResult = "Course enrolled. But failed to update course volume.";
 					}
 					else addCourseResult = "Oops! You have already enrolled in that course!";
 				}
 			}
+			
+
+			
 			conn.close();
 		} catch(Exception e){
 			e.printStackTrace();
@@ -247,7 +268,7 @@ public class StudentAction {
 				//check if homework is within due range and has remaining chance
 				DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 				String curDate = df.format(new Date()); 
-				if(tstart.compareTo(curDate)<=0 && tend.compareTo(curDate)>=0)
+				if(tstart.compareTo(curDate)<=0 && tend.compareTo(curDate)>0)
 					homeworkList.add(aid+","+title+","+tstart+","+tend+","+remain);
 			}
 			conn.close();

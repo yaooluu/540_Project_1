@@ -48,11 +48,24 @@
 											Unread Notification:</td>
 									</tr>
 									<tr><td colspan="5">&nbsp;</td></tr>
-									<tr>
-										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-										<td colspan="3" align="center" style="white-space: nowrap"><font size="2">None.</font></td>
-										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-									</tr>
+									<%
+							    	String notif = (String)request.getAttribute("notif");
+							    	if(notif!=null && notif.length()>0) {
+							    		
+							    		for(int i=0;i<notif.split("@").length;i+=2) {
+							    			out.println("<td style='width: 50px;'>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>");
+											out.println("<tr><td colspan='2' style='width: 50px;'>"+notif.split("@")[i]+"</td>");
+											out.println("<td colspan='3' align='center' style='white-space: nowrap'><font size='2'>"+notif.split("@")[i+1]+"</font></td>");
+											//out.println("<td style='width: 50px;'>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>");
+							    		}
+							    	}else{
+										out.println("<tr><td style='width: 50px;'>&nbsp;&nbsp;&nbsp;&nbsp;</td>");
+										out.println("<td colspan='3' align='center' style='white-space: nowrap'><font size='2'>None.</font></td>");
+										out.println("<td style='width: 50px;'>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>");
+							    	}
+							    	%>
+
+									<!-- 
 									<tr><td colspan="5"><br></td></tr>
 									<tr>
 										<td colspan="5" align="center"
@@ -65,6 +78,7 @@
 										<td colspan="3" align="center" style="white-space: nowrap"><font size="2">None.</font></td>
 										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
 									</tr>
+									 -->
 								</tbody>
 							</table>
 						</td>
