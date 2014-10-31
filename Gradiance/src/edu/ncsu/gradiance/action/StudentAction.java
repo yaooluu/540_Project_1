@@ -63,15 +63,16 @@ public class StudentAction {
 							
 							//Notification: if isTA and course added have overlap topic with TA's course, then notify Professor
 							sql = "SELECT CV1.cid, CV2.cid"
-									+"FROM gradiance.stusecour AS SC, gradiance.courseta AS CT, gradiance.cover AS CV1, gradiance.cover AS CV2"
-									+"WHERE SC.sid=CT.sid"
-									+"AND SC.sid=?"
-									+"AND CT.cid=CV1.cid"
-									+"AND SC.cid=CV2.cid"
-									+"AND CV1.tid=CV2.tid"
-									+"GROUP BY CV1.cid, CV2.cid";
-							stmt.setString(1, sid);
+									+" FROM gradiance.stusecour AS SC, gradiance.courseta AS CT, gradiance.cover AS CV1, gradiance.cover AS CV2"
+									+" WHERE SC.sid=CT.sid"
+									+" AND SC.sid=?"
+									+" AND CT.cid=CV1.cid"
+									+" AND SC.cid=CV2.cid"
+									+" AND CV1.tid=CV2.tid"
+									+" GROUP BY CV1.cid, CV2.cid";
 							
+							stmt = conn.prepareStatement(sql);
+							stmt.setString(1, sid);
 							ResultSet rs2 = stmt.executeQuery();
 							while(rs2.next()){	//have overlap, notify professor
 								String cid1 = rs2.getString(1);
@@ -85,7 +86,6 @@ public class StudentAction {
 									String fid = rs3.getString("fid");
 									new NotifAction().addNotif(fid, "Overlap Topic", "Overlap Topic between "+cid1+" and "+cid2);
 								}
-								
 							}
 						}
 						else addCourseResult = "Course enrolled. But failed to update course volume.";
@@ -93,9 +93,7 @@ public class StudentAction {
 					else addCourseResult = "Oops! You have already enrolled in that course!";
 				}
 			}
-			
-
-			
+					
 			conn.close();
 		} catch(Exception e){
 			e.printStackTrace();
