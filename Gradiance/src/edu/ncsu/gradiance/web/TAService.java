@@ -54,7 +54,7 @@ System.out.println("isTACourse:"+isTACourse);
 		request.getSession().setAttribute("cid", cid);
 		request.getSession().setAttribute("courseTitle", new StudentAction().getCourseTitle(cid));
 		
-		request.setAttribute("isTACourse", isTACourse);
+		request.getSession().setAttribute("isTACourse", isTACourse);
 		if(isTACourse.compareTo("0")==0) {
 			String uid = (String) request.getSession().getAttribute("curUser");
 			new NotifAction().checkUrgentDue(uid,cid);
@@ -65,8 +65,9 @@ System.out.println("isTACourse:"+isTACourse);
 			
 			return Response.ok(new Viewable("/optStu.jsp", null)).build();
 		}
-		else
+		else {
 			return Response.ok(new Viewable("/optTA.jsp", null)).build();
+		}
 	}
 	
 	/**

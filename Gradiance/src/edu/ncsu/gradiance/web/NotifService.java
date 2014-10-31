@@ -19,8 +19,7 @@ public class NotifService {
 	 */
 	@POST
 	@Path("viewNotif")
-	public Response viewNotif(@Context HttpServletRequest request,
-			@FormParam("isTACourse") String isTACourse) throws Exception { 
+	public Response viewNotif(@Context HttpServletRequest request) throws Exception { 
 		System.out.println("/Notif/viewNotif called at: "+System.currentTimeMillis());
 		
     	//check if logged in
@@ -28,11 +27,13 @@ public class NotifService {
     	Integer authority = (Integer)request.getSession().getAttribute("curAuthority");
     	String forwardPage = "/usrLog.jsp";
   
+    	String isTACourse = (String)request.getSession().getAttribute("isTACourse");
+    	
     	if(uid != null) {
     		if(authority.intValue() == 0) {		
     			forwardPage = "/viewNotifProf.jsp";
     		}			
-    		else if(authority == 1 && isTACourse!=null && isTACourse.compareTo("1")==0 ) {
+    		else if(authority == 1 && isTACourse!=null && isTACourse.compareTo("1")==0) {
 				forwardPage = "/viewNotifTA.jsp";
 			}
     		else {

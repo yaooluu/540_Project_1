@@ -23,7 +23,6 @@
 		<font size="4"><br><%=session.getAttribute("courseTitle") %></font>
 	</div>
 
-	<form action="<%=request.getContextPath()+"/rest/login" %>" method="post">
 		<div align=center>
 			<table>
 				<tbody valign="top">
@@ -86,7 +85,5 @@
 				</tbody>
 			</table>
 		</div>
-	</form>
-
 </body>
 </html>

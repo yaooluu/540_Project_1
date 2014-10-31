@@ -23,7 +23,6 @@
 		<font size="4"><br><%=session.getAttribute("courseTitle") %></font>
 	</div>
 
-	<form action="<%=request.getContextPath()+"/rest/login" %>" method="post">
 		<div align=center>
 			<table>
 				<tbody valign="top">
@@ -65,20 +64,6 @@
 							    	}
 							    	%>
 
-									<!-- 
-									<tr><td colspan="5"><br></td></tr>
-									<tr>
-										<td colspan="5" align="center"
-											style="color: white; background-color: grey; height: 15px">
-											Read Notifications:</td>
-									</tr>
-									<tr><td colspan="5">&nbsp;</td></tr>
-									<tr>
-										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-										<td colspan="3" align="center" style="white-space: nowrap"><font size="2">None.</font></td>
-										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-									</tr>
-									 -->
 								</tbody>
 							</table>
 						</td>
@@ -86,7 +71,6 @@
 				</tbody>
 			</table>
 		</div>
-	</form>
 
 </body>
 </html>
