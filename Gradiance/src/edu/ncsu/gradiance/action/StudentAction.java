@@ -52,13 +52,16 @@ public class StudentAction {
 					stmt.setString(2, cid);
 					int result = stmt.executeUpdate();
 					
-					sql = "update course set volume=? where cid=?";			//update course volume
-					stmt = conn.prepareStatement(sql);
-					stmt.setInt(1, volume+1);
-					stmt.setString(2, cid);
-					result = result + stmt.executeUpdate();
-					if(result == 2) addCourseResult = "Course enrolled!";
-					else addCourseResult = "Oops! Something wrong when executing SQL.";
+					if(result==1) {
+						sql = "update course set volume=? where cid=?";			//update course volume
+						stmt = conn.prepareStatement(sql);
+						stmt.setInt(1, volume+1);
+						stmt.setString(2, cid);
+						result = result + stmt.executeUpdate();
+						if(result == 2) addCourseResult = "Course enrolled!";
+						else addCourseResult = "Course enrolled. But failed to update course volume.";
+					}
+					else addCourseResult = "Oops! You have already enrolled in that course!";
 				}
 			}
 			conn.close();

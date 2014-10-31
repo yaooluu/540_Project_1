@@ -68,7 +68,7 @@
 					<label for="name">Username:</label>
 				</td>
 				<td>
-					<input type="text" style="width: 150px" name="uname" placeholder="Enter username" required>
+					<input type="text" style="width: 150px" name="name" placeholder="Enter username" required>
 				</td>
 			</tr>
 			<tr><td><br></td></tr>

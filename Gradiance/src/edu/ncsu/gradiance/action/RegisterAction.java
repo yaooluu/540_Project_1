@@ -27,7 +27,7 @@ public class RegisterAction {
 			
 			stmt.setString(1, uid);
 			if(stmt.executeQuery().next()) {
-				sql = "insert into user(uid,uname,upass,authority) values (?,?,?,?)";
+				sql = "insert into user(uid,name,upass,authority) values (?,?,?,?)";
 				stmt = conn.prepareStatement(sql);
 				stmt.setString(1, uid);
 				stmt.setString(2, name);

@@ -30,9 +30,12 @@ public class MainService {
     		if(authority.intValue() == 0) {		
     			forwardPage = "/indexProf.jsp";
     			request.setAttribute("selectedCourses", new ProfessorAction().getSelectedCourses(uid));
-    		}
-    		else if(authority.intValue() == 1) 
-    			forwardPage = "/indexTA.jsp";
+    		}			
+    		else if(authority == 1) {
+				forwardPage = "/indexTA.jsp";
+				request.setAttribute("selectedCourses", new StudentAction().getSelectedCourses(uid));
+				request.setAttribute("TACourses", new TAAction().getTACourses(uid));
+			}
     		else if(authority.intValue() == 2) {
     			forwardPage = "/indexStu.jsp";
     			request.setAttribute("selectedCourses", new StudentAction().getSelectedCourses(uid));
@@ -63,8 +66,11 @@ public class MainService {
 				forwardPage = "/indexProf.jsp";
 				request.setAttribute("selectedCourses", new ProfessorAction().getSelectedCourses(uid));
 			}
-			else if(authority == 1) 
+			else if(authority == 1) {
 				forwardPage = "/indexTA.jsp";
+				request.setAttribute("selectedCourses", new StudentAction().getSelectedCourses(uid));
+				request.setAttribute("TACourses", new TAAction().getTACourses(uid));
+			}
 			else {
 				forwardPage = "/indexStu.jsp";
 				request.setAttribute("selectedCourses", new StudentAction().getSelectedCourses(uid));
