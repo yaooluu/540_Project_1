@@ -28,15 +28,19 @@ public class TAService {
 		String uid = (String)request.getSession().getAttribute("curUser");
 		String addCourseResult = "Please Login first!";
 		if(uid != null) {
-			if(isTACourse.compareTo("0")==0)
-				addCourseResult = new StudentAction().addCourse(token,uid);
-			else
-				addCourseResult = new TAAction().addTACourse(token,uid);
+			
+			if(new TAAction().isTACourse(token,uid) == false) {
+				if(isTACourse.compareTo("0")==0)
+					addCourseResult = new StudentAction().addCourse(token,uid);
+				else
+					addCourseResult = new TAAction().addTACourse(token,uid);
+			} else
+				addCourseResult = "Course already selected as TA!";
 			
 			request.setAttribute("addCourseResult", addCourseResult);	
 			request.setAttribute("selectedCourses", new StudentAction().getSelectedCourses(uid));
 			request.setAttribute("TACourses", new TAAction().getTACourses(uid));
-		}
+		} 
 				
 	    return Response.ok(new Viewable("/indexTA.jsp", null)).build();
 	}

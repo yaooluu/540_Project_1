@@ -43,7 +43,7 @@ public class TAAction {
 					stmt.setString(1, sid);
 					stmt.setString(2, cid);
 					int result = stmt.executeUpdate();
-					
+					System.out.print("result:"+result);
 					if(result == 1) {
 						addCourseResult = "TA course added!";
 						
@@ -114,5 +114,27 @@ public class TAAction {
 			e.printStackTrace();
 		}
 		return taCourses;
+	}
+
+	public boolean isTACourse(String token, String uid) {
+		String sql = "select cid from courseta where sid=? and cid in (select cid from course where token=?)";	
+		boolean isTACourse = false;
+
+		try {
+			dbc = new DBConnection();
+			conn = dbc.getConnection();
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			
+			stmt.setString(1, uid);
+			stmt.setString(2, token);
+			ResultSet rs = stmt.executeQuery();
+			if(rs.next()) {
+				isTACourse = true;
+			}
+			conn.close();
+		} catch(Exception e){
+			e.printStackTrace();
+		}
+		return isTACourse;
 	}
 }

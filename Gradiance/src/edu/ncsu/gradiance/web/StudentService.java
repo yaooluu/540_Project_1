@@ -26,8 +26,12 @@ public class StudentService {
 		
 		String curUser = (String)request.getSession().getAttribute("curUser");
 		String addCourseResult = "Please Login first!";
-		if(curUser != null)
-			addCourseResult = new StudentAction().addCourse(token,curUser);
+		if(curUser != null) {
+			if(new StudentAction().isCourseSelected(token,curUser)==false)
+				addCourseResult = new StudentAction().addCourse(token,curUser);
+			else 
+				addCourseResult = "Course already enrolled!";
+		}
 			
 		request.setAttribute("addCourseResult", addCourseResult);	
 		
@@ -52,7 +56,7 @@ public class StudentService {
 		request.getSession().setAttribute("courseTitle", new StudentAction().getCourseTitle(cid));
 		
 		String uid = (String) request.getSession().getAttribute("curUser");
-		boolean check = new NotifAction().checkUrgentDue(uid,cid);
+		new NotifAction().checkUrgentDue(uid,cid);
 		
 		//get nofitications for user and don't delete from db
 		String notif = new NotifAction().getNotif(uid,false);

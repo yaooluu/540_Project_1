@@ -91,10 +91,12 @@
 											    		str += s[4]+"</font></td>";
 											    	else
 											    		str += "Unlimited</font></td>";
+											    str += "<td style='width: 50px;'>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>";
 												out.println(str);
 											}
 										}else{
-											str = "<tr><td style='width: 50px;'>&nbsp;&nbsp;&nbsp;&nbsp;</td><td align='center' style='background-color: lightgray; word-break: normal; width: 280px;'><font size='2'>"
+											str = "<tr><td style='width: 50px;'>&nbsp;&nbsp;&nbsp;&nbsp;</td>"
+													+  "<td align='center' style='background-color: lightgray; word-break: normal; width: 280px;'><font size='2'>"
 													+  "NULL"
 												    +  "</font></td><td align='center' style='background-color: lightgray; white-space: nowrap; width: 100px;'><font size='2'>"
 												    +  "NULL"
@@ -104,8 +106,7 @@
 												    +  "NULL"
 												    +  "</font></td><td align='center' style='background-color: lightgray; white-space: nowrap; width: 100px;'><font size='2'>"
 													+  "NULL"
-													+  "</font></td><td align='center' style='background-color: lightgray; white-space: nowrap; width: 100px;'><font size='2'>"
-													+  "NULL";
+													+  "</font></td><td style='width: 50px;'>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>";
 											out.println(str);
 										}
 									%>		
