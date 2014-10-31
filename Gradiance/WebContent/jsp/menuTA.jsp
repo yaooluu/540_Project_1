@@ -20,7 +20,7 @@
 		    </td></tr>
 		    <tr><td><br></td></tr>
 		    <tr><td>
-		    	•&nbsp; <a href="<%=request.getContextPath()+"/jsp/rptProf.jsp" %>" style="color: black;">Reports</a>
+		    	•&nbsp; <a href="<%=request.getContextPath()+"/jsp/rptTA.jsp" %>" style="color: black;">Reports</a>
 		    </td></tr>
 		    <tr><td><br></td></tr>
 		    <tr><td>

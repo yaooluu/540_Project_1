@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"%>
+<%@ page import="java.util.*"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,31 +30,7 @@
 				<tbody valign="top">
 					<tr>
 						<td style="width: 220px;">
-							<table>
-								<tbody>
-									<tr>
-										<td>
-											<br> <br> •&nbsp; <a href="http://localhost:8080/Gradiance/jsp/indexProf.jsp" style="color: black;">Home Page</a>
-											<br> <br> •&nbsp; <a href="http://localhost:8080/Gradiance/jsp/addHwProf.jsp" style="color: black;">Add Homework</a> 
-											<br> <br> •&nbsp; <a href="http://localhost:8080/Gradiance/jsp/addRmQsProf.jsp" style="color: black;">Add/Remove Questions</a> 
-											<br> <br> •&nbsp; <a href="http://localhost:8080/Gradiance/jsp/editHwProf.jsp" style="color: black;">Edit Homework</a> 
-											<br> <br> •&nbsp; <a href="http://localhost:8080/Gradiance/jsp/viewHwProf.jsp" style="color: black;">View Homework</a> 
-											<br> <br> •&nbsp; <a href="http://localhost:8080/Gradiance/jsp/viewNotifProf.jsp" style="color: black;">View Notification</a> 
-											<br> <br> •&nbsp; <a href="http://localhost:8080/Gradiance/jsp/rptProf.jsp" style="color: black;">Reports</a> 
-											<br> <br> •&nbsp; <a href="" style="color: black;">Log Out</a>
-										</td>
-									</tr>
-									<tr>
-										<td>&nbsp;</td>
-									</tr>
-									<tr>
-										<td><HR></td>
-									</tr>
-									<tr style="color: black; height: 20px;">
-										<td valign="middle"><font size="1">Copyright © 2014&nbsp;YYYD Database Team.</font></td>
-									</tr>
-								</tbody>
-							</table>
+							<jsp:include page="../jsp/menuProf.jsp"/>
 						</td>
 						<td style="width: 2px; background-color: grey;"></td>
 						<td style="width: 686px;">
@@ -78,15 +55,44 @@
 											<font size="2">•&nbsp;Choose A Query:</font>
 										</td>
 										<td colspan="3" align="left" style="white-space: nowrap">
-											<select style="width: 430px">
+											<form action="<%=request.getContextPath()+"/rest/Report/runSQL"%>" method="post">
+												<select name="rptid" style="width: 400px">
 												<option>&nbsp;</option>
-												<option>Find students who did not take Homework 1.</option>
-												<option>Find students who scored the maximum score on the first attempt for Homework 1.</option>
-												<option>Find students who scored the maximum score on the first attempt for any homework.</option>
-												<option>For each student, show total score for each homework and average score overall homework.</option>
-												<option>For each homework and question, show the maximum and minimum score.</option>
-												<option>For each homework and question, show average number of attempts.</option>
-											</select>
+												<option value="1">Find students who did not take Homework 1.</option>
+												<option value="2">Find students who scored the maximum score on the first attempt for Homework 1.</option>
+												<option value="3">Find students who scored the maximum score on the first attempt for any homework.</option>
+												<option value="4">For each student, show total score for each homework and average score overall homework.</option>
+												<option value="5">For each homework and question, show the maximum and minimum score.</option>
+												<option value="6">For each homework and question, show average number of attempts.</option>
+												</select>
+												&nbsp;&nbsp;&nbsp;
+												<input type="submit" value="Choose">
+											</form>
+										</td>
+										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+									</tr>
+									
+									<tr>
+										<td></td>
+										<td align="center" style="white-space: nowrap" >
+											<font size="2">OR</font>
+										</td>
+										<td colspan="3"></td>
+										<td></td>
+									</tr>
+									<tr>
+										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+										<td align="left" valign="top" style="white-space: nowrap" >
+											<font size="2">•&nbsp;Input SQL Query:</font>
+										</td>
+										<td colspan="3" align="left" valign="top" style="white-space: nowrap">
+											<form action="<%=request.getContextPath()+"/rest/Report/runSQL"%>" method="post">
+												<textarea style="width: 400px" rows="5" cols="58" name="sql" 
+												placeholder="Please input your query here"><%
+												if(request.getAttribute("sql")!=null ) out.print(request.getAttribute("sql")); %></textarea>
+												&nbsp;&nbsp;&nbsp;
+												<input type="submit" value="Submit">
+											</form>										
 										</td>
 										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
 									</tr>
@@ -96,243 +102,44 @@
 											style="color: white; background-color: grey; height: 15px">
 											Query Result:</td>
 									</tr>
-									<tr><td colspan="6">&nbsp;</td></tr>
-									<tr>
-										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
-											Student ID</td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
-											Student Name</td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
-											Assignment</td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
-											Score</td>
-										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-									</tr>
-									<tr>
-										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
-											<font size="2">200067020</font></td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
-											<font size="2">Ting Dai</font></td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
-											<font size="2">HW 1</font></td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
-											<font size="2">N/A</font></td>
-										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-									</tr>
-									<tr><td colspan="6">&nbsp;</td></tr>
+									<tr><td colspan="6">&nbsp;<%//=request.getAttribute("sqlResult") %></td></tr>
+									<%
+										String sqlResult = 	(String)request.getAttribute("sqlResult");
+										if(sqlResult!=null && sqlResult.length()>0) {
+											String[] str = sqlResult.split("#");
+											int len = str[0].split("@").length;
+											
+											//print result table header
+											out.println("<tr><td style='width: 50px;'>&nbsp;&nbsp;&nbsp;&nbsp;</td>");
+											for(int i=0;i<len;i++) {
+												out.print("<td ");
+												if(len==1)
+													out.print("colspan='4' style='max-width:700px'");
+												out.print(" align='center' style='background-color: lightgray; white-space: nowrap; width: 142px;'>");
+												out.println(""+str[0].split("@")[i]+"</td>");
+												//out.println(str.length+"</td>");
+											}
+											out.println("<td style='width: 50px;'>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>");
+											
+											//print result table content
+											int len2 = str.length; 
+											for(int i=1;i<len2;i++) {
+												String[] str2 = str[i].split("@");	
+												out.println("<tr><td style='width: 50px;'>&nbsp;&nbsp;&nbsp;&nbsp;</td>");
+												
+												for(int j=0;j<len;j++) {
+													out.println("<td ");
+													if(len==1)
+														out.print("colspan='4' style='max-width:700px'");
+													out.println(" align='center' style='background-color: lightgray; white-space: nowrap; width: 142px;'>");
+													out.println("<font size='2'>"+str2[j]+"</font></td>");
+												}
+												out.println("<td style='width: 50px;'>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>");
+											}
+											out.println("<td style='width: 50px;'>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>");
+										}
+									%>
 									
-									<tr>
-										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
-											Student ID</td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
-											Student Name</td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
-											Assignment</td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
-											Max Score</td>
-										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-									</tr>
-									<tr>
-										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
-											<font size="2">200067020</font></td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
-											<font size="2">Ting Dai</font></td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
-											<font size="2">HW 1</font></td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
-											<font size="2">32.0</font></td>
-										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-									</tr>
-									<tr><td colspan="6">&nbsp;</td></tr>
-									
-									<tr>
-										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
-											Student ID</td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
-											Student Name</td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
-											Assignment</td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
-											Max Score</td>
-										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-									</tr>
-									<tr>
-										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
-											<font size="2">200067020</font></td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
-											<font size="2">Ting Dai</font></td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
-											<font size="2">HW 1</font></td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
-											<font size="2">32.0</font></td>
-										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-									</tr>
-									<tr>
-										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
-											<font size="2">200067021</font></td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
-											<font size="2">Yao Lu</font></td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
-											<font size="2">HW 2</font></td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
-											<font size="2">32.0</font></td>
-										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-									</tr>
-									<tr><td colspan="6">&nbsp;</td></tr>
-									
-									<tr>
-										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
-											Student ID</td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
-											Student Name</td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
-											Assignment</td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
-											Max Score</td>
-										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-									</tr>
-									<tr>
-										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
-											<font size="2">200067020</font></td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
-											<font size="2">Ting Dai</font></td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
-											<font size="2">HW 1</font></td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
-											<font size="2">32.0</font></td>
-										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-									</tr>
-									<tr>
-										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
-											<font size="2">200067020</font></td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
-											<font size="2">Ting Dai</font></td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
-											<font size="2">HW 2</font></td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
-											<font size="2">32.0</font></td>
-										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-									</tr>
-									<tr>
-										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
-											<font size="2">200067020</font></td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
-											<font size="2">Ting Dai</font></td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
-											<font size="2">AVG</font></td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
-											<font size="2">32.0</font></td>
-										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-									</tr>
-									<tr><td colspan="6">&nbsp;</td></tr>
-									
-									<tr>
-										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
-											Assignment</td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
-											Question</td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
-											Max Score</td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
-											Mini Score</td>
-										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-									</tr>
-									<tr>
-										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
-											<font size="2">HW 1</font></td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
-											<font size="2">Q 1</font></td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
-											<font size="2">32.0</font></td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
-											<font size="2">10.0</font></td>
-										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-									</tr>
-									<tr>
-										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
-											<font size="2">HW 1</font></td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
-											<font size="2">--</font></td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
-											<font size="2">32.0</font></td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
-											<font size="2">10.0</font></td>
-										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-									</tr>
-									<tr>
-										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
-											<font size="2">HW 2</font></td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
-											<font size="2">Q 1</font></td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
-											<font size="2">32.0</font></td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
-											<font size="2">10.0</font></td>
-										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-									</tr>
-									<tr>
-										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
-											<font size="2">HW 2</font></td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
-											<font size="2">--</font></td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
-											<font size="2">32.0</font></td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
-											<font size="2">10.0</font></td>
-										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-									</tr>
-									<tr><td colspan="6">&nbsp;</td></tr>
-									
-									<tr>
-										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
-											Assignment</td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
-											Question</td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
-											AVG of Attempts</td>
-										<td style="width: 142px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-									</tr>
-									<tr>
-										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
-											<font size="2">HW 1</font></td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
-											<font size="2">Q 1</font></td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
-											<font size="2">10</font></td>
-										<td style="width: 142px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-									</tr>
-									<tr>
-										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
-											<font size="2">HW 1</font></td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
-											<font size="2">--</font></td>
-										<td align="center" style="background-color: lightgray; white-space: nowrap; width: 142px;">
-											<font size="2">12</font></td>
-										<td style="width: 142px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-										<td style="width: 50px;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
-										<tr><td colspan="6">&nbsp;</td></tr>
-									</tr>
 								</tbody>
 							</table>
 						</td>

@@ -521,7 +521,7 @@ public class StudentAction {
 	 */
 	public String submitHomework(String sid, String ansPosList, String points, String userAnsAndIdLists) {		
 		String sql = "select max(atid) from attempt where sid=?";
-		int atid = -1;
+		int atid = 1;
 		
 		String[] infos = userAnsAndIdLists.split("@");
 		
