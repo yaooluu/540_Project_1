@@ -70,7 +70,7 @@ public class TAAction {
 							ResultSet rs3 = stmt.executeQuery();
 							if(rs3.next()) {
 								String fid = rs3.getString("fid");
-								new NotifAction().addNotif(fid, "Overlap Topic", "Overlap Topic between "+cid1+" and "+cid2);
+								new NotifAction().addNotif(fid, "Overlap Topic", "Student "+sid+"overlaped topic between "+cid1+" and "+cid2);
 							}
 						}
 					}
