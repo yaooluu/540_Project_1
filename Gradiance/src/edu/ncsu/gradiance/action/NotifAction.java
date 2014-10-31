@@ -85,16 +85,17 @@ public class NotifAction {
 	 * @function check if user has an unattempted due that will expire with a day
 	 */
 
-	public boolean checkUrgentDue(String sid) {		
-		String sql = "select aid,tend from assessment where cid in (select cid from stusecour where sid=?)";
+	public boolean checkUrgentDue(String sid, String cid) {		
+		String sql = "select aid,title,tend from assessment where cid=?";
 		boolean hasUrgentDue = false;
+		String title = "";
 	
 		try {
 			dbc = new DBConnection();
 			conn = dbc.getConnection();
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			
-			stmt.setString(1, sid);
+			stmt.setString(1, cid);
 			ResultSet rs = stmt.executeQuery();
 			String curTime = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
 			
@@ -102,6 +103,7 @@ public class NotifAction {
 			while(rs.next()) {
 				int aid = rs.getInt("aid");
 				String tend = rs.getString("tend");
+				title = rs.getString("title");
 				
 				//get yesterday's date
 				Date date = new SimpleDateFormat("yyyy-MM-dd").parse(tend);
@@ -113,8 +115,9 @@ public class NotifAction {
 				if(curTime.compareTo(oneDayBefore)==0) {
 					
 					//if student don't have attempted, then notify
-					sql = "select * from attempt where aid="+aid;
+					sql = "select * from attempt where aid="+aid+" and sid=?";
 					stmt = conn.prepareStatement(sql);
+					stmt.setString(1,sid);
 					ResultSet rs2 = stmt.executeQuery();
 					if(rs2.next()==false) {
 						hasUrgentDue = true;
@@ -129,12 +132,12 @@ public class NotifAction {
 		}
 		
 		if(hasUrgentDue)
-			addNotif(sid, "Urgent Due", "You have an unattempted due that will expire with a day.");
+			addNotif(sid, "Urgent Due", "You have an unattempted due\""+title+"\" that will expire with a day.");
 		
 		return hasUrgentDue;
 	}
 	
 	public static void main(String[] args) {
-		System.out.println(new NotifAction().checkUrgentDue("ylu31"));
+		//System.out.println(new NotifAction().checkUrgentDue("ylu31"));
 	}
 }

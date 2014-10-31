@@ -70,21 +70,13 @@ public class MainService {
 				forwardPage = "/indexTA.jsp";
 				request.setAttribute("selectedCourses", new StudentAction().getSelectedCourses(uid));
 				request.setAttribute("TACourses", new TAAction().getTACourses(uid));
-				
-				//check urgent due and add notif if have
-				new NotifAction().checkUrgentDue(uid);
 			}
 			else {
 				forwardPage = "/indexStu.jsp";
 				request.setAttribute("selectedCourses", new StudentAction().getSelectedCourses(uid));
-				
-				//check urgent due and add notif if have
-				new NotifAction().checkUrgentDue(uid);
 			}
 			
-			//get nofitications for user and don't delete from db
-			String notif = new NotifAction().getNotif(uid,false);
-			request.getSession().setAttribute("notif", notif);
+
 
 			
 		} else {								

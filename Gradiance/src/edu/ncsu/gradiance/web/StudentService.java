@@ -48,8 +48,17 @@ public class StudentService {
 			@FormParam("cid") String cid) throws Exception { 
 		System.out.println("/student/courseOption called at: "+System.currentTimeMillis());
 		
+		String uid = (String) request.getSession().getAttribute("curUser");
+		
 		request.getSession().setAttribute("cid", cid);
 		request.getSession().setAttribute("courseTitle", new StudentAction().getCourseTitle(cid));
+		
+		new NotifAction().checkUrgentDue(uid,cid);
+		
+		//get nofitications for user and don't delete from db
+		String notif = new NotifAction().getNotif(uid,false);
+		request.getSession().setAttribute("notif", notif);
+		
 	    return Response.ok(new Viewable("/optStu.jsp", null)).build();
 	}
 

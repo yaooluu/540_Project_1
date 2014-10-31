@@ -29,7 +29,15 @@
 		    </td></tr>
 		    <tr><td><br></td></tr>
 		    <tr><td>
-		    	•&nbsp; <a href="http://localhost:8080/Gradiance/jsp/viewNotifStu.jsp" style="color: black;">View Notification</a>
+		   		<form id="viewNotifStuForm" action="<%=request.getContextPath()+"/rest/Notif/viewNotif"%>" method="post">
+					  •&nbsp; <a href="#" style="color: black;" onclick="document.getElementById('viewNotifStuForm').submit()">View Notification</a>
+				<%
+		    	String notif = (String)session.getAttribute("notif");
+		    	if(notif!=null && notif.length()>0) {
+		    		out.println("<font color='red'> ("+notif.split("@").length/2+")</font>");
+		    	}
+		    	%>
+		    	</form>
 		    </td></tr>
 		    <tr><td><br></td></tr>
 		    <tr><td>

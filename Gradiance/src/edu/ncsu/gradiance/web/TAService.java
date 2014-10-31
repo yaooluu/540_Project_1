@@ -54,8 +54,16 @@ public class TAService {
 		request.getSession().setAttribute("cid", cid);
 		request.getSession().setAttribute("courseTitle", new StudentAction().getCourseTitle(cid));
 		
-		if(isTACourse.compareTo("0")==0)
+		if(isTACourse.compareTo("0")==0) {
+			String uid = (String) request.getSession().getAttribute("curUser");
+			new NotifAction().checkUrgentDue(uid,cid);
+			
+			//get nofitications for user and don't delete from db
+			String notif = new NotifAction().getNotif(uid,false);
+			request.getSession().setAttribute("notif", notif);
+			
 			return Response.ok(new Viewable("/optStu.jsp", null)).build();
+		}
 		else
 			return Response.ok(new Viewable("/optTA.jsp", null)).build();
 	}
