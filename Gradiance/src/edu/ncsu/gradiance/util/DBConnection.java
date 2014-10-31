@@ -14,7 +14,7 @@ public class DBConnection {
 	private final static String DRIVER = ("com.mysql.jdbc.Driver");
 	private final static String URL = "jdbc:mysql://localhost:3306/gradiance";
 	private final String username = "root";
-	private final String password = "root";
+	private final String password = "";
 	
 	private Connection conn = null;
 	

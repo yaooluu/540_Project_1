@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Student Dashboard</title> 
+<title>TA Dashboard</title> 
 <link href="<%=request.getContextPath()+"/css/style.css"%>" rel="stylesheet" type="text/css" />
 <style>
 #header {
@@ -61,7 +61,7 @@
 				}
 			}else out.println("You haven't selected any course yet.");
 		%>
-		
+		<br><br>
 		<font color="midnightblue" size="5"><br>Select TA Course<br><br></font>
 		
 		<!-- here we use jsp to load current TA's selected courses. -->
@@ -97,14 +97,15 @@
 			<label for="classtoken"><br>Course Token:</label>
 			<input type="text" name="token" placeholder="Enter Class Token" required>
 			<font size="2">
-				<input type="radio" name="isTACourse" value="0" checked="checked">Student
-				<input type="radio" name="isTACourse" value="1">TA
+				<input type="radio" name="isTACourse" value="0" checked="checked">&nbsp;Student
+				&nbsp;&nbsp;
+				<input type="radio" name="isTACourse" value="1">&nbsp;TA
 			</font>
 			<br><br>
 			<input type="submit" value="Sign Up"/><br><br>
 		</div>
 	</form>	
-	<br><br><br><br><br>
+	<br><br><br>
 	<div id="footer">Copyright ©2014 YYYD Database Team.</div>
 </body>
 </html>

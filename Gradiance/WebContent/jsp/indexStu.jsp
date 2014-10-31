@@ -36,13 +36,7 @@
 	<div align="center">
 		<font color="midnightblue" size="5"><br>Select Course<br><br></font>
 		
-		<!-- the first part is an static example for writing jsp below! 
-		<form id="myForm" action="request.getContextPath()+"/rest/student/viewCourse"" method="post">	 
-			<a href="#" onclick="document.getElementById('myForm').submit()">CSC540</a> Database Management Systems
-			<input type="hidden" name="cid" value="CSC540"/>
-		</form>-->
-		
-		
+				
 		<!-- here we use jsp to load current student's selected courses. -->
 		<%
 			List<Course> list = (List<Course>) request.getAttribute("selectedCourses"); 
@@ -79,7 +73,7 @@
 			<input type="submit" value="Sign Up"><br><br>
 		</div>
 	</form>	
-	<br><br><br><br><br>
+	<br><br><br>
 	<div id="footer">Copyright ©2014 YYYD Database Team.</div>
 </body>
 </html>
