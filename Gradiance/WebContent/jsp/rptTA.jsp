@@ -56,7 +56,7 @@
 										</td>
 										<td colspan="3" align="left" style="white-space: nowrap">
 											<form action="<%=request.getContextPath()+"/rest/Report/runSQL"%>" method="post">
-												<select name="rptid" style="width: 400px">
+												<select name="rptId" style="width: 400px">
 												<option>&nbsp;</option>
 												<option value="1">Find students who did not take Homework 1.</option>
 												<option value="2">Find students who scored the maximum score on the first attempt for Homework 1.</option>
@@ -131,7 +131,7 @@
 													out.println("<td ");
 													if(len==1)
 														out.print("colspan='4' style='max-width:700px'");
-													out.println(" align='center' style='background-color: lightgray; white-space: nowrap; width: 142px;'>");
+													out.println(" align='center' style='background-color: lightgray;word-break: break-all; width: 142px;'>");
 													out.println("<font size='2'>"+str2[j]+"</font></td>");
 												}
 												out.println("<td style='width: 50px;'>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>");

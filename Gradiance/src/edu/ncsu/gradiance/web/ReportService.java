@@ -35,7 +35,7 @@ public class ReportService {
     		else if(authority == 1) {
 				forwardPage = "/rptTA.jsp";
 			}
-    		
+    		System.out.println("rptId:"+rptId);
 			if(rptId!=null) {	//if user specified a rptId, run built-in query
 				String builtInSql = new ReportAction().getBuiltInSQL(rptId);
 				request.setAttribute("sql", builtInSql);
