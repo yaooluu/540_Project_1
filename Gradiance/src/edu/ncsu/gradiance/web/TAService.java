@@ -50,10 +50,11 @@ public class TAService {
 	public Response courseOption(@Context HttpServletRequest request,
 			@FormParam("cid") String cid, @FormParam("isTACourse") String isTACourse) throws Exception { 
 		System.out.println("/TA/courseOption called at: "+System.currentTimeMillis());
-
+System.out.println("isTACourse:"+isTACourse);
 		request.getSession().setAttribute("cid", cid);
 		request.getSession().setAttribute("courseTitle", new StudentAction().getCourseTitle(cid));
 		
+		request.setAttribute("isTACourse", isTACourse);
 		if(isTACourse.compareTo("0")==0) {
 			String uid = (String) request.getSession().getAttribute("curUser");
 			new NotifAction().checkUrgentDue(uid,cid);

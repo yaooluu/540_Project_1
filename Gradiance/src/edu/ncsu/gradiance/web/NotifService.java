@@ -19,7 +19,8 @@ public class NotifService {
 	 */
 	@POST
 	@Path("viewNotif")
-	public Response viewNotif(@Context HttpServletRequest request) throws Exception { 
+	public Response viewNotif(@Context HttpServletRequest request,
+			@FormParam("isTACourse") String isTACourse) throws Exception { 
 		System.out.println("/Notif/viewNotif called at: "+System.currentTimeMillis());
 		
     	//check if logged in
@@ -31,13 +32,14 @@ public class NotifService {
     		if(authority.intValue() == 0) {		
     			forwardPage = "/viewNotifProf.jsp";
     		}			
-    		else if(authority == 1) {
+    		else if(authority == 1 && isTACourse!=null && isTACourse.compareTo("1")==0 ) {
 				forwardPage = "/viewNotifTA.jsp";
 			}
-    		else if(authority.intValue() == 2) {
+    		else {
     			forwardPage = "/viewNotifStu.jsp";
     		}
     		
+    		request.setAttribute("isTACourse", isTACourse);
     		//get notif and delete from database, because they are read now.
     		request.setAttribute("notif", new NotifAction().getNotif(uid,true));
     		request.getSession().removeAttribute("notif");

@@ -32,6 +32,7 @@
 		   		<form id="viewNotifStuForm" action="<%=request.getContextPath()+"/rest/Notif/viewNotif"%>" method="post">
 					  •&nbsp; <a href="#" style="color: black;" onclick="document.getElementById('viewNotifStuForm').submit()">View Notification</a>
 				<%
+				out.println("<input type='hidden' name='isTACourse' value='"+request.getAttribute("isTACourse")+"'/>");
 		    	String notif = (String)session.getAttribute("notif");
 		    	if(notif!=null && notif.length()>0) {
 		    		out.println("<font color='red'> ("+notif.split("@").length/2+")</font>");
