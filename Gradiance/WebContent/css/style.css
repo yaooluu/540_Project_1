@@ -6,6 +6,11 @@ div {
 	align-content:center;
 }
 
+html {
+       overflow-y: scroll;
+       overflow:scroll;
+}
+
 #header {
 	background-color: black;
 	color: white;

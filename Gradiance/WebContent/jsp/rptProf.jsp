@@ -4,6 +4,7 @@
 <html>
 <head>
 <title>Reports for Professor</title>
+<link href="<%=request.getContextPath()+"/css/style.css"%>" rel="stylesheet" type="text/css" />
 <style>
 #header {
 	background-color: black;
@@ -24,7 +25,6 @@
 		<font size="4"><br><%=session.getAttribute("courseTitle") %></font>
 	</div>
 
-	<form action="<%=request.getContextPath()+"/rest/login" %>" method="post">
 		<div align=center>
 			<table>
 				<tbody valign="top">
@@ -147,7 +147,5 @@
 				</tbody>
 			</table>
 		</div>
-	</form>
-
 </body>
 </html>

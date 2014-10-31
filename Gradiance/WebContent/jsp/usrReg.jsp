@@ -3,7 +3,7 @@
 <html>
 <head>
 <title>Register</title>
-<link href="../css/style.css" rel="stylesheet" type="text/css" />
+<link href="<%=request.getContextPath()+"/css/style.css"%>" rel="stylesheet" type="text/css" />
 <style>
 #header {
 	background-color: black;

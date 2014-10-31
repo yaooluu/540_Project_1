@@ -3,6 +3,7 @@
 <html>
 <head>
 <title>View Notification</title>
+<link href="<%=request.getContextPath()+"/css/style.css"%>" rel="stylesheet" type="text/css" />
 <style>
 #header {
 	background-color: black;

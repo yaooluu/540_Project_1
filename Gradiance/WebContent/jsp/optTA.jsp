@@ -3,6 +3,7 @@
 <html>
 <head>
 <title>Course Options for Professor</title>
+<link href="<%=request.getContextPath()+"/css/style.css"%>" rel="stylesheet" type="text/css" />
 <style>
 #header {
 	background-color: black;
