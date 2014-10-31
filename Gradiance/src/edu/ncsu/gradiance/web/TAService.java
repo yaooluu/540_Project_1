@@ -1,6 +1,8 @@
 package edu.ncsu.gradiance.web;
 
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
@@ -56,5 +58,28 @@ public class TAService {
 			return Response.ok(new Viewable("/optStu.jsp", null)).build();
 		else
 			return Response.ok(new Viewable("/optTA.jsp", null)).build();
+	}
+	
+	/**
+	 * @author yaolu
+	 * @function view homework's 
+	 */
+	@POST
+	@Path("viewHwTA")
+	public Response viewHwTA(@Context HttpServletRequest request,@FormParam("aid") String aid) throws Exception { 
+		System.out.println("/prof/viewHwTA called at: "+System.currentTimeMillis());
+		
+		String cid = (String)request.getSession().getAttribute("cid");
+		request.setAttribute("homeworkList", new ProfessorAction().getHomeworkList(cid));
+		
+		if(aid!=null && aid.length()>0) {
+			List<String> homeworkBasic = new ProfessorAction().getHomeworkBasic(aid);
+			request.setAttribute("homeworkBasic", homeworkBasic);	
+			
+			String homeworkQuestion = new ProfessorAction().getHomeworkQuestion(aid);
+			request.setAttribute("homeworkQuestion", homeworkQuestion);	
+		}
+		
+	    return Response.ok(new Viewable("/viewHwTA.jsp", null)).build();
 	}
 }

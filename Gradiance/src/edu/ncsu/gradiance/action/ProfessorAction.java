@@ -134,7 +134,7 @@ public class ProfessorAction {
 	 */
 	public String getHomeworkList(String cid) {		
 		String sql = "select aid,title from assessment where cid=?";
-		String homework = "";
+		String homework = null;
 		
 		try {
 			dbc = new DBConnection();
@@ -145,7 +145,8 @@ public class ProfessorAction {
 			ResultSet rs = stmt.executeQuery();
 			while(rs.next()) 
 				homework += rs.getString("aid")+","+rs.getString("title")+",";
-			homework = homework.substring(0, homework.length()-1);
+			if(homework != null)
+				homework = homework.substring(0, homework.length()-1);
 			
 			conn.close();	
 		} catch(Exception e){

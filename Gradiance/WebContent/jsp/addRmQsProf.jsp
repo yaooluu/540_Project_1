@@ -82,7 +82,7 @@
 												<%
 													String html = "";
 													String str = (String)request.getAttribute("homeworkList");
-													if(str!=null) {
+													if(str!=null && str.length()>0) {
 														String[] s = str.split(",");
 														for(int i=0;i<s.length;i+=2) {
 															html += "<option value="+s[i]+">"+s[i+1]+"</option>";

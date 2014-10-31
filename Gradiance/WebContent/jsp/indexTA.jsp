@@ -56,7 +56,7 @@
 					out.println("<td style='width:30px'></td><td align='left'><font color='black' size='3'>"+c.getName()+"</font></td><td></td>");
 					out.println("<input type='hidden' name='cid' value='"+c.getCid()+"'/>");
 					out.println("</tr></tbody></table>");
-					out.println("<input type='hidden' name='isTACourse' value='0'");
+					out.println("<input type='hidden' name='isTACourse' value='0'/>");
 					out.println("</form>");
 				}
 			}else out.println("You haven't selected any course yet.");
@@ -77,7 +77,7 @@
 					out.println("<td style='width:30px'></td><td align='left'><font color='black' size='3'>"+c.getName()+"</font></td><td></td>");
 					out.println("<input type='hidden' name='cid' value='"+c.getCid()+"'/>");
 					out.println("</tr></tbody></table>");
-					out.println("<input type='hidden' name='isTACourse' value='1'");
+					out.println("<input type='hidden' name='isTACourse' value='1'/>");
 					out.println("</form>");
 				}
 			}else out.println("You haven't added any TA course yet.");
@@ -101,7 +101,7 @@
 				<input type="radio" name="isTACourse" value="1">TA
 			</font>
 			<br><br>
-			<input type="submit" value="Sign Up"><br><br>
+			<input type="submit" value="Sign Up"/><br><br>
 		</div>
 	</form>	
 	<br><br><br><br><br>
