@@ -43,7 +43,7 @@ public class ProfessorAction {
 					stmt = conn.prepareStatement(sql);
 					stmt.setString(1, fid);
 					stmt.setString(2, cid);
-					if(stmt.executeUpdate()>0) addCourseResult = "Course Selected!";
+					if(stmt.executeUpdate()>0) addCourseResult = "Course already selected!";
 					else addCourseResult = "Oops! Something wrong when executing SQL.";
 				}
 			}
@@ -134,7 +134,7 @@ public class ProfessorAction {
 	 */
 	public String getHomeworkList(String cid) {		
 		String sql = "select aid,title from assessment where cid=?";
-		String homework = null;
+		String homework = "";
 		
 		try {
 			dbc = new DBConnection();

@@ -31,6 +31,15 @@
 	</div>
 	<br><br><br>
 	<div align="center">
+	
+		<table style="padding:5px;border-style: dashed;border-width: 2px;">
+			<tr><td><b>Role</b></td><td><b>Username</b></td><td><b>Password</b></td></tr>
+			<tr><td>Professor</td><td>prof</td><td>pw</td></tr>
+			<tr><td>Student</td><td>stu</td><td>pw</td></tr>
+			<tr><td>TA</td><td>ta</td><td>pw</td></tr>
+		</table>
+		<br><br>
+		
 		<form action="<%=request.getContextPath() + "/rest/login"%>" method="post">
 		<table><tbody>
 			<tr>
@@ -55,14 +64,15 @@
 				<td colspan="2" align="center">
 					<input type="submit" value="Login" style="width:50px">
 					&nbsp;&nbsp;&nbsp;&nbsp;
-					<input type="button" value="Exit" onclick="self.close()" style="width:50px">
+					<input type="button" value="Exit" onclick="window.close();" style="width:50px">
 				</td>
 			</tr>			
 		</tbody></table>	
 		</form>
 		
 		<br><HR><br>
-		<a href="<%=request.getContextPath()+"/jsp/usrReg.jsp"%>" style="color: midnightblue;">Create New Account</a>
+		<a href="<%=request.getContextPath()+"/jsp/usrReg.jsp"%>" style="color: midnightblue;">Create New Account</a><br><br>
+		<label><b>Note:</b> Only pre-registered users can create accounts. Or TIY :)</label>
 	</div>
 	<br><br><br>
 	<div id="footer">Copyright ©2014 YYYD Database Team.</div>

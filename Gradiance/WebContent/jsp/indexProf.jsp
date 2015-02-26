@@ -73,6 +73,7 @@
 			<input type="text" name="token" placeholder="Enter Course Token" required>
 			<br><br>
 			<input type="submit" value="Add Course"><br><br>
+			<label><b>Hint:</b> Try CSC540FALL14, CSC440FALL14, CSC541FALL13 or anything else :-)</label>
 		</div>	
 	</form>
 	<br><br><br>

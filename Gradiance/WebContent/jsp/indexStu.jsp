@@ -71,6 +71,7 @@
 			<br>
 			<br>
 			<input type="submit" value="Sign Up"><br><br>
+			<label><b>Hint:</b> Try CSC540FALL14, CSC440FALL14, CSC541FALL13 or anything else :-)</label>
 		</div>
 	</form>	
 	<br><br><br>
